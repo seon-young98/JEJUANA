@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team6.jejuana.dao.PlanDAO">
+<insert id="planSave" parameterType="com.team6.jejuana.dto.PlanDTO">
+    insert into plan(plan_no, plan_name, start_date, end_date, transport, id, days)
+    values(plan_sq.nextval, #{plan_name}, to_date(#{start_date}), to_date(#{end_date}), #{transport}, #{id}, ${days})
+</insert>
+<select id="placeAllList"   resultType="com.team6.jejuana.dto.PlaceDTO">
+    select place_no, place_name, place_addr, latitude, longitude, content, rate, to_char(writedate, 'MM-DD'), id, thumbnail
+    from place order by place_no asc
+</select>
+<select id="placeSelectList"  resultType="com.team6.jejuana.dto.PlaceDTO">
+    select place_no, place_name, place_addr, latitude, longitude, content, rate, to_char(writedate, 'MM-DD'), id, thumbnail
+    from place where place_name like '%${param1}%' order by place_no asc
+</select>
+    <select id="selectedPlace" resultType="com.team6.jejuana.dto.PlaceDTO">
+        select * from place where place_no=${param1}
+    </select>
+</mapper>

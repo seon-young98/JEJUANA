@@ -1,0 +1,50 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/header.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	// 버튼 클릭 이벤트
+	function myFunction() {
+		document.getElementById("myDropdown").classList.toggle("show");
+	}
+	window.onclick = function(event) {
+		if (!event.target.matches('.dropbtn')) {
+			var dropdowns = document.getElementsByClassName("dropdown-content");
+			var i;
+			for (i = 0; i < dropdowns.length; i++) {
+				var openDropdown = dropdowns[i];
+				if (openDropdown.classList.contains('show')) {
+					openDropdown.classList.remove('show');
+				}
+			}
+		}
+	}
+</script>
+</head>
+<body id="container_A">
+	<header>
+		<div class="header">
+			<!-- 로고 -->
+			<img src="${pageContext.request.contextPath}/img/jejuana.png" alt="logo" id="logo">
+			<!-- 카테고리 -->
+			<div id="kategorie">
+				<ul>
+					<li><a href="#">계획만들기</a></li>
+					<li><a href="#">여행지목록</a></li>
+					<li><a href="#">여행기록</a></li>
+					<li><a href="#">여행친구</a></li>
+					<div class="dropdown">
+						<button onclick="myFunction()" class="dropbtn">고구마님 환영합니다</button>
+						<div id="myDropdown" class="dropdown-content">
+							<a href="#">마이페이지</a> <a href="#">로그아웃</a>
+						</div>
+					</div>
+				</ul>
+			</div>
+		</div>
+	</header>
