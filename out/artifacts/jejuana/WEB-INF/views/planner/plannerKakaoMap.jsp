@@ -6,18 +6,23 @@
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" type="text/javascript"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=806e918783759197bca10fffa91fc3e5"></script>
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=806e918783759197bca10fffa91fc3e5&libraries=services"></script>
 <link href="<%=request.getContextPath()%>/css/planner.css" rel="stylesheet">
 <script>
-    let markers=[]; //마커 담을 배열
+    let markers = []; //마커 담을 배열
     let polylines = []; // 경로 담을 배열
-    let colors =[
-        '#FFAE00', '#0022ff', '#aa00ff','#ff003b',
-        '#00ff0d','#c8ff00','#36fcff','#480148',
+    let colors = [
+        '#FFAE00', '#0022ff', '#aa00ff', '#ff003b',
+        '#00ff0d', '#c8ff00', '#36fcff', '#480148',
         '#1f2c70', '#1f702a', '#42ff5c', '#42b7ff',
         '#424bff', '#ff42e6'
     ];
-    let random_color =[];
+    let random_color = [];
+
+    var ps = new kakao.maps.services.Places();
+    var infowindow = new kakao.maps.InfoWindow({zIndex: 10});
+
     $(function () {
         // 저장 눌렀을 때 플랜 이름 있는지 확인
         $("#planner_Saver").submit(function () {
@@ -39,7 +44,7 @@
             start = $("#start_date").val().split('-');  // 선택한 날짜를 '-' 를 기준으로 나눠서 배열에 넣고
             startdate = new Date(start[0], start[1], start[2]);// 그걸 다시 Data 객체로 만듬
             if (enddate != null) {// 만약 종료일이 선택되어있으면
-                days = 1+(enddate.getTime() - startdate.getTime()) / (1000 * 60 * 60 * 24);// 두 날짜의 차이를 구해서
+                days = 1 + (enddate.getTime() - startdate.getTime()) / (1000 * 60 * 60 * 24);// 두 날짜의 차이를 구해서
                 $("#days").val(days);
                 showSchedule(days);// 일정을 선택할수있는 함수에 넣는다.
             }
@@ -50,7 +55,7 @@
             end = $("#end_date").val().split('-');
             enddate = new Date(end[0], end[1], end[2]);
             if (startdate != null) {
-                days =1+ (enddate.getTime() - startdate.getTime()) / (1000 * 60 * 60 * 24);
+                days = 1 + (enddate.getTime() - startdate.getTime()) / (1000 * 60 * 60 * 24);
                 $("#days").val(days);
 
                 showSchedule(days);
@@ -58,19 +63,20 @@
             }
 
         });
-        function colorSetup(days){
+
+        function colorSetup(days) {
             random_color = [];
             var num;
             do {
                 num = Math.floor(Math.random() * colors.length);
                 random_color.push(colors[num]);
-                for(var i=0; i<colors.length; i++){ // 중복된 값이 들어가지 않도록 result 배열에 저장된 값은 arr 배열에서 제거
-                    if(random_color[random_color.length-1]==colors[i]){
+                for (var i = 0; i < colors.length; i++) { // 중복된 값이 들어가지 않도록 result 배열에 저장된 값은 arr 배열에서 제거
+                    if (random_color[random_color.length - 1] == colors[i]) {
                         colors.splice(i, 1);
                     }
                 }
-            }while(random_color.length != days); // result 배열의 요소가 6개가 될 때까지 반복
-            random_color.sort(function(a, b) { // 오름차순으로 정렬
+            } while (random_color.length != days); // result 배열의 요소가 6개가 될 때까지 반복
+            random_color.sort(function (a, b) { // 오름차순으로 정렬
                 return a - b;
             });
             return random_color;
@@ -82,13 +88,13 @@
 
         function showSchedule(days) {
             colorSetup(days);// 시작일과 종료일의 차이로 여행 날짜수 구해준값을 파라미터로 넣고
-            for (let i = 1; i <= days ; i++) {// 날수+1 번 반복해서 코스를 짤 수 있는 블럭을 넣어줌
+            for (let i = 1; i <= days; i++) {// 날수+1 번 반복해서 코스를 짤 수 있는 블럭을 넣어줌
                 let tag = "<div class='schedule_detail'>";
                 tag += "<input type='hidden' class='day' value='" + i + "'/>";
                 tag += "<div class='schedule_header'><div class='day' style='border-bottom-color:" + random_color[i - 1] + "' >Day" + i + "</div></div>";
-                tag += "<div class='schedule_body' id='day"+i+"'></div>";
-;                tag += "<div class='schedule_footer'>";
-                tag += "<div class='placeAdd' id='"+i+"'>";
+                tag += "<div class='schedule_body' id='day" + i + "'></div>";
+                tag += "<div class='schedule_footer'>";
+                tag += "<div class='placeAdd' id='" + i + "'>";
                 tag += "<img src='<%=request.getContextPath()%>/img/placeselect.png' width='50'/></div>";
                 tag += "</div></div>";
                 $("#schedule").append(tag);
@@ -99,15 +105,15 @@
         $(document).on("click", ".closeModal", function () { //모달 닫는 버튼
             $("#myModal").css("display", "none");
         });
+
+        // 장소선택을 위해서 여행지 목록을 보여주는 창 OPEN
         $(document).on("click", ".placeAdd", function () { // 장소 추가 버튼을 누르면
-            console.log($(this).attr("id"));
-            $("#day").val($(this).attr("id"));
-            $("#selectedPlace").html("");
-            $("#searchWord").val("");// selectedPlace 박스 초기화
-            $("#myModal").css("display", "block");// 그리고 모달을 보이게 한다.
-            let searchWord = $(this).serialize();
-            showPlace(searchWord);                                  //목록 띄워주기
+            let placeModal = document.getElementById("myModal");
+            placeModal.style.display = "block";
+            // searchPlaces();
         });
+
+
 
         // 모달 내 여행지 목록에서 여행지 선택 버튼을 눌렀을 때
         $(document).on("click", ".btn-primary", function () { //선택을 누르면
@@ -116,47 +122,41 @@
             selected.css("display", "none"); //선택된 여행지를 목록에서 안보이게 한다.
 
         });
-        function showPlace(searchWord){  //장소를 DB에서 불러와서 보여주는 함수
 
-            $("#placeBox").html("");
-            let url = "placeSelectList";
-            $.ajax({
-                url: url,
-                type: "POST",
-                data:searchWord,
-                success(result) {
-                    $(result).each(function (idx, dto) {
-                        let tag = "<div class='place_container'>";
-                        tag += "<div class='place_item'>";
-                        tag += "    <input type='hidden' value='" + dto.place_no + "'/> ";
-                        tag += "    <img src='<%=request.getContextPath()%>/img/" + dto.thumbnail + "' width='70' height='70'/></div>";
-                        tag += "<div class='place_item'>";
-                        tag += "    <span style='font-size: 1.2em'>" + dto.place_name + "</span></div>";
-                        tag += "<div class='place_item'>" + dto.content + "</div>";
-                        tag += "<div class='place_item'>";
-                        tag += "    <button type='button' class='btn btn-primary'>선택</button></div>";
+        function getPlaceItem(index, place) {
+            let el = document.createElement("div"),
+                tag = "";
+            tag += "<div class='place_item'>";
+            tag += "    <input type='hidden' value='" + place.id + "'/> ";
+            tag += "    <img src='<%=request.getContextPath()%>/img/" + dto.thumbnail + "' width='70' height='70'/></div>";
+            tag += "<div class='place_item'>";
+            tag += "    <span style='font-size: 1.2em'>" + place.place_name + "</span></div>";
+            tag += "<div class='place_item'>[" + place.category_name + "]";
+            if (place.road_address_name) {
+                tag += place.road_address_name + "</div>";
+            } else {
+                tag += place.address_name + "</div>";
+            }
+            tag += "<div class='place_item'>";
+            tag += "<button type='button' class='btn btn-primary'>선택</button></div>";
 
-                        $("#placeBox").append(tag);
-                    });
+            el.innerHTML = tag;
+            el.className = 'place_container';
 
-                }, error(e) {
-                    console.log(e.responseText);
-                }
-
-            })
+            return el;
         }
 
 
-        $(document).on("keypress", "#searchWord", function(){ // 검색어를 입력하고 enter를 치면 검색되도록하는 이벤트
-           if(event.keyCode==13){
-               let searchWord = $("#searchWord").serialize();
-               showPlace(searchWord);
-           }
+        $(document).on("keypress", "#searchWord", function () { // 검색어를 입력하고 enter를 치면 검색되도록하는 이벤트
+            if (event.keyCode == 13) {
+                let searchWord = $("#searchWord").serialize();
+                showPlace(searchWord);
+            }
         });
-        let lat1= null, lat2 = null, lon1=null, lon2=null;
+        let lat1 = null, lat2 = null, lon1 = null, lon2 = null;
 
         // 스케줄러에 넣어준 장소를 제거했을 경우
-        $(document).on("click", ".place_del", function(){
+        $(document).on("click", ".place_del", function () {
             let idName = $(this).attr("class").substring(10);
             $(this).parent(".place").remove();
             let target = document.getElementById(idName);
@@ -169,8 +169,8 @@
 
             let selectedNo = "";
             for (let i = 0; i < selectedPlace.length; i++) {
-                        selectedNo += "&places="+selectedPlace[i].value
-                    }
+                selectedNo += "&places=" + selectedPlace[i].value
+            }
             target.innerHTML = "";
 
             schedule_setup(selectedNo, idName);
@@ -179,15 +179,15 @@
         });
 
 
-        $("#saveBtn").click(function(){  //장소를 다 고르고 저장 버튼을 누르면 선택된 여행지가 해당 날짜로 들어감
+        $("#saveBtn").click(function () {  //장소를 다 고르고 저장 버튼을 누르면 선택된 여행지가 해당 날짜로 들어감
             // 저장을 누르면
             // 1. selectedPlace에 옮겨진 장소를 plannerbody의 일정부분에 옮기기
             let selectedNo = "";
             let selectedPlace = $("#selectedPlace input");
             for (let i = 0; i < selectedPlace.length; i++) {
-                selectedNo += "&places="+selectedPlace[i].value
+                selectedNo += "&places=" + selectedPlace[i].value
             }
-            let day = "day"+$("#day").val();
+            let day = "day" + $("#day").val();
             deleteMarkers();
             deletePolylines();
             schedule_setup(selectedNo, day);
@@ -202,53 +202,50 @@
 
         function schedule_setup(selectedNo, day) {
             $.ajax({
-                url:'selectedPlace',
-                data:selectedNo,
-                traditional:true,
+                url: 'selectedPlace',
+                data: selectedNo,
+                traditional: true,
                 type: 'POST',
                 success(result) {
 
                     let target = document.getElementById(day);
                     let a = target.childElementCount;
 
-                    $(result).each(function(i, dto){
-                        let places = {lat:dto.latitude, lon: dto.longitude}
+                    $(result).each(function (i, dto) {
+                        let places = {lat: dto.latitude, lon: dto.longitude}
                         displayMarker(places)
 
                         let tag = "";
                         tag += "<div class='place day1'>";
-                        tag += "<input type='hidden' class='order' value='"+(i + 1 + a)+"'/>";
+                        tag += "<input type='hidden' class='order' value='" + (i + 1 + a) + "'/>";
                         tag += "<div class='place_dis'>";
-                        if((i+1+a)==1){
+                        if ((i + 1 + a) == 1) {
                             lat1 = dto.latitude;
                             lon1 = dto.longitude;
-                        }else{
-                            lat2 =dto.latitude;
+                        } else {
+                            lat2 = dto.latitude;
                             lon2 = dto.longitude;
 
-                            tag+=parseInt(distance(lat1, lon1, lat2, lon2))+ "KM";
+                            tag += parseInt(distance(lat1, lon1, lat2, lon2)) + "KM";
                             let linePath = [
                                 new kakao.maps.LatLng(lat1, lon1),
                                 new kakao.maps.LatLng(lat2, lon2)
                             ]
 
-                            console.log(random_color[parseInt(day.substring(3))-1]);
-                            drawPath(linePath, random_color[parseInt(day.substring(3))-1]);
+                            console.log(random_color[parseInt(day.substring(3)) - 1]);
+                            drawPath(linePath, random_color[parseInt(day.substring(3)) - 1]);
 
-                            lat1 =lat2;
+                            lat1 = lat2;
                             lon1 = lon2;
                         }
                         tag += "</div>";
                         tag += "<div class='place_name'>" + dto.place_name + "</div>";
-                        tag += "<div class='place_del "+day+"'>삭제</div>";
+                        tag += "<div class='place_del " + day + "'>삭제</div>";
                         tag += "<input type='hidden' class='place_no' value='" + dto.place_no + "'/>";
                         tag += "<input class='lat' type='hidden' value='" + dto.latitude + "'/>";
                         tag += "<input class='lon'  type='hidden' value='" + dto.longitude + "'/></div>";
 
                         target.innerHTML += tag;
-
-
-
 
 
                         //---------------------------------------
@@ -259,7 +256,7 @@
                     });
 
 
-                },error(e) {
+                }, error(e) {
 
                 }
             })
@@ -271,7 +268,104 @@
 
     });
 
+    function removeAllChildNode(el) {
+        while (el.hasChildNodes()) {
+            el.removeChild(el.lastChild);
+        }
+    }
 
+    function searchPlaces() {
+
+        var keyword = document.getElementById('searchWord').value;
+
+        if (!keyword.replace(/^\s+|\s+$/g, '')) {
+            alert('키워드를 입력해주세요!');
+            return false;
+        }
+
+        // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+        ps.keywordSearch(keyword, placesSearchCB);
+    }
+
+    // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+    function placesSearchCB(data, status, pagination) {
+        if (status === kakao.maps.services.Status.OK) {
+
+            // 정상적으로 검색이 완료됐으면
+            // 검색 목록과 마커를 표출합니다
+            displayPlaces(data);
+
+            // 페이지 번호를 표출합니다
+            displayPagination(pagination);
+
+        } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+
+            alert('검색 결과가 존재하지 않습니다.');
+
+
+        } else if (status === kakao.maps.services.Status.ERROR) {
+
+            alert('검색 결과 중 오류가 발생했습니다.');
+
+
+        }
+    }
+
+    function displayPlaces(places) {
+        let placeList = document.getElementById("placeBox"),
+            fragement = document.createDocumentFragment(),
+            listStr = '';
+        //초기화
+        removeAllChildNode(placeList);
+        //여행지 목록 출력
+        for (let i = 0; i < places.length; i++) {
+            let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+                market = addMarket(placePosition, i),
+                itemEl = getPlaceItem(i, places[i]);
+
+            (function (marker, title) {
+                itemEl.onmouseover = function () {
+                    displayInfowindow(marker, title);
+                    marker.setMap(map);
+                };
+
+                itemEl.onmouseout = function () {
+                    infowindow.close();
+                    marker.setMap(null);
+                };
+            })(marker, places[i].place_name);
+
+            fragment.appendChild(itemEl);
+        }
+
+        // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
+        listEl.appendChild(fragment);
+        listEl.scrollTop = 0;
+
+    }
+
+    function addMarker(position, idx, title) {
+        var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+            imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+            imgOptions = {
+                spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+                spriteOrigin: new kakao.maps.Point(0, (idx * 46) + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+                offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+            },
+            markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions);
+        return new kakao.maps.Marker({
+            position: position, // 마커의 위치
+            image: markerImage
+        });
+    }
+
+
+    function displayInfowindow(marker, title) {
+        let content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+        infowindow.setContent(content);
+        infowindow.open(map, marker);
+    }
 
 
 
@@ -303,7 +397,7 @@
             </li>
             <li><input type="hidden" id="days" name="days" value=""/></li>
             <li id="schedule">
-                <div class="aaaa">1</div>
+
             </li>
         </ul>
         <br/>
@@ -322,14 +416,17 @@
                                                                     width="20"></button>
             <%--검색--%>
             <div id="searchForm" style="background-color: bisque; height:50px;">
-                <input type="text" name="searchWord" id="searchWord"/>
+                <form onsubmit="searchPlaces(); return false;">
+                    <input type="text" name="searchWord" id="searchWord"/>
+                </form>
             </div>
             <%--선택한거 보여주는 박스--%>
             <div id="selectedPlace">
 
             </div>
             <div id="placeSave">
-                <div id="saveBtn" class="btn button">저장</div> <%--이거 누르면 왜 --%>
+                <div id="saveBtn" class="btn button">저장</div>
+                <%--이거 누르면 왜 --%>
                 <div id="cancelBtn" class="btn button">취소</div>
             </div>
             <%--장소 목록 예시--%>
@@ -383,13 +480,14 @@
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
-        markers=[];
+        markers = [];
     }
-    function showAllMarkers(){
+
+    function showAllMarkers() {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(map);
         }
-        markers=[];
+        markers = [];
 
     }
 
@@ -397,13 +495,14 @@
         for (var i = 0; i < polylines.length; i++) {
             polylines[i].setMap(null);
         }
-        polylines=[];
+        polylines = [];
     }
-    function showAllPolylines(){
+
+    function showAllPolylines() {
         for (var i = 0; i < polylines.length; i++) {
             ploylines[i].setMap(map);
         }
-        markers=[];
+        markers = [];
 
     }
 
@@ -412,19 +511,17 @@
         const R = 6371; // 지구 반지름 (단위: km)
         const dLat = deg2rad(lat2 - lat1);
         const dLon = deg2rad(lon2 - lon1);
-        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-            Math.sin(dLon/2) * Math.sin(dLon/2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return R * c;// 두 지점 간의 거리 (단위: km)
     }
 
     function deg2rad(deg) {
-        return deg * (Math.PI/180);
+        return deg * (Math.PI / 180);
     }
-
-
 
 
     // 지도에 표시할 선을 생성합니다
@@ -442,8 +539,6 @@
         polyline.setMap(map);
         polylines.push(polyline);
     }
-
-
 
 
 </script>

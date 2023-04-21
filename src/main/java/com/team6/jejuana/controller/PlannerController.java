@@ -37,6 +37,11 @@ public class PlannerController {
 
         return "planner/test";
     }
+    @GetMapping("plannerKakaoMap")
+    public String plannerKakaoMap() {
+
+        return "planner/plannerKakaoMap";
+    }
 
     @PostMapping("/planSave")
     public ModelAndView planSave(PlanDTO dto, HttpSession session) {

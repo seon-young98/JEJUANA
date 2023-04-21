@@ -70,7 +70,14 @@ ul li {
 }
 
 .day {
-    width: 40px;
+    width: 50px;
+    height : 30px;
+    line-height: 30px;
+    border-radius: 5px;
+    border-bottom: 3px solid;
+    background-color: azure;
+    color:#061733;
+    text-align: center;
 }
 
 #buttons {
@@ -84,7 +91,7 @@ ul li {
     top: 5%;
     position: absolute;
     display: none;
-    z-index: 100;
+    z-index: 3;
     background-color: #f9f9f9;
 
 }
@@ -240,4 +247,13 @@ ul li {
 }
 .order{
     display: none;
+}
+.modal-content div[class=modal-body]{
+    margin: 0 auto;
+    align-content: center;
+
+}
+.modal-dialog{
+    height:100%;
+    vertical-align: middle;
 }
