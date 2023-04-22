@@ -1,0 +1,184 @@
+/*link*/
+a:link, a:visited{
+	text-decoration:none;
+	color:black;
+}
+a:hover{
+	text-decoration:none;
+	color:gray;
+}
+
+/*reviewList*/
+.review_header{
+	margin:10px 5px;
+}
+.page_feature{
+	border:1px solid #999999;
+	padding: 10px 2%;
+	padding-right: 15%;
+	margin-top: 40px;
+	margin-left: 5%;
+	float:left;
+}
+	
+.topic{
+	font-size:30px;
+}
+	
+.search{ /*검색*/
+	border: 1px solid #999999;
+	text-align:center;
+	border-radius:30px;
+	margin-top: 70px;
+	float:right;
+	margin-right:5%; 
+	padding:15px 4%;
+}
+
+/*슬라이더*/
+
+swiper-container {
+	width: 60%;
+}
+
+swiper-slide {
+    background: #fff;
+    display: flex;
+    flex-direction: column; /* 수정 */
+    border: 1px solid transparent;
+}
+.img-crop{
+	width:100%;
+	height:250px;
+	overflow: hidden;
+}
+.inner {
+  position: relative; /* 자식 요소에 대한 상대적인 위치를 설정 */
+  width: 100%; /* 부모 요소에 대해 100%로 설정 */
+  height: 100%;
+}
+swiper-slide img {
+	display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+}
+    
+swiper-slide > *{
+	display: inline-block;
+	margin-bottom: 12px;
+}
+    
+/*베스트 게시글*/
+dl { margin:0 }
+dt { margin:0; display:inline; }
+.dt_cnt{color:red}
+
+
+/*게시글 목록 부분*/
+.review_list{
+	margin: 0 6%;
+}
+
+.best_list{
+	background-color:#F2F2F2;
+	padding: 2% 0;
+}
+	
+.review {
+	background-color: #F2F2F2;
+	border: 1px solid transparent;
+	border-radius:5px;
+	margin: 10px;
+	width: 300px;
+	height: 400px;
+	display: inline-block;
+}
+
+.li_sub{font-size:28px;}
+.li_id{color:gray}
+
+.review ul{
+	line-height:27px
+}
+
+.thumbnail {
+  position: absolute; /* .inner에 대해 상대적인 위치로 설정 */
+  width: 100%; 
+  height: 100%;
+  object-fit: cover; /* 이미지를 화면에 꽉 채우면서 비율 유지 */
+  top: 50%; /* 이미지를 수직으로 중앙에 위치 */
+  left: 50%; /* 이미지를 수평으로 중앙에 위치 */
+  transform: translate(-50%, -50%); /* 이미지를 수평, 수직으로 중앙에 위치 */
+}
+
+/*reviewWrite*/
+#reviewForm li{
+	padding:10px 0px;
+}
+#review_subject{
+	width:100%;
+}	
+/*CKEDITOR*/
+.ck-editor__editable[role="textbox"] {
+    /* editing area */
+    min-height: 200px;
+}
+.ck-content .image {
+    /* block images */
+    max-width: 80%;
+    margin: 20px auto;
+}
+
+.container{
+	width:1000px;
+	margin:0 auto;
+}
+
+table{
+	border: none;
+	border-collapse:collapse;
+	width:100%;
+	table-layout: fixed;
+}
+th, td{
+	border: 1px solid transparent;
+	padding: 15px;
+}
+
+#starli{
+	margin-bottom:2%;
+}
+
+/*reviewView*/
+.view_cont{
+	margin: 1% 0;
+	padding: 3% 1%; 
+	border:1px solid transparent;
+}
+.view_cont img{
+	width:60%;	
+}
+
+.view_sub{
+	font-size:45pt;
+	margin: 3% 0;
+}
+#course{
+	margin: 3% 0;
+}
+.joa{
+	float:left;
+}
+.bookmark{
+	float:right;
+}
+#comment_content{
+		width:50%;
+		height:80px;
+		resize:none;
+}
+#commentList>li{
+	padding:10px 0;
+	border-bottom:1px solid #ddd;
+}
