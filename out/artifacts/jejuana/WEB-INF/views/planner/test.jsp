@@ -19,13 +19,6 @@
     ];
     let random_color =[];
     $(function () {
-
-        $("#modalopen").trigger("click");
-        $("#newPlannerChoose").click(function(){
-            location.href="planner";
-        });
-
-
         // 저장 눌렀을 때 플랜 이름 있는지 확인
         $("#planner_Saver").submit(function () {
             if ($("#plan_name").val() === "") {
@@ -34,7 +27,10 @@
             }
 
         });
-
+        $("#modalopen").trigger("click");
+        $("#newPlannerChoose").click(function(){
+            location.href="planner";
+        })
 
         let start = {}; // 시작날짜를 연/월/일로 나눠서 담을 배열
         let startdate;  // 시작날짜를 담을 Date 객체
@@ -93,7 +89,7 @@
                 let tag = "<div class='schedule_detail'>";
                 tag += "<input type='hidden' class='day' value='" + i + "'/>";
                 tag += "<div class='schedule_header'><div class='day' style='border-bottom-color:" + random_color[i - 1] + "' >Day" + i + "</div></div>";
-                tag += "<div class='schedule_body' id='day"+i+"'></div>";
+                tag += "<div class='schedule_body ui-sortable' id='day"+i+"'></div>";
                 ;                tag += "<div class='schedule_footer'>";
                 tag += "<div class='placeAdd' id='"+i+"'>";
                 tag += "<img src='<%=request.getContextPath()%>/img/placeselect.png' width='50'/></div>";
@@ -283,6 +279,34 @@
 
 
 </script>
+<span style="display: none">
+<input type="button" id="modalopen" data-bs-toggle="modal" data-bs-target="#chooseModal" value="모달열기"/>
+</span>
+<div class="modal fade modal-dialog-centered" id="chooseModal">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" >
+                <input type="button" id="oldPlannerChoose" value="기존 플랜 불러오기">
+            </div>
+            <div class="modal-body" >
+                <input type="button" id="newPlannerChoose" value="플랜 새로만들기" data-bs-dismiss="modal">
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <div id="planner_body">
     <form id="planner_Saver" method="post" action="planSave">
@@ -292,9 +316,9 @@
                 <input type="text" class="ib" id="plan_name" name="plan_name" placeholder="플랜 이름"/></li>
             <li>
                 <div class="label">일정 :</div>
-                <input type="date" id="start_date" name="start_date" value="2023-04-05"/>
-                - <input type="date" id="end_date" name="end_date" value="2023-04-07"/></li>
-            <li id="transport">
+                <input type="date" id="start_date" name="start_date" value=""/>
+                - <input type="date" id="end_date" name="end_date" value=""/></li>
+            <%--<li id="transport">
                 <div class="label">교통수단 :</div>
                 <div class="content ib" id="transport_radio">
                     <input type="radio" name="transport" value="public"/>대중교통<br>
@@ -307,10 +331,9 @@
             <li>
                 <div class="label">일행 추가 :</div>
                 <div class="content ib"></div>
-            </li>
+            </li>--%>
             <li><input type="hidden" id="days" name="days" value=""/></li>
             <li id="schedule">
-                <div class="aaaa">1</div>
             </li>
         </ul>
         <br/>
@@ -350,36 +373,6 @@
     </div>
 </div>
 <div id="map"></div>
-
-<%--플래너 열때 새로만들지 기존거 불러올지 정하는 폼--%>
-<span style="display: none">
-<input type="button" id="modalopen" data-bs-toggle="modal" data-bs-target="#chooseModal" value="모달열기"/>
-</span>
-<div class="modal fade modal-dialog-centered" id="chooseModal" style="z-index: 2000">
-    <div class="modal-dialog ">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body" >
-                <input type="button" id="oldPlannerChoose" value="기존 플랜 불러오기">
-            </div>
-            <div class="modal-body" >
-                <input type="button" id="newPlannerChoose" value="플랜 새로만들기" data-bs-dismiss="modal">
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 
 <script>

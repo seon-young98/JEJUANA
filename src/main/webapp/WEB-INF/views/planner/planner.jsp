@@ -86,7 +86,7 @@
                 let tag = "<div class='schedule_detail'>";
                 tag += "<input type='hidden' class='day' value='" + i + "'/>";
                 tag += "<div class='schedule_header'><div class='day' style='border-bottom-color:" + random_color[i - 1] + "' >Day" + i + "</div></div>";
-                tag += "<div class='schedule_body' id='day"+i+"'></div>";
+                tag += "<div class='schedule_body ui-sortable' id='day"+i+"'></div>";
 ;                tag += "<div class='schedule_footer'>";
                 tag += "<div class='placeAdd' id='"+i+"'>";
                 tag += "<img src='<%=request.getContextPath()%>/img/placeselect.png' width='50'/></div>";
@@ -287,7 +287,7 @@
                 <div class="label">일정 :</div>
                 <input type="date" id="start_date" name="start_date" value="2023-04-05"/>
                 - <input type="date" id="end_date" name="end_date" value="2023-04-07"/></li>
-            <li id="transport">
+ <%--           <li id="transport">
                 <div class="label">교통수단 :</div>
                 <div class="content ib" id="transport_radio">
                     <input type="radio" name="transport" value="public"/>대중교통<br>
@@ -300,10 +300,9 @@
             <li>
                 <div class="label">일행 추가 :</div>
                 <div class="content ib"></div>
-            </li>
+            </li>--%>
             <li><input type="hidden" id="days" name="days" value=""/></li>
             <li id="schedule">
-                <div class="aaaa">1</div>
             </li>
         </ul>
         <br/>

@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="jejuana:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>jejuana</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="jejuana-1.0.0-BUILD-SNAPSHOT.war">
+      <element id="artifact" artifact-name="jejuana:war exploded" />
+    </root>
+  </artifact>
+</component>

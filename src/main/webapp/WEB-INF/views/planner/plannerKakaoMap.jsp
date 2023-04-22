@@ -110,8 +110,26 @@
         $(document).on("click", ".placeAdd", function () { // 장소 추가 버튼을 누르면
             let placeModal = document.getElementById("myModal");
             placeModal.style.display = "block";
-            // searchPlaces();
+            // searchPlaces("제주특별자치도 관광");
+            searchPlaces_sv("제주특별자치도 관광");
         });
+
+        function searchPlaces_sv(keyword){
+            let url = "searchPlace"
+            $.ajax({
+                url:url,
+                data:keyword,
+                type: "POST",
+                success:function(result) {
+                    console.log(JSON.parse(result));
+                },error : function(e){
+                    console.log(e.responseText);
+                }
+
+
+            })
+
+        }
 
 
 
@@ -123,36 +141,6 @@
 
         });
 
-        function getPlaceItem(index, place) {
-            let el = document.createElement("div"),
-                tag = "";
-            tag += "<div class='place_item'>";
-            tag += "    <input type='hidden' value='" + place.id + "'/> ";
-            tag += "    <img src='<%=request.getContextPath()%>/img/" + dto.thumbnail + "' width='70' height='70'/></div>";
-            tag += "<div class='place_item'>";
-            tag += "    <span style='font-size: 1.2em'>" + place.place_name + "</span></div>";
-            tag += "<div class='place_item'>[" + place.category_name + "]";
-            if (place.road_address_name) {
-                tag += place.road_address_name + "</div>";
-            } else {
-                tag += place.address_name + "</div>";
-            }
-            tag += "<div class='place_item'>";
-            tag += "<button type='button' class='btn btn-primary'>선택</button></div>";
-
-            el.innerHTML = tag;
-            el.className = 'place_container';
-
-            return el;
-        }
-
-
-        $(document).on("keypress", "#searchWord", function () { // 검색어를 입력하고 enter를 치면 검색되도록하는 이벤트
-            if (event.keyCode == 13) {
-                let searchWord = $("#searchWord").serialize();
-                showPlace(searchWord);
-            }
-        });
         let lat1 = null, lat2 = null, lon1 = null, lon2 = null;
 
         // 스케줄러에 넣어준 장소를 제거했을 경우
@@ -275,9 +263,10 @@
     }
 
     function searchPlaces() {
-
-        var keyword = document.getElementById('searchWord').value;
-
+        let keyword = document.getElementById('searchWord').value;
+        if(keyword===""||keyword==null){
+            keyword = "제주특별자치도";
+        }
         if (!keyword.replace(/^\s+|\s+$/g, '')) {
             alert('키워드를 입력해주세요!');
             return false;
@@ -296,7 +285,7 @@
             displayPlaces(data);
 
             // 페이지 번호를 표출합니다
-            displayPagination(pagination);
+            // displayPagination(pagination);
 
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -313,14 +302,13 @@
 
     function displayPlaces(places) {
         let placeList = document.getElementById("placeBox"),
-            fragement = document.createDocumentFragment(),
-            listStr = '';
-        //초기화
+            fragment = document.createDocumentFragment();
+                    //초기화
         removeAllChildNode(placeList);
         //여행지 목록 출력
         for (let i = 0; i < places.length; i++) {
             let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-                market = addMarket(placePosition, i),
+                marker = addMarker(placePosition, i),
                 itemEl = getPlaceItem(i, places[i]);
 
             (function (marker, title) {
@@ -339,8 +327,8 @@
         }
 
         // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-        listEl.appendChild(fragment);
-        listEl.scrollTop = 0;
+        placeList.appendChild(fragment);
+        placeList.scrollTop = 0;
 
     }
 
@@ -365,6 +353,33 @@
 
         infowindow.setContent(content);
         infowindow.open(map, marker);
+    }
+
+    function getPlaceItem(index, place) {
+        let el = document.createElement("div"),
+            tag = "";
+        tag += "<div class='place_item'>";
+        tag += "    <input type='hidden' class='id' value='" + place.id + "'/> ";
+        tag += "    <input type='hidden' class='latitude'  value='" + place.y + "'/> ";
+        tag += "    <input type='hidden' class='longitude'  value='" + place.x + "'/> ";
+        tag += "    <input type='hidden' class=''  value='" + place.id + "'/> ";
+        tag += "    <input type='hidden' class=''  value='" + place.id + "'/> ";
+        tag += "    <input type='hidden' class=''  value='" + place.id + "'/> ";
+        tag += "    <img src='<%=request.getContextPath()%>/img/123123.png' width='70' height='70'/></div>";
+        tag += "<div class='place_item'>"+place.place_name + "</div>";
+        tag += "<div class='place_item' style='font-size: 0.8em'>[" + place.category_group_name +"]";
+        if (place.road_address_name) {
+            tag += place.road_address_name + "</div>";
+        } else {
+            tag += place.address_name + "</div>";
+        }
+        tag += "<div class='place_item'>";
+        tag += "<button type='button' class='btn btn-primary'>선택</button></div>";
+
+        el.innerHTML = tag;
+        el.className = 'place_container';
+
+        return el;
     }
 
 
