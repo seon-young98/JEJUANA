@@ -33,12 +33,16 @@ public class ReviewDTO {
 	private int days_order; //번째 날짜
 	private int course_order; //순서
 	
+	
 	@Override
 	public String toString() {
-		return "ReviewDTO [plan_no=" + plan_no + ", review_subject=" + review_subject + ", review_hit=" + review_hit + ", id=" + id + ", nickname=" + nickname
-				+ ", writedate=" + writedate + ", activated=" + activated + ", ip=" + ip + ", joayo_hit=" + joayo_hit + ", tag_content=" + tag_content + ", tagArr=" + Arrays.toString(tagArr)
+		return "ReviewDTO [plan_no=" + plan_no + ", review_subject=" + review_subject + ", review_content="
+				+ review_content + ", review_hit=" + review_hit + ", id=" + id + ", nickname=" + nickname
+				+ ", writedate=" + writedate + ", activated=" + activated + ", ip=" + ip + ", thumbnail=" + thumbnail
+				+ ", joayo_hit=" + joayo_hit + ", tag_content=" + tag_content + ", tagArr=" + Arrays.toString(tagArr)
 				+ ", tag=" + tag + ", place_no=" + place_no + ", place_name=" + place_name + ", rate=" + rate
-				+ ", rate_count=" + rate_count + ", days=" + days + ", days_order=" + days_order + ", course_order=" + course_order + "]";
+				+ ", rate_count=" + rate_count + ", days=" + days + ", days_order=" + days_order + ", course_order="
+				+ course_order + "]";
 	}
 	public int getPlan_no() {
 		return plan_no;

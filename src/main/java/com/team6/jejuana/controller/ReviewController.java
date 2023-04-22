@@ -46,10 +46,10 @@ public class ReviewController {
 	@GetMapping("/reviewWrite")
 	public ModelAndView reviewWrite(int plan_no) {
 		ReviewDTO dto = service.reviewWriteSelect(plan_no);
-		List<ReviewDTO> place = service.planSelect(plan_no); 
+		List<ReviewDTO> place = service.reviewCourse(plan_no);
 		
 		//System.out.println(place.toString()); //placetest 데이터(번호,이름,별점,별점준사람수) 넘어감
-		
+		System.out.println(place.toString());
 		List<ReviewDTO> tags = service.tagSelect();
 		ModelAndView mav = new ModelAndView();
 		
@@ -77,18 +77,27 @@ public class ReviewController {
 		
 	//별점 DB 등록
 	@PostMapping("/reviewStarOk")
-	public ResponseEntity<String> reviewStarOk(int rate, int place_no, HttpServletRequest request) {
+	public ResponseEntity<String> reviewStarOk(int place_no, ReviewDTO dto, HttpServletRequest request) {
+		dto.setId((String)request.getSession().getAttribute("logId"));
+		dto.toString();
 		String htmlTag = "<script>";
 		
-		try {
-			service.starUpdate(place_no, rate);
-			htmlTag += "alert('별점이 정상적으로 등록되었습니다.');";
+		int result = service.starSelect(dto);
+		if(result<1) {
+			try {
+				service.starInsert(dto);
+				service.starUpdate(place_no, dto.getRate());
+				htmlTag += "alert('별점이 정상적으로 등록되었습니다.');";
+				htmlTag += "window.close();";
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				htmlTag += "alert('별점 등록에 실패하였습니다. ');";
+				htmlTag += "history.back();";
+			}
+		}else {
+			htmlTag += "alert('이미 별점이 등록된 여행지입니다.');";
 			htmlTag += "window.close();";
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-			htmlTag += "alert('별점 등록에 실패하였습니다. ');";
-			htmlTag += "history.back();";
 		}
 		htmlTag += "</script>";
 		

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.team6.jejuana.dao.ReviewDAO;
 import com.team6.jejuana.dto.ReviewDTO;
 import com.team6.jejuana.dto.ReviewSearchVO;
+
 @Service
 public class ReviewServiceImpl implements ReviewService {
 	@Inject
@@ -29,6 +30,14 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public ReviewDTO onePlaceSelect(int place_no) {
 		return dao.onePlaceSelect(place_no);
+	}
+	@Override
+	public int starSelect(ReviewDTO dto) {
+		return dao.starSelect(dto);
+	}
+	@Override
+	public int starInsert(ReviewDTO dto) {
+		return dao.starInsert(dto);
 	}
 	@Override
 	public int starUpdate(int place_no, int rate) {

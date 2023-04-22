@@ -11,13 +11,16 @@ public interface ReviewService {
 	public List<ReviewDTO> reviewAllSelect(ReviewSearchVO vo); //글 목록
 	
 	//글작성 창
-	//작성할 플랜 선택
-	public ReviewDTO reviewWriteSelect(int plan_no);
-	public List<ReviewDTO> planSelect(int plan_no); //1플랜 당 여행지 총 개수
-	public ReviewDTO onePlaceSelect(int place_no); //여행지 1개 선택
-	public int starUpdate(int place_no, int rate); //별점등록
+	public ReviewDTO reviewWriteSelect(int plan_no); //작성할 플랜 선택
+	public List<ReviewDTO> planSelect(int plan_no); //총 여행지 갯수/목록
 	public List<ReviewDTO> tagSelect(); //태그목록
 	public int reviewInsert(ReviewDTO dto); //글등록
+		
+	//별점
+	public ReviewDTO onePlaceSelect(int place_no); //여행지 1개 선택
+	public int starSelect(ReviewDTO dto); //중복방지 확인
+	public int starInsert(ReviewDTO dto); //별점 DB 등록
+	public int starUpdate(int place_no, int rate); //별점 부여
 	
 	//글선택(확인)
 	public ReviewDTO reviewSelect(int plan_no);

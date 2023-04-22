@@ -31,14 +31,23 @@
 	 </select>
 	 <!-- 여행지 1개씩 선택 -->
 	 <select id="onePlaceSelect" resultType="com.team6.jejuana.dto.ReviewDTO">
-	 select place_no, place_name, rate, rate_count from place 
+	 select place_no, place_name, rate, rate_count from place
 		where place_no in
 	    (select distinct place_no from course) and place_no=${place_no}
 	 </select>
-	 <!-- 장소별 별점 부여 -->
-	 <update id="starUpdate"  parameterType="com.team6.jejuana.dto.ReviewDTO">
+	 <!-- 별점 중복 확인 -->
+	 <select id="starSelect" resultType="int">
+		select count(rate_no) from rate where plan_no=${plan_no} and id=#{id}
+	</select>
+	<!-- 별점 정보 등록 -->
+	 <insert id="starInsert">
+		insert into rate(rate_no, plan_no, place_no, id, rate)
+		values(joa_sq.nextval, ${plan_no}, ${place_no}, #{id}, ${rate})
+	</insert>
+	 <!-- 별점 부여 -->
+	 <update id="starUpdate">
 	 update 
-		   (select place_no, place_name, rate, rate_count from place 
+		   (select place_no, place_name, rate, rate_count from place
 		        where place_no in
 		            (select distinct place_no from course))
 		set rate=((rate*rate_count)+${param2})/(rate_count+1), rate_count=rate_count+1
@@ -51,12 +60,12 @@
 	</insert>
 	<!-- 해당 플랜의 course 정보 불러오기 -->
 	<select id="reviewCourse" resultType="com.team6.jejuana.dto.ReviewDTO">
-		select a.days_order, b.place_name, c.days 
+		select a.days_order, b.place_name, b.place_no, c.days 
 		from course a join place b
 		on a.place_no = b.place_no
 		join plan c on a.plan_no = c.plan_no
 		where a.plan_no=${plan_no}
-		order by a.days_order asc
+		order by a.days_order, a.course_order asc
 	</select>
 	<!-- 게시글 확인 -->
 	<select id="reviewSelect" resultType="com.team6.jejuana.dto.ReviewDTO"> 

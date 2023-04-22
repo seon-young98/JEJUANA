@@ -153,6 +153,7 @@ $(function(){
 		starArr.push("${sDTO.place_name}");
 		noArr.push("${sDTO.place_no}")
 	</c:forEach>
+		console.log(noArr);
 	
 	pnum = 0;
 	const prowCnt = Math.ceil(${psize}/5);
@@ -254,6 +255,7 @@ $(function(){
 		<div>
 			<div style="font-weight:bold">[다녀온 여행지 목록]</div>
 			<div>- 여행지 이름을 클릭하면 별점을 남길 수 있습니다. (자유)</div>
+			<div>- 한 번 등록한 별점은 수정/삭제할 수 없습니다. </div>
 			<div id="starli"></div>
 		</div>
 		<a href="/jejuana/review/reviewList">목록</a>
