@@ -43,7 +43,7 @@
 			<div id="kategorie">
 				<ul>
 					<li><a href="#">계획만들기</a></li>
-					<li><a href="/jejuana/review/reviewWrite">여행지목록</a></li>
+					<li><a href="#">여행지목록</a></li>
 					<li><a href="/jejuana/review/reviewList">여행기록</a></li>
 					<li><a href="#">여행친구</a></li>
 					<div class="dropdown">
