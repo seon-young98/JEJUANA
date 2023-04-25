@@ -110,16 +110,18 @@
         $(document).on("click", ".placeAdd", function () { // 장소 추가 버튼을 누르면
             let placeModal = document.getElementById("myModal");
             placeModal.style.display = "block";
-            // searchPlaces("제주특별자치도 관광");
-            searchPlaces_sv("제주특별자치도 관광");
+            // searchPlaces("제주특별자치도");
+            searchPlaces_sv("제주특별자치도");
         });
 
         function searchPlaces_sv(keyword){
             let url = "searchPlace"
+            let data = {"content" : keyword}
             $.ajax({
                 url:url,
-                data:keyword,
+                data:data,
                 type: "POST",
+                dataType: "TEXT",
                 success:function(result) {
                     console.log(JSON.parse(result));
                 },error : function(e){
@@ -283,6 +285,7 @@
             // 정상적으로 검색이 완료됐으면
             // 검색 목록과 마커를 표출합니다
             displayPlaces(data);
+            console.log(data);
 
             // 페이지 번호를 표출합니다
             // displayPagination(pagination);
@@ -554,6 +557,19 @@
         polyline.setMap(map);
         polylines.push(polyline);
     }
+
+    var content = "";
+
+    // 커스텀 오버레이가 표시될 위치입니다
+    var position = new kakao.maps.LatLng(37.54699, 127.09598);
+
+    // 커스텀 오버레이를 생성합니다
+    var customOverlay = new kakao.maps.CustomOverlay({
+        position: position,
+        content: content,
+        yAnchor: 1
+    });
+    customOverlay.setMap(map);
 
 
 </script>

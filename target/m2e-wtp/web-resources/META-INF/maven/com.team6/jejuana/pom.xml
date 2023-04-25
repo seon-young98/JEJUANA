@@ -176,7 +176,8 @@
 		</dependency>
 
 
-	</dependencies>
+
+    </dependencies>
 	<build>
 		<plugins>
 			<plugin>

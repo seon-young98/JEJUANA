@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +46,7 @@ public class PlannerController {
 
         return "planner/test";
     }
+
     @GetMapping("plannerKakaoMap")
     public String plannerKakaoMap() {
 
@@ -81,7 +83,7 @@ public class PlannerController {
 
     @PostMapping("selectedPlace")
     @ResponseBody
-    public List<PlaceDTO> selectedPlace(String[] places){
+    public List<PlaceDTO> selectedPlace(String[] places) {
         List<PlaceDTO> list = new ArrayList<PlaceDTO>();
         int distance = 0;
         for (int i = 0; i < places.length; i++) {
@@ -93,16 +95,22 @@ public class PlannerController {
         return list;
     }
 
-    @PostMapping(value="/searchPlace", produces="application/text; charset=utf-8")
+    @PostMapping(value = "/searchPlace", produces = "application/text; charset=utf-8")
     @ResponseBody
-    public String searchPlace(String keyword){
+    public String searchPlace(@RequestParam("content") String keyword) throws Exception {
         System.out.println(keyword);
-        String url = "https://dapi.kakao.com/v2/local/search/keyword.json?query="+"제주특별자치도 관광";
+        String searchWord = URLEncoder.encode(keyword, "UTF-8");
+        System.out.println(searchWord);
+        int size = 45;
+        int page = 1;
+
+        String url = "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + keyword+ "&size=15";
+        System.out.println(url);
         String placeList = "";
-        try{
-            placeList = getJSONData(url);
+        try {
+            placeList = getDocument(getJSONData(url));
             System.out.println(placeList);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("주소 api 요청 에러");
             e.printStackTrace();
         }
@@ -110,19 +118,6 @@ public class PlannerController {
         return placeList;
     }
 
-
-    public static String coordToAddr(String longitude, String latitude){
-        String url = "https://dapi.kakao.com/v2/local/geo/coord2address.json?x="+longitude+"&y="+latitude;
-        String addr = "";
-        try{
-            addr = getRegionAddress(getJSONData(url));
-            //LOGGER.info(addr);
-        }catch(Exception e){
-            System.out.println("주소 api 요청 에러");
-            e.printStackTrace();
-        }
-        return addr;
-    }
 
     /**
      * REST API로 통신하여 받은 JSON형태의 데이터를 String으로 받아오는 메소드
@@ -165,6 +160,7 @@ public class PlannerController {
                 response.append(inputLine);
             }
         }
+        System.out.println(response.toString());
 
         return response.toString();
     }
@@ -172,32 +168,22 @@ public class PlannerController {
     /**
      * JSON형태의 String 데이터에서 주소값(address_name)만 받아오기
      */
-    private static String getRegionAddress(String jsonString) {
+    private static String getDocument(String jsonString) {
         String value = "";
         JSONObject jObj = new JSONObject(jsonString);
+        System.out.println(jObj.toString());
         JSONObject meta = jObj.getJSONObject("meta");
-        long size = (long) meta.getInt("total_count");
+        System.out.println(meta.toString());
+        long total_count = (long) meta.getInt("total_count");
 
-        if(size>0){
+        if (total_count > 0) {
             JSONArray jArray = (JSONArray) jObj.get("documents");
-            JSONObject subJobj = (JSONObject) jArray.get(0);
-            JSONObject roadAddress =  (JSONObject) subJobj.get("road_address");
-
-            if(roadAddress == null){
-                JSONObject subsubJobj = (JSONObject) subJobj.get("address");
-                value = (String) subsubJobj.get("address_name");
-            }else{
-                value = (String) roadAddress.get("address_name");
-            }
-
-            if(value.equals("") || value==null){
-                subJobj = (JSONObject) jArray.get(1);
-                subJobj = (JSONObject) subJobj.get("address");
-                value =(String) subJobj.get("address_name");
-            }
+            value = jArray.toString();
+            System.out.println(total_count);
+        }else{
+            System.out.println("no result");
         }
         return value;
     }
-
-
 }
+
