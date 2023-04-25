@@ -14,6 +14,6 @@
 	<!-- 북마크 -->
 	<insert id="reviewBmInsert">
 		insert into bookmark(book_no, book_name, book_type, id, target_no) 
-		values(bm_sq.nextval, #{book_name}, 2, #{id}, ${target_no})
+		values(book_sq.nextval, #{book_name}, 2, #{id}, ${target_no})
 	</insert>
 </mapper>

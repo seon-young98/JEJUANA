@@ -10,7 +10,7 @@
 	<!-- 좋아요 클릭 -->
 	<insert id="reviewJoaClick">
 		insert into joayo(joayo_no, plan_no, id)
-		values(joa_sq.nextval, ${plan_no}, #{id})
+		values(joayo_sq.nextval, ${plan_no}, #{id})
 	</insert>
 	<!-- 좋아요 수 +1 -->
 	<update id="reviewJoaUp">

@@ -42,7 +42,7 @@
 	<!-- 별점 정보 등록 -->
 	 <insert id="starInsert">
 		insert into rate(rate_no, plan_no, place_no, id, rate)
-		values(joa_sq.nextval, ${plan_no}, ${place_no}, #{id}, ${rate})
+		values(rate_sq.nextval, ${plan_no}, ${place_no}, #{id}, ${rate})
 	</insert>
 	 <!-- 별점 부여 -->
 	 <update id="starUpdate">
