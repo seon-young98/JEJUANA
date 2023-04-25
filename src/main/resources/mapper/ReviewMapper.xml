@@ -6,8 +6,8 @@
 	<!-- 인기 게시글 목록 -->
 	<select id="reviewBestSelect" resultType="com.team6.jejuana.dto.ReviewDTO">
 		select plan_no, review_subject, id, nickname, thumbnail, tag, joayo_hit from
-		(select r.plan_no, r.review_subject, u.id, u.nickname, r.thumbnail, r.tag, r.joayo_hit from review r join common u on r.id=u.id order by r.joayo_hit desc)
-		where rownum &lt;= 10 and activated=0
+		(select r.plan_no, r.review_subject, u.id, u.nickname, r.thumbnail, r.tag, r.joayo_hit from review r join common u on r.id=u.id and r.activated=0 order by r.joayo_hit desc)
+		where rownum &lt;= 10
 	</select>
 	<!-- 일반 게시글 목록 -->
 	<select id="reviewAllSelect" resultType="com.team6.jejuana.dto.ReviewDTO">
