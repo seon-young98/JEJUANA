@@ -9,61 +9,48 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/esm/popper.js"></script>
 
 <style>
-	html, body {width:100%;height:100%;padding:0;margin:0} 
-	
-	#screen{width:100%; height:86%}
-	
-	.section1{width:20%;height:107%;float:left;}
-	
-	.section1_1{background: #258fff;border-radius:5px; margin-top:-9px; height:6%;}
-	
-	.section1_1 button{float:left;width:20%;height:50px;float:left;float:left;text-decoration-line: none;margin-top:9px}
-	
-	.section1_2{width:100%;height:2%;background:green;text-align:center;}
+html, body {width:100%;height:100%;padding:0;margin:0} 
 
-	
-	.section1_3{width:100%;height:6%;font-size:12px;overflow: auto;}
-	
-	.section2{width:80%;height:86%;background:gray; float:right;}
-	
-	#weather {width:100%;height:100%; text-align:center;background-color: #1890ff; color:white;
-			display:inline-block;letter-spacing: 12px;box-shadow: 5px 5px 5px;}
-	
-	#weather li {list-style-type: none;margin-right:1px; }
-	
-	#weather span {float:right;}
-	#bkidx {position:absolute;z-index:4;margin-top:500px;}
-	#testid {position:absolute;z-index:4;margin-top:500px;}
-	
-	#resultData:nth-child(odd) { background-color: #e6f1ff;}
-	#resultData:nth-child(even)) { background-color: #f0f7ff;}
- </style>
-
- <!-- 지도전환 -->
-<style>
+#screen{width:100%; height:86%}
+.section1{width:20%;height:107%;float:left;}
+.section1_1{background: #258fff;border-radius:5px; margin-top:-9px; height:6%;margin-top:-9px;}
+.section1_1 button{float:left;width:20%;height:50px;float:left;float:left;text-decoration-line: none;margin-top:9px}
+.section1_2{width:100%;height:2%;background:green;text-align:center;}
+.section1_3{width:100%;height:6%;font-size:12px;overflow: auto;background: #258fff; display: inline-block;}
+.section2{width:80%;height:86%;background:gray; float:right;position:relative;overflow:hidden;}
+.section1_3_1{width:80%;height:90%; display: inline-block;}
+.section1_3_2{width:15%;float:right;height:100%;  display: inline-block;}
+.section1_3_2 button{height:90%;width:92%;align-items: center;border-radius:5px; border:none; margin-left:-20px; background: white}
+.section1_3_2 button img{object-fit: fill; height:55%;}
+.modal_style table{width:100%;height:470px;border:1px solid black;}
+.modal_style table tr{border:1px solid black;}
+#weather {width:100%;height:100%; text-align:center;background-color: #1890ff; color:white;display:inline-block;letter-spacing: 12px;box-shadow: 5px 5px 5px;font-size:40px;}
+#weather li {list-style-type: none;margin-right:1px;font-size:25px; font-weight: bold }
+#weather span {float:right;}
+#bkidx {position:absolute;z-index:4;margin-top:500px;}
+#testid {position:absolute;z-index:4;margin-top:500px;}
+#resultData:nth-child(odd) { background-color: #e6f1ff;}
+#resultData:nth-child(even)) { background-color: #f0f7ff;}
+.btn btn-link{color: #f9f9f9;border:5px solid gray;position:absolute;margin-top:-830px;z-index:4;text-decoration-line: none;}
 .radius_border{border:1px solid #919191;border-radius:5px;}   
 .custom_typecontrol {position:absolute;top:10px;right:10px;overflow:hidden;width:130px;height:30px;margin:0;padding:0;z-index:2;font-size:10px;font-family:'Malgun Gothic', '맑은 고딕', sans-serif;}
 .custom_typecontrol button {display: inline-block;width:60px;height:30px;float:left;text-align:center;line-height:30px;cursor:pointer;padding:5px; }
-.custom_typecontrol .btn {background:#fff;background:linear-gradient(#fff,  #e6e6e6);}       
+.custom_typecontrol .btn {background:#fff;background:linear-gradient(#fff,  #e6e6e6);width:50%; font-size:12px; margin-top:-5px; height:33px;}       
 .custom_typecontrol .btn:hover {background:#f5f5f5;background:linear-gradient(#f5f5f5,#e3e3e3);}
 .custom_typecontrol .btn:active {background:#e6e6e6;background:linear-gradient(#e6e6e6, #fff);}    
-.custom_typecontrol .selected_btn {color:#fff;background:#425470;background:linear-gradient(#425470, #5b6d8a);}
+.custom_typecontrol .selected_btn {color:#fff;background:#425470;background:linear-gradient(#425470, #5b6d8a);width:50%; font-size:12px; margin-top:-5px; height:33px;}
 .custom_typecontrol .selected_btn:hover {color:#fff;}   
 .custom_zoomcontrol {position:absolute;top:50px;right:10px;width:36px;height:80px;overflow:hidden;z-index:2;background-color:#f5f5f5;} 
 .custom_zoomcontrol span {display:block;width:36px;height:40px;text-align:center;cursor:pointer;}     
 .custom_zoomcontrol span img {width:10px;height:10px;}             
 .custom_zoomcontrol span:first-child{border-bottom:1px solid #bfbfbf;}     
-</style>
-
- <!-- 지도검색,마커표시 -->
- <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {position:absolute;width:20%;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap {position:absolute;top:19%;left:0;bottom:7%;width:20%;margin:88px 0px 0px 2px;padding:5px;overflow-y:auto;z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
- .section1, .section1 * {margin:0px;padding:0px;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:15px;}
+.section1, .section1 * {margin:0px;padding:0px;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:15px;}
 #placesList li {list-style: none;width:100%}
 #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 80px;}
 #placesList .item span {display: block;margin-top:4px;font-weight:bold;}
@@ -72,133 +59,78 @@
 #placesList .info .gray {color:#8a8a8a;}
 #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
 #placesList .info .tel {color:#009900;}
-
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
-</style>
-
- <!-- 커스텀 오버레이 -->
-<style>
 
 .wrap {position: absolute;left: 0;bottom: 40px;width: 276px;height: 300px;margin-left: -144px;text-align:right;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5; border: 1px solid #258fff;}
-    .wrap * {padding: 0;margin: 0;}
-    .wrap_button button{width:88px; height:50px;font-weight: bold; background:white;border:1px solid gray;border-radius: 2px;color:white; text-shadow : -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray}
-    .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;}
-    .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;white-space: normal;font-weight: bold;}
-    
-    .wrap .info {height: 28px;margin-bottom:5px;border-radius: 20px;margin-left:2px;overflow: hidden;background: #fff;padding:12px 12px;}
-    .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-    .info .title {margin-right:30px;height: 35px;background: white;font-size: 18px;font-weight: bold;margin-top:-8px;overflow:hidden;}
-    .item {display:inline-flex;}
+.wrap * {padding: 0;margin: 0;}
+.wrap_button button{width:88px; height:50px;font-weight: bold; background:white;border:1px solid gray;border-radius: 2px;color:white; text-shadow : -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray}
+.desc .ellipsis {overflow: hidden;text-overflow: ellipsis;}
+.desc .jibun {font-size: 11px;color: #888;margin-top: -2px;white-space: normal;font-weight: bold;}
 
-</style>
-<style>
-.modal_wrap{
-        display: none;
-        width: 15%;
-        height: 40%;
-        position: absolute;
-        top:50%;
-        left: 50%;
-        margin: -273px 0 0 -713px;
-        background:#eee;
-        z-index: 3;
-    }
-    .black_bg{
-        display: none;
-        position: absolute;
-        content: "";
-        width: 100px;
-        height: 100%;
+.wrap .info {height: 28px;margin-bottom:5px;border-radius: 20px;margin-left:2px;overflow: hidden;background: #fff;padding:12px 12px;}
+.wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+.info .title {margin-right:30px;height: 35px;background: white;font-size: 18px;font-weight: bold;margin-top:-8px;overflow:hidden;}
+.item {display:inline-flex;}
 
-        top:0;
-        left: 0;
-        z-index: 3;
-    }
-    .modal_close{
-        width: 26px;
-        height: 26px;
-        position: absolute;
-        top: -26px;
-        right: 0;
-    }
-    .modal_close> a{
-        display: block;
-        width: 100%;
-        height: 100%;
-        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
-        text-indent: -9999px;
-    }
+.modal_wrap{display: none;width: 15%;height: 40%;position: absolute;top:50%;left: 50%;margin: -273px 0 0 -713px;background:#eee;z-index: 3;}
+.black_bg{display: none;position: absolute;content: ""; width: 100px;height: 100%;top:0;left: 0;z-index: 3;}
+.modal_close{width: 26px; height: 26px;position: absolute;top: -26px;right: 0;}
+.modal_close> a{display: block;width: 100%;height: 100%;background:url(https://img.icons8.com/metro/26/000000/close-window.png);text-indent: -9999px;}
+#keyword{height:100%;font-size:15px;width:86%;margin-left:28px}
+.JejuIcon{float:left;width:10%}
+.section1_1_1{background: #258fff; height:9%}
+.JejuNowtemp{float:right;font-size:20px;}
 </style>
 
 		<!-- 맨위 -->
 		<div id="screen">
 			<div class="section1">
-				<div style="background: #258fff; height:9%">
-			        <div id="weather" style="font-size:40px; ">	
-			        	<span style="font-size:25px; font-weight: bold" class="nowtime"></span>
-						<span style="font-size:25px; font-weight: bold">제주도</span>
-				        <h3 class="JejuIcon" style="float:left;width:10%"></h3>
+				<div class="section1_1_1">
+			        <div id="weather" >	
+			        	<span class="nowtime"></span>
+						<span>제주도</span>
+				        <h3 class="JejuIcon"></h3>
 				        <ul>
-					        <li class="JejuNowtemp" style="float:right;font-size:20px;">현재기온 :  </li>
+					        <li class="JejuNowtemp">현재기온 :  </li>
 				        </ul>
 					</div>
 				</div>
 				
-				<div class="section1_3" style="background: #258fff; display: inline-block;" >
+				<div class="section1_3">
 					<form onsubmit="searchPlaces(); return false;" style="height:100%;" >
-						
-							<div class="section1_3_1" style="width:80%;height:90%; display: inline-block;">
-								<input type="text" class="form-control search-menu" id="keyword" placeholder="검색..."  style="height:100%;font-size:15px;width:86%;margin-left:28px ">
+							<div class="section1_3_1">
+								<input type="text" class="form-control search-menu" id="keyword" placeholder="검색..." >
 							</div>
-							<div style="width:15%;float:right;height:100%;  display: inline-block;">
-								<button type="submit" name="name1" style="height:90%;width:92%;align-items: center;border-radius:5px; border:none; margin-left:-20px; background: white" ><img src="/jejuana/img/button_search.png" style="object-fit: fill; height:55%;  "alt="검색"></button>
+							<div class="section1_3_2">
+								<button type="submit" name="name1"><img src="/jejuana/img/button_search.png"alt="검색"></button>
 							</div> 
-						
-							 
-						
 					</form>
 				</div>
 				
 				<!-- 메뉴 -->
-				<div class="section1_1" style="margin-top:-9px;">
-
-					
-					
-					
-					
+				<div class="section1_1">
 				</div>
 			
 		<!-- 북마크 표현을 위한 모달창 출력 ------------------------------ -->		
 		<div class="black_bg" ></div>
 			<div class="modal_wrap">
 			    <div class="modal_close" ><a href="#">close</a></div>
-			    <div>
-			       <table style=" width:100%;height:470px;border:1px solid black;">
+			    <div class="modal_style">
+			       <table>
 				       <thead>
-							<tr style="border:1px solid black;">
+							<tr>
 								<th>장소명</th>
 								<th>등록일시</th>
 							
 							</tr>
 					   </thead>
 					   <tbody id="resultData">
-					   
-					  
 					   </tbody>							
 					</table>
 			    </div>
 			 </div>
-
-		<!-- 북마크 표현을 위한 모달창 출력 ------------------------------ -->	
-
-
-				<!-- 검색  -->
-
-				
-				<!-- 검색하면 표시될 -->		     
-		        
 		        <hr>
 		        <div class="map_wrap" id="menu_wrap">
 		        	<ul id="placesList" ></ul>
@@ -206,12 +138,11 @@
 	        	</div>
 	        </div>
 
-			<div class="section2" id="map" style="position:relative;overflow:hidden;height:100%">
-				
+			<div class="section2" id="map" style="">				
 				<!-- 지도타입 컨트롤 div 입니다 -->
 				<div class="custom_typecontrol radius_border">
-		        	<button type="submit" id="btnRoadmap" class="selected_btn" onclick="setMapType('roadmap')" style="width:50%; font-size:12px; margin-top:-5px; height:33px;">로드뷰</button>
-		       		<button type="submit" id="btnSkyview" class="btn" onclick="setMapType('skyview')" style="width:50%; font-size:12px; margin-top:-5px; height:33px; " >스카이맵</button>
+		        	<button type="submit" id="btnRoadmap" class="selected_btn" onclick="setMapType('roadmap')">로드뷰</button>
+		       		<button type="submit" id="btnSkyview" class="btn" onclick="setMapType('skyview')">스카이맵</button>
 		    	</div>
 			    <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
 			    <div class="custom_zoomcontrol radius_border"> 
@@ -221,13 +152,11 @@
 			</div>
 			
 			
-			<c:if test="${logStatus!='Y' }">
-						<button type="button"  class="btn btn-link" style="color: #f9f9f9;border:5px solid gray;position:absolute;margin-top:-830px;z-index:4;text-decoration-line: none;" onclick="test1()" >북마크</button>
-						<a href="loginForm"><button type="button"  class="btn btn-link" style="color:black;background:white; text-decoration:none; border:5px solid gray" >LoginTest</button></a>
+			<c:if test="${logStatus!='Y'}">
+						<button type="button"  class="btn btn-link" onclick="test1()" >북마크</button>
 					</c:if>
-					<c:if test="${logStatus=='Y' }">
-						<button type="button"  id="modal_btn" class="btn btn-link" style="color: #f9f9f9;border:5px solid gray;position:absolute;margin-top:-830px;z-index:4;text-decoration-line: none;" >북마크</button>
-						<a href="logout"><button type="button"  class="btn btn-link" style="color: #f9f9f9; border:5px solid gray" >${logName }님 로그아웃</button></a>
+					<c:if test="${logStatus=='Y'}">
+						<button type="button"  id="modal_btn" class="btn btn-link">북마크</button>
 			</c:if>
 			
 			
@@ -672,8 +601,8 @@ function sendLink(title) {
       description:'(으)로 놀러가자~',
       imageUrl: 'https://a.cdn-hotels.com/gdcs/production85/d946/73f139d8-4c1d-4ef6-97b0-9b2ccf29878a.jpg?impolicy=fcrop&w=1600&h=1066&q=medium',
       link: {
-        mobileWebUrl: 'http://localhost:8080/jejuana/test2#',
-        webUrl: 'http://localhost:8080/jejuana/test2#'
+        mobileWebUrl: 'http://localhost:8080/jejuana/map_list#',
+        webUrl: 'http://localhost:8080/jejuana/map_list#'
       }
     },
     social: {

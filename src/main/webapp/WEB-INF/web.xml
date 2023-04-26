@@ -35,6 +35,13 @@
 	</servlet-mapping>
 	
 	<!-- include -->
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>/WEB-INF/views/*</url-pattern>
+			<include-prelude>/resources/header.jspf</include-prelude>
+			
+		</jsp-property-group>
+	</jsp-config> 
 	
 	<!-- POST방식 접속에 대한 한글 인코딩(UTF-8) -->
 	<filter>

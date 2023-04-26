@@ -51,7 +51,7 @@ public class BookMarkController {
 			service.bookMarkInsert(dto);
 			transactionManager.commit(status);
 			htmlTag += "alert('북마크에 등록 완료하였습니다!');";
-			htmlTag += "location.href='test2'";
+			htmlTag += "location.href='map_list'";
 		//결과
 		}catch(Exception e) {
 			
@@ -84,16 +84,16 @@ public class BookMarkController {
 //		
 			
 			
-			//북마크 삭제
-			@GetMapping("/list/bookDelete")
-			public ModelAndView bookDelete(int no) {
+	//북마크 삭제
+	@GetMapping("/list/bookDelete")
+	public ModelAndView bookDelete(int no) {
 
-				ModelAndView mav = new ModelAndView();
-				service.dataDelete(no);
-				mav.setViewName("list/test2");
+		ModelAndView mav = new ModelAndView();
+		service.dataDelete(no);
+		mav.setViewName("list/map_list");
 
-				return mav; 
-			}		
+		return mav; 
+	}		
 			
 	
 		

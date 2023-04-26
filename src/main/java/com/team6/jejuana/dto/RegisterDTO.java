@@ -3,9 +3,9 @@ package com.team6.jejuana.dto;
 import java.util.Arrays;
 
 public class RegisterDTO {
-	private String userid;
-	private String userpwd;
-	private String username;
+	private String id;
+	private String password;
+	private String nickname;
 	private String tel;
 
 	private String email;
@@ -14,33 +14,29 @@ public class RegisterDTO {
 	private String addrdetail;
 	private String hobby;
 	private String writedate;
-	
-	
-	
-	
 	@Override
 	public String toString() {
-		return "RegisterDTO [userid=" + userid + ", userpwd=" + userpwd + ", username=" + username + ", tel=" + tel
+		return "RegisterDTO [id=" + id + ", password=" + password + ", nickname=" + nickname + ", tel=" + tel
 				+ ", email=" + email + ", zipcode=" + zipcode + ", addr=" + addr + ", addrdetail=" + addrdetail
 				+ ", hobby=" + hobby + ", writedate=" + writedate + "]";
 	}
-	public String getUserid() {
-		return userid;
+	public String getId() {
+		return id;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getUserpwd() {
-		return userpwd;
+	public String getPassword() {
+		return password;
 	}
-	public void setUserpwd(String userpwd) {
-		this.userpwd = userpwd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public String getUsername() {
-		return username;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public String getTel() {
 		return tel;
@@ -85,8 +81,10 @@ public class RegisterDTO {
 		this.writedate = writedate;
 	}
 	
-
-
+	
+	
+	
+	
 	
 	
 	
