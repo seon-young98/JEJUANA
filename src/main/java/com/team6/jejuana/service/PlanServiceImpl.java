@@ -28,12 +28,17 @@ public class PlanServiceImpl implements PlanService{
     }
 
     @Override
-    public List<PlaceDTO> placeSelectList(String searchWord) {
-        return dao.placeSelectList(searchWord);
+    public List<PlaceDTO> placeSelectList(String searchWord, int pageNo) {
+        return dao.placeSelectList(searchWord, pageNo);
     }
 
     @Override
     public PlaceDTO selectedPlace(int place_no) {
         return dao.selectedPlace(place_no);
+    }
+
+    @Override
+    public List<PlaceDTO> bookmarkList(String searchWord, String userid) {
+        return dao.bookmarkList(searchWord, userid);
     }
 }

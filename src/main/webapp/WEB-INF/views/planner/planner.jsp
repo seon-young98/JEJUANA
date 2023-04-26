@@ -21,20 +21,16 @@
         '#1f2c70', '#1f702a', '#42ff5c', '#42b7ff',
         '#424bff', '#ff42e6'
     ];
+    let moreList = document.createElement("div");
+    moreList.id = "moreList";
+    moreList.innerText = "더보기";
+
+    let savePlan = {};
     let random_color = [];
     $(function () {
         // 저장 눌렀을 때 플랜 이름 있는지 확인
-        $("#planner_Saver").submit(function () {
-            if ($("#plan_name").val() === "") {
-                alert("플랜 이름을 작성해주세요");
-                return false;
-            }
 
-
-
-
-
-        });
+        let pageNo = 1;
 
 
         let start = {}; // 시작날짜를 연/월/일로 나눠서 담을 배열
@@ -85,6 +81,85 @@
             return random_color;
         }
 
+
+        $(document).on("click", "#save", function () {
+            if ($("#plan_name").val() === "") {
+                alert("플랜 이름을 작성해주세요");
+                return false;
+            }
+
+            savePlan.plan_name = $("#plan_name").val();
+            savePlan.start_date = $("#start_date").val();
+            savePlan.end_date = $("#end_date").val();
+            savePlan.days =  days;
+
+            let schedule =[];
+
+            for (let i = 0; i < $("#schedule").children().length; i++) {
+                for (let j = 0; j < $(".schedule_detail").eq(i).find(".place").length; j++) {
+                    let place = {place_no:$(".schedule_detail").eq(i)
+                            .find(".place").eq(j).find(".place_no").val(),
+                        day:(i + 1),
+                        order:(j+1)
+                                        };
+
+
+                    // place.place_no = $(".schedule_detail").eq(i)
+                    // .find(".place").eq(j).find(".place_no").val();
+                    // place.day = (i + 1);
+                    // place.order = (j + 1);
+                    schedule.push(place);
+
+
+
+
+                    // schedule += "{'place_no':" + $(".schedule_detail").eq(i)
+                    //     .find(".place").eq(j).find(".place_no").val() + ", ";
+                    // schedule += "'day':"+(i+1)+", ";
+                    // schedule += "'order':"+(j+1)+"}";
+                    // if(j<$(".schedule_detail").eq(i).find(".place").length-1){
+                    //     schedule += ", ";
+                    // }
+                }
+                // if(i<$("#schedule").children().length-1 &&
+                //     $(".schedule_detail").eq(i+1).find(".place").length>0 &&
+                //     $(".schedule_detail").eq(i).find(".place").length>0) {
+                //     console.log($(".schedule_detail").eq(i).find(".place").length);
+                //     schedule += ", ";
+                // }
+            }
+            // schedule += "]";
+
+            savePlan.schedule = JSON.stringify(schedule);
+
+            console.log(savePlan);
+
+           // console.log(JSON.stringify(savePlan));
+
+            //console.log(savePlan.toString());
+            //let data = savePlan.toString();
+            
+            $.ajax({
+                url:'/jejuana/planSave',
+                data :savePlan,
+                type:"POST",
+                //dataType: "json",
+                //traditional:true,
+                //contentType : "application/json;charset=UTF-8",
+                success: function (result) {
+                    console.log(result);
+                },error:function (e){
+                    console.log(e.responseText);
+                }
+
+            })
+
+
+
+
+
+
+        });
         // 일정을 작성했는데 날짜를 변경할 경우 예) 6월 3일부터 6월 9일(6박7일)까지 일정에서
         // 5월 3일에서 5월 5일로(2박3일) 변경 시 day1, day2, day3은 작성된 채로 남겨두고
         // day4~day7까지만 삭제되게끔 변경해야함!!!!!!!!!!!!!!!!!!!!
@@ -110,11 +185,14 @@
         });
         $(document).on("click", ".placeAdd", function () { // 장소 추가 버튼을 누르면
             $("#day").val($(this).attr("id"));
+            pageNo=1;
+            $("#searchWord").attr("class", "placeList");
             $("#selectedPlace").html("");
+            $("#placeBox").html("");
             $("#searchWord").val("");// selectedPlace 박스 초기화
             $("#myModal").css("display", "block");// 그리고 모달을 보이게 한다.
-            let searchWord = $(this).serialize();
-            showPlace(searchWord);                                  //목록 띄워주기
+            let searchWord = $("#searchWord").val();
+            placeList(searchWord, pageNo);                                  //목록 띄워주기
         });
 
         // 모달 내 여행지 목록에서 여행지 선택 버튼을 눌렀을 때
@@ -125,41 +203,77 @@
 
         });
 
-        function showPlace(searchWord) {  //장소를 DB에서 불러와서 보여주는 함수
+        function placeList(searchWord, pageNo) {  //장소를 DB에서 불러와서 보여주는 함수
 
-            $("#placeBox").html("");
             let url = "placeSelectList";
+            let data = "&searchWord="+searchWord+"&pageNo="+pageNo;
             $.ajax({
                 url: url,
                 type: "POST",
-                data: searchWord,
+                data: data,
                 success(result) {
-                    $(result).each(function (idx, dto) {
-                        let tag = "<div class='place_container'>";
-                        tag += "<div class='place_item'>";
-                        tag += "    <input type='hidden' value='" + dto.place_no + "'/> ";
-                        tag += "    <img src='<%=request.getContextPath()%>/img/" + dto.thumbnail + "' width='70' height='70'/></div>";
-                        tag += "<div class='place_item'>";
-                        tag += "    <span style='font-size: 1.2em'>" + dto.place_name + "</span></div>";
-                        tag += "<div class='place_item'>" + dto.content + "</div>";
-                        tag += "<div class='place_item'>";
-                        tag += "    <button type='button' class='btn btn-primary'>선택</button></div>";
-
-                        $("#placeBox").append(tag);
-                    });
-
+                    showplaces(result);
+                    if(result.length>=15) {
+                        $("#placeBox").append(moreList);
+                    }
                 }, error(e) {
                     console.log(e.responseText);
                 }
 
             })
         }
+        function bookmarkList(searchWord, pageNo) {  //장소를 DB에서 불러와서 보여주는 함수
+
+            let url = "bookmarkList";
+            let data = "&searchWord="+searchWord+"&pageNo="+pageNo;
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: data,
+                success(result) {
+                    showplaces(result);
+                    if(result.length>=15) {
+                        console.log("check");
+                        $("#placeBox").append(moreList);
+                    }
+                }, error(e) {
+                    console.log(e.responseText);
+                }
+
+            })
+        }
+        function showplaces(data){
+            $("#moreList").remove();
+            $(data).each(function (idx, dto) {
+                let tag = "<div class='place_container'>";
+                tag += "<div class='place_item'>";
+                tag += "    <input type='hidden' value='" + dto.place_no + "'/> ";
+                tag += "    <img src='<%=request.getContextPath()%>/img/" + dto.thumbnail + "' width='70' height='70'/></div>";
+                tag += "<div class='place_item'>";
+                tag += "    <span style='font-size: 1.2em'>" + dto.place_name + "</span></div>";
+                tag += "<div class='place_item'>" + dto.content + "</div>";
+                tag += "<div class='place_item'>";
+                tag += "    <button type='button' class='btn btn-primary'>선택</button></div>";
+
+                $("#placeBox").append(tag);
+
+            });
+
+        }
 
 
         $(document).on("keypress", "#searchWord", function () { // 검색어를 입력하고 enter를 치면 검색되도록하는 이벤트
             if (event.keyCode == 13) {
-                let searchWord = $("#searchWord").serialize();
-                showPlace(searchWord);
+                $("#placeBox").html("");
+                let searchWord = $("#searchWord").val();
+                console.log(searchWord);
+                pageNo=1;
+                if($("#searchWord").attr("class") =="placeList"){
+                    placeList(searchWord, pageNo);
+                }
+                if($("#searchWord").attr("class") =="bookmarkList"){
+                    bookmarkList(searchWord, pageNo);
+                }
             }
         });
         let lat1 = null, lat2 = null, lon1 = null, lon2 = null;
@@ -201,6 +315,7 @@
             $("#myModal").css("display", "none");
         });
 
+
         function schedule_setup(selectedNo, day) {
 
             let target = document.getElementById(day); // 해당 .schedule_body  자리
@@ -213,11 +328,11 @@
                 success(result) {
                     $(result).each(function (i, dto) {
                         let tag = "<div class='place " + day + "'>";
-                        tag += "<input type='hidden' class='order' value='" + (i + 1 + a) + "'/>";
+                        tag += "<input type='hidden' class='order' name='order'  value='" + (i + 1 + a) + "'/>";
                         tag += "<div class='place_dis'></div>";
                         tag += "<div class='place_name'>" + dto.place_name + "</div>";
                         tag += "<div class='place_del " + day + "'>삭제</div>";
-                        tag += "<input type='hidden' class='place_no' value='" + dto.place_no + "'/>";
+                        tag += "<input type='hidden' class='place_no' name='place_no' value='" + dto.place_no + "'/>";
                         tag += "<input class='lat' type='hidden' value='" + dto.latitude + "'/>";
                         tag += "<input class='lon'  type='hidden' value='" + dto.longitude + "'/></div>";
 
@@ -252,42 +367,87 @@
             drawPath(latlon, random_color[parseInt($(this).siblings(".day").val()) - 1]);
 
         });
+        $("#place_tab").click(function(){
+            $("#selectedPlace").html("");
+            $("#placeBox").html("");
+            pageNo = 1;
+            $("#searchWord").attr("class", "placeList");
+            $("#searchWord").val("");// selectedPlace 박스 초기화
+            let searchWord = $(this).serialize();
+            placeList(searchWord, pageNo);
+        });
+        $("#bookmark_tab").click(function(){
+            $("#selectedPlace").html("");
+            $("#placeBox").html("");
+            pageNo = 1;
+            $("#searchWord").attr("class", "bookmarkList");
+            $("#searchWord").val("");// selectedPlace 박스 초기화
+            let searchWord = $(this).serialize();
+            bookmarkList(searchWord, pageNo);
+        })
+        $(document).on("click",".schedule_detail",function(){
+            $(".schedule_detail").css("border", "1px solid gray");
+           $(this).css("border","3px solid #C1584A");
+            let target = $(this).find(".schedule_body");
+
+            deleteMarkers();
+            deletePolylines();
+            $(target).trigger("change");
+
+        });
+        $(document).on("click", "#moreList", function(){
+            console.log("clicked");
+            pageNo++;
+            let searchWord =$("#searchWord").val();
+            if($("#searchWord").attr("class") =="placeList"){
+                placeList(searchWord, pageNo);
+            }
+            if($("#searchWord").attr("class") =="bookmarkList"){
+                bookmarkList(searchWord, pageNo);
+            }
+        });
     });
 
 
 </script>
 
 <div id="planner_body">
-    <form id="planner_Saver" method="post" action="planSave">
-        <ul>
-            <li>
-                <div class="label">플랜이름:</div>
-                <input type="text" class="ib" id="plan_name" name="plan_name" placeholder="플랜 이름"/></li>
-            <li>
-                <div class="label">일정 :</div>
-                <input type="date" id="start_date" name="start_date" value="2023-04-05"/>
-                - <input type="date" id="end_date" name="end_date" value="2023-04-07"/></li>
-            <li><input type="hidden" id="days" name="days" value=""/></li>
-            <li id="schedule">
-            </li>
-        </ul>
-        <br/>
+    <ul>
+        <li>
+            <div class="label">플랜이름:</div>
+            <input type="text" class="ib" id="plan_name" name="plan_name" placeholder="플랜 이름"/></li>
+        <li>
+            <div class="label">일정 :</div>
+            <input type="date" id="start_date" name="start_date" value=""/>
+            - <input type="date" id="end_date" name="end_date" value=""/></li>
+        <li><input type="hidden" id="days" name="days" value=""/></li>
+        <li id="schedule">
 
-        <div id="buttons">
-            <button type="submit">저장</button>
-            <button type="reset">취소</button>
-        </div>
 
-    </form>
+
+        </li>
+    </ul>
+    <br/>
+
+    <div id="buttons">
+        <button type="button" id="save">저장</button>
+        <button type="button" id="cancel">취소</button>
+    </div>
+
+
     <div class="myModal" id="myModal"> <!-- 모달로 쓸 블럭 -->
         <input type="hidden" id="day" value=""/>
+        <div id="modalheader">
+            <div id="place_tab">여행지</div>
+            <div id="bookmark_tab">북마크</div>
+        </div>
         <div id="modalbody">
 
             <button type="button" class="closeModal" id="xbox"><img src="<%=request.getContextPath()%>/img/delete.png"
                                                                     width="20"></button>
             <%--검색--%>
             <div id="searchForm" style="background-color: bisque; height:50px;">
-                <input type="text" name="searchWord" id="searchWord"/>
+                <input type="text" class="placeList" name="searchWord" id="searchWord"/>
             </div>
             <%--선택한거 보여주는 박스--%>
             <div id="selectedPlace">
@@ -300,6 +460,7 @@
             </div>
             <%--장소 목록 예시--%>
             <div id="placeBox">
+
             </div>
 
         </div>
