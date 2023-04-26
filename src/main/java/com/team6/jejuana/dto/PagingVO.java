@@ -15,6 +15,8 @@ public class PagingVO {
 	private String searchKey;
 	private String searchWord;
 	
+	private String id;
+	
 	@Override
 	public String toString() {
 		return "PagingVO [nowPage=" + nowPage + ", onePageRecord=" + onePageRecord + ", totalRecord=" + totalRecord
@@ -92,6 +94,12 @@ public class PagingVO {
 
 	public void setSearchWord(String searchWord) {
 		this.searchWord = searchWord;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

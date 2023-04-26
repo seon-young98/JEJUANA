@@ -40,7 +40,7 @@
 				return false;
 			}
 			
-			$("#pwdCheck").attr("action", "mypagePwdCheck")
+			$("#pwdCheck").attr("action", "mypageUser")
 			
 		});
 		

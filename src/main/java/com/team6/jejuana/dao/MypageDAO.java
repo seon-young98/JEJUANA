@@ -7,14 +7,18 @@ import com.team6.jejuana.dto.PagingVO;
 import com.team6.jejuana.dto.PlanDTO;
 import com.team6.jejuana.dto.ReviewDTO;
 import com.team6.jejuana.dto.CommonDTO;
+import com.team6.jejuana.dto.LoginDTO;
 
 public interface MypageDAO {
 	public int totalRecord(PagingVO vo);
 	public List<PlanDTO> planAllSelect(PagingVO vo);
-	public List<CommonDTO> profileSelect();
+	public List<CommonDTO> profileSelect(String userid);
 	public int mypagePlanMultiDel(List<Integer> noPList);
 	public int totalRecordReview(PagingTwoVO vo);
 	public List<ReviewDTO> reviewAllSelect(PagingTwoVO vo);
 	public int mypageReviewMultiDel(List<Integer> noRList);
-	public String pwdSelect();
+	public String pwdSelect(String userid);
+	public LoginDTO userEdit(String userid); 
+	public int userEditOk(LoginDTO dto);
+	public int userDelete(String userid);
 }

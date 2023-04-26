@@ -13,6 +13,9 @@ public class CommonDTO {
 	private String name;
 	private String nickname;
 	private String email;
-	private String tel;
+	private String phone_num;
 	private String sign_date;
+	
+	private String email1;
+	private String eamil2;
 }

@@ -15,6 +15,7 @@ public class PagingTwoVO {
 	private String searchKey;
 	private String searchWord;
 	
+	private String id;
 	
 	@Override
 	public String toString() {
@@ -89,6 +90,12 @@ public class PagingTwoVO {
 	}
 	public void setSearchWord(String searchWord) {
 		this.searchWord = searchWord;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

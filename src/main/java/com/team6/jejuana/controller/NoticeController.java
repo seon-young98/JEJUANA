@@ -33,4 +33,11 @@ public class NoticeController {
 		mav.setViewName("/notice/noticeList");
 		return mav;
 	}
+	
+	@GetMapping("/noticeWrite")
+	public ModelAndView noticeWrite() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/notice/noticeWrite");
+		return mav;
+	}
 }

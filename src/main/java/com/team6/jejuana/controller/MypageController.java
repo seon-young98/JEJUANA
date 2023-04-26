@@ -1,21 +1,33 @@
 package com.team6.jejuana.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team6.jejuana.dto.PagingTwoVO;
 import com.team6.jejuana.dto.PagingVO;
 import com.team6.jejuana.dto.PlanDTO;
 import com.team6.jejuana.dto.ReviewDTO;
+import com.team6.jejuana.dto.SmsResponseDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.team6.jejuana.dto.CommonDTO;
+import com.team6.jejuana.dto.LoginDTO;
+import com.team6.jejuana.dto.MessageDTO;
 import com.team6.jejuana.service.MypageService;
+import com.team6.jejuana.service.SmsService;
 
 @RestController
 @RequestMapping("/mypage")
@@ -24,15 +36,19 @@ public class MypageController {
 	@Inject
 	MypageService service;
 	
+	
 	//마이페이지 일정관리
 	@GetMapping("/mypagePlan")
-	public ModelAndView mypagePlan(PagingVO vo) {
+	public ModelAndView mypagePlan(PagingVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
 		vo.setTotalRecord(service.totalRecord(vo));
-		System.out.println(vo.toString());
 		
-		List<CommonDTO> pDTO = service.profileSelect();
+		vo.setId((String)session.getAttribute("loginId"));
+		
+		String userid = (String)session.getAttribute("loginId");
+		
+		List<CommonDTO> pDTO = service.profileSelect(userid);
 		
 		mav.addObject("list", service.planAllSelect(vo));
 		mav.addObject("vo", vo);
@@ -63,13 +79,16 @@ public class MypageController {
 	
 	//마이페이지 여행기록관리
 	@GetMapping("/mypageReview")
-	public ModelAndView mypageReview(PagingTwoVO vo) {
+	public ModelAndView mypageReview(PagingTwoVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
 		vo.setTotalRecord(service.totalRecordReview(vo));
-		System.out.println(vo.toString());
 		
-		List<CommonDTO> pDTO = service.profileSelect();
+		vo.setId((String)session.getAttribute("loginId"));
+		
+		String userid = (String)session.getAttribute("loginId");
+		
+		List<CommonDTO> pDTO = service.profileSelect(userid);
 		mav.addObject("proDTO", pDTO);
 		
 		mav.addObject("vo", vo);
@@ -99,10 +118,14 @@ public class MypageController {
 		
 	//마이페이지 북마크(코스)
 	@GetMapping("/mypageCourse")
-	public ModelAndView mypageCourse(PagingTwoVO vo) {
+	public ModelAndView mypageCourse(PagingTwoVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		List<CommonDTO> pDTO = service.profileSelect();
+		vo.setId((String)session.getAttribute("loginId"));
+		
+		String userid = (String)session.getAttribute("loginId");
+		
+		List<CommonDTO> pDTO = service.profileSelect(userid);
 		mav.addObject("proDTO", pDTO);
 		
 		mav.setViewName("mypage/mypageCourse");
@@ -111,10 +134,12 @@ public class MypageController {
 	
 	//마이페이지 북마크(여행지)
 	@GetMapping("/mypagePlace")
-	public ModelAndView mypagePlace() {
+	public ModelAndView mypagePlace(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		List<CommonDTO> pDTO = service.profileSelect();
+		String userid = (String)session.getAttribute("loginId");
+		
+		List<CommonDTO> pDTO = service.profileSelect(userid);
 		mav.addObject("proDTO", pDTO);
 		
 		mav.setViewName("mypage/mypagePlace");
@@ -123,10 +148,12 @@ public class MypageController {
 	
 	//마이페이지 회원정보수정 비밀번호 확인
 	@GetMapping("/mypageUserCheck")
-	public ModelAndView mypageUserCheck() {
+	public ModelAndView mypageUserCheck(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		List<CommonDTO> pDTO = service.profileSelect();
+		String userid = (String)session.getAttribute("loginId");
+		
+		List<CommonDTO> pDTO = service.profileSelect(userid);
 		mav.addObject("proDTO", pDTO);
 		
 		mav.setViewName("mypage/mypageUserCheck");
@@ -134,23 +161,109 @@ public class MypageController {
 	}
 	
 	//비밀번호 확인
-	@PostMapping("mypagePwdCheck")
-	public ModelAndView mypagePwdCheck(CommonDTO dto) {
+	@PostMapping("/mypageUser")
+	public ModelAndView mypagePwdCheck(CommonDTO dto, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		String password = service.pwdSelect();
+		String userid = (String)session.getAttribute("loginId");
+		
+		String password = service.pwdSelect(userid);
 		String pwd = dto.getPassword();
 		
 		if(pwd.equals(password)) {
-			List<CommonDTO> pDTO = service.profileSelect();
+			List<CommonDTO> pDTO = service.profileSelect(userid);
+			
+			LoginDTO Udto = service.userEdit(userid);
+			
+			String email1 = Udto.getEmail1();
+			String email2 = Udto.getEmail2();
+			
+			mav.addObject("email1", email1);
+			mav.addObject("email2", email2);
+			
 			mav.addObject("proDTO", pDTO);
-			mav.setViewName("mypage/mypageUser");
+			mav.setViewName("mypage/mypageUser2");
 		}else {
 			mav.addObject("msg", "비밀번호가 일치하지 않습니다.");
 			mav.setViewName("mypage/mypageDelete");
 		}
 		
-		return mav;
-		
+		return mav;	
 	}
+	
+	//회원정보 수정(DB)
+	@PostMapping("/userEditOk")
+	public ModelAndView userEditOk(LoginDTO dto, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		String userid = (String)session.getAttribute("loginId");
+		dto.setId(userid);
+		
+		int cnt = service.userEditOk(dto);
+		
+		if(cnt>0) { //수정성공
+			mav.addObject("msg", "회원정보가 수정되었습니다.");
+			mav.addObject("url", "/jejuana");
+			mav.setViewName("mypage/editOk");
+		}else { //수정실패
+			mav.addObject("msg", "회원정보 수정에 실패했습니다.");
+			mav.setViewName("mypage/mypageDelete");
+		}
+		return mav;
+	}
+
+	//회원탈퇴
+	@PostMapping("/userDelete")
+	public ModelAndView userDelete(HttpSession session, CommonDTO dto) {
+		ModelAndView mav= new ModelAndView();
+		
+		String userid = (String)session.getAttribute("loginId");
+		
+		String password = service.pwdSelect(userid);
+		String pwd = dto.getPassword();
+		
+		if(pwd.equals(password)) {
+			int cnt = service.userDelete(userid);
+			if(cnt>0) {
+				session.invalidate();
+				mav.addObject("msg", "회원 탈퇴 처리되었습니다.");
+				mav.addObject("url", "/jejuana");
+				mav.setViewName("mypage/editOk");
+			}else {
+				mav.addObject("msg", "회원 탈퇴 실패했습니다.");
+				mav.setViewName("mypage/mypageDelete");
+			}
+		}else {
+			mav.addObject("msg", "비밀번호가 일치하지 않습니다.");
+			mav.setViewName("mypage/mypageDelete");
+		}
+		return mav;
+	}
+	
+	
+	//휴대폰 인증
+	@Inject
+	SmsService smsService;
+	
+	@GetMapping("/sendSms")
+	public ModelAndView test() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("mypage/sendSms");
+			
+		return mav;
+	}
+		
+	@PostMapping("/smssend")
+	public ModelAndView sendSms(MessageDTO messageDto, Model model, HttpSession session) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
+		ModelAndView mav = new ModelAndView();
+		SmsResponseDTO response = smsService.sendSms(messageDto);
+		model.addAttribute("response", response);
+			
+		session.setAttribute("Anumber", messageDto.getContent());
+		System.out.println(messageDto.getContent());
+		mav.setViewName("mypage/sendSms");
+			
+		return mav;
+	}
+	
 }

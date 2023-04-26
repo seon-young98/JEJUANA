@@ -11,6 +11,7 @@ import com.team6.jejuana.dto.PagingVO;
 import com.team6.jejuana.dto.PlanDTO;
 import com.team6.jejuana.dto.ReviewDTO;
 import com.team6.jejuana.dto.CommonDTO;
+import com.team6.jejuana.dto.LoginDTO;
 
 @Service
 public class MypageServiceImpl implements MypageService {
@@ -29,8 +30,8 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public List<CommonDTO> profileSelect() {
-		return dao.profileSelect();
+	public List<CommonDTO> profileSelect(String userid) {
+		return dao.profileSelect(userid);
 	}
 
 	@Override
@@ -54,8 +55,23 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public String pwdSelect() {
-		return dao.pwdSelect();
+	public String pwdSelect(String userid) {
+		return dao.pwdSelect(userid);
+	}
+
+	@Override
+	public LoginDTO userEdit(String userid) {
+		return dao.userEdit(userid);
+	}
+
+	@Override
+	public int userEditOk(LoginDTO dto) {
+		return dao.userEditOk(dto);
+	}
+
+	@Override
+	public int userDelete(String userid) {
+		return dao.userDelete(userid);
 	}
 
 	
