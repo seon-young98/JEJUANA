@@ -1,0 +1,102 @@
+.userTitle{
+	width:18%;
+	border:1px solid navy;
+	font-size:1.5em;
+	margin-top:20px;
+	margin-left:20px;
+	padding:10px;
+	text-align:center;
+}
+#bold5{
+	font-weight:bold;
+}
+.join_inputBox{ 
+ 	display:inline-block;
+ 	width:42%;
+ 	float:left;
+ 	margin:50px 20px;
+ 	padding-left:50px;
+}
+.join_inputBox>div{
+ 	width:100%;
+ 	float:left;
+ 	margin-left:14px;
+ 	margin-bottom:20px;
+ }
+ .join_inputBox p{
+ 	display:inline-block;
+ 	width:50%;
+ 	border:1px solid #aaaaaa;
+ 	text-align:center;
+ 	padding:6px;	
+ }
+ .join_inputBox input{
+ 	font-size:12px;
+ 	padding:6px;
+ 	height:31px;
+ 	width:200px;
+ }
+ .userButton{
+ 	float:left;
+ 	margin:80px -153px 20px;
+ }
+ .userButton input{
+ 	font-size:12px;
+ 	padding:6px;
+ 	height:31px;
+ 	width:200px;
+ }
+ 
+#modalC {
+ 	   width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+}
+.modal-window {
+   	background: gray;
+       box-shadow: 0 8px 32px 0 #ddd;
+       backdrop-filter: blur( 13.5px );
+       -webkit-backdrop-filter: blur( 13.5px );
+       border-radius: 10px;
+       border: 1px solid rgba( 255, 255, 255, 0.18 );
+       width: 450px;
+       height: 450px;
+       position: relative;
+       top: -85px;
+       left:85px;
+       padding: 10px;
+   }
+   #p1{
+   	margin-top:115px;
+   	text-align:center;
+   	font-size:21px;
+   	font-weight:bold;
+   }
+   #p2{
+   	text-align:center;	
+   }
+   #pwdC{
+   	margin-top:20px;
+   	width:250px;
+   }
+   .btnC{
+   	text-align:center;
+   	margin-top:20px;
+   }
+   .btnC input{
+   	font-size:12px;
+ 	padding:6px;
+ 	height:31px;
+ 	width:200px;
+   }
+   .close-area{
+   	padding-top:10px;
+   	padding-left:400px;
+   	font-weight:bold;
+   }

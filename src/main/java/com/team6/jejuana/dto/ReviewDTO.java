@@ -1,6 +1,7 @@
 package com.team6.jejuana.dto;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ReviewDTO {
 	private int plan_no; //플랜번호
@@ -33,6 +34,8 @@ public class ReviewDTO {
 	private int days_order; //번째 날짜
 	private int course_order; //순서
 	
+	//여러 개의 레코드 한번에 삭제할 때 필요한 레코드 번호
+	private List<Integer> noList;
 	
 	@Override
 	public String toString() {
@@ -126,7 +129,7 @@ public class ReviewDTO {
 	}
 
 	public String getTag() {
-		//배열의 취미를 문자열로 반환
+		//배열의 태그를 문자열로 반환
 		String tagStr = Arrays.toString(tagArr);
 		tagStr = tagStr.substring(1, tagStr.length()-1);
 		tagStr = tagStr.replaceAll(", ", "/");
@@ -202,4 +205,11 @@ public class ReviewDTO {
 	public void setCourse_order(int course_order) {
 		this.course_order = course_order;
 	}
+	public List<Integer> getNoList() {
+		return noList;
+	}
+	public void setNoList(List<Integer> noRList) {
+		this.noList = noRList;
+	}
+	
 }

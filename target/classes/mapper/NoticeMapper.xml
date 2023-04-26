@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team6.jejuana.dao.NoticeDAO">
+	<select id="gonggiSelect" resultType="com.team6.jejuana.dto.NoticeDTO">
+		select n.notice_subject, c.nickname, to_char(n.notice_date,'yyyy-MM-dd') notice_date, n.notice_hit
+		from notice n join common c on n.id=c.id where n.gonggi=1
+	</select>
+	<select id="noticeSelect" resultType="com.team6.jejuana.dto.NoticeDTO">
+		select * from
+			(select * from
+				(
+					select notice_no, notice_subject, to_char(notice_date,'YYYY-MM-DD') notice_date, id, notice_hit, secretKey
+					from notice order by notice_no desc	
+				)
+				<![CDATA[		
+				where rownum<=${onePageRecord*nowPage} order by notice_no asc
+				]]>
+			)
+			<choose>
+					<when test="nowPage!=totalPage">
+						<![CDATA[		
+						where rownum<=${onePageRecord} order by notice_no desc
+						]]>
+					</when>
+					<when test="nowPage==totalPage">
+						<![CDATA[		
+						where rownum<=${lastPageRecord} order by notice_no desc
+						]]>
+					</when>
+				</choose>
+	</select>
+	<select id="totalRecord" resultType="int">
+		select count(notice_no) totalRecord from notice
+	</select>
+</mapper>

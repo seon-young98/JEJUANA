@@ -55,6 +55,91 @@ $(function(){
 			  	<div class="li_id">by ${bDTO.nickname }</div>
 		  </swiper-slide>
 		</c:forEach>
+		<swiper-slide>
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="image" src="${bDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<div>
+		    		<dl class="list_data">
+		    			<dt class="dt_tag">서쪽/홀로</dt>
+		    			<dt> · </dt>
+		    			<dt class="dt_joa">좋아요</dt>
+		    			<dt class="dt_cnt">999</dt>
+		    		</dl>
+		    	</div>
+			  	<div class="li_sub"><a href="reviewView?plan_no=${bDTO.plan_no }">제주도 좋아</a></div>
+			  	<div class="li_id">by 고구마</div>
+		  </swiper-slide>
+		  <swiper-slide>
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="image" src="${bDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<div>
+		    		<dl class="list_data">
+		    			<dt class="dt_tag">뚜벅이/버스여행/식도락</dt>
+		    			<dt> · </dt>
+		    			<dt class="dt_joa">좋아요</dt>
+		    			<dt class="dt_cnt">955</dt>
+		    		</dl>
+		    	</div>
+			  	<div class="li_sub"><a href="reviewView?plan_no=${bDTO.plan_no }">제주도 좋아</a></div>
+			  	<div class="li_id">by 고구마</div>
+		  </swiper-slide>
+		  <swiper-slide>
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="image" src="${bDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<div>
+		    		<dl class="list_data">
+		    			<dt class="dt_tag">식도락</dt>
+		    			<dt> · </dt>
+		    			<dt class="dt_joa">좋아요</dt>
+		    			<dt class="dt_cnt">911</dt>
+		    		</dl>
+		    	</div>
+			  	<div class="li_sub"><a href="reviewView?plan_no=${bDTO.plan_no }">제주도 좋아</a></div>
+			  	<div class="li_id">by 고구마</div>
+		  </swiper-slide>
+		  <swiper-slide>
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="image" src="${bDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<div>
+		    		<dl class="list_data">
+		    			<dt class="dt_tag">가족/힐링</dt>
+		    			<dt> · </dt>
+		    			<dt class="dt_joa">좋아요</dt>
+		    			<dt class="dt_cnt">779</dt>
+		    		</dl>
+		    	</div>
+			  	<div class="li_sub"><a href="reviewView?plan_no=${bDTO.plan_no }">제주도 좋아</a></div>
+			  	<div class="li_id">by 고구마</div>
+		  </swiper-slide>
+		  <swiper-slide>
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="image" src="${bDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<div>
+		    		<dl class="list_data">
+		    			<dt class="dt_tag">서쪽/홀로</dt>
+		    			<dt> · </dt>
+		    			<dt class="dt_joa">좋아요</dt>
+		    			<dt class="dt_cnt">545</dt>
+		    		</dl>
+		    	</div>
+			  	<div class="li_sub"><a href="reviewView?plan_no=${bDTO.plan_no }">제주도 좋아</a></div>
+			  	<div class="li_id">by 고구마</div>
+		  </swiper-slide>
  	</swiper-container>
 </div> 
 <hr>	
@@ -76,5 +161,145 @@ $(function(){
 				</ul>
 		  </div>
 		</c:forEach>
+		<div class="review">
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="thumbnail" src="${rDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<ul>
+					<li class="li_tag">동쪽/식도락/힐링</li>
+					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">제주도 짱</a></li>
+					<li class="li_id">by 고구마</li>
+					<li>조회 12 좋아요 3</li>
+					<li>2023-04-21</li>
+				</ul>
+		  </div>
+		  <div class="review">
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="thumbnail" src="${rDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<ul>
+					<li class="li_tag">가족여행/액티비티</li>
+					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">좋았던 제주도 여행</a></li>
+					<li class="li_id">by 감자</li>
+					<li>조회 22 좋아요 4</li>
+					<li>2023-04-15</li>
+				</ul>
+		  </div>
+		  <div class="review">
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="thumbnail" src="${rDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<ul>
+					<li class="li_tag">동쪽/식도락/힐링</li>
+					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">제주도 짱</a></li>
+					<li class="li_id">by 고구마</li>
+					<li>조회 12 좋아요 3</li>
+					<li>2023-04-21</li>
+				</ul>
+		  </div>
+		  <div class="review">
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="thumbnail" src="${rDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<ul>
+					<li class="li_tag">가족여행/액티비티</li>
+					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">좋았던 제주도 여행</a></li>
+					<li class="li_id">by 감자</li>
+					<li>조회 22 좋아요 4</li>
+					<li>2023-04-15</li>
+				</ul>
+		  </div>
+		  <div class="review">
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="thumbnail" src="${rDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<ul>
+					<li class="li_tag">동쪽/식도락/힐링</li>
+					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">제주도 짱</a></li>
+					<li class="li_id">by 고구마</li>
+					<li>조회 12 좋아요 3</li>
+					<li>2023-04-21</li>
+				</ul>
+		  </div>
+		  <div class="review">
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="thumbnail" src="${rDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<ul>
+					<li class="li_tag">가족여행/액티비티</li>
+					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">좋았던 제주도 여행</a></li>
+					<li class="li_id">by 감자</li>
+					<li>조회 22 좋아요 4</li>
+					<li>2023-04-15</li>
+				</ul>
+		  </div>
+		  <div class="review">
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="thumbnail" src="${rDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<ul>
+					<li class="li_tag">동쪽/식도락/힐링</li>
+					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">제주도 짱</a></li>
+					<li class="li_id">by 고구마</li>
+					<li>조회 12 좋아요 3</li>
+					<li>2023-04-21</li>
+				</ul>
+		  </div>
+		  <div class="review">
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="thumbnail" src="${rDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<ul>
+					<li class="li_tag">가족여행/액티비티</li>
+					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">좋았던 제주도 여행</a></li>
+					<li class="li_id">by 감자</li>
+					<li>조회 22 좋아요 4</li>
+					<li>2023-04-15</li>
+				</ul>
+		  </div>
+		  <div class="review">
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="thumbnail" src="${rDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<ul>
+					<li class="li_tag">동쪽/식도락/힐링</li>
+					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">제주도 짱</a></li>
+					<li class="li_id">by 고구마</li>
+					<li>조회 12 좋아요 3</li>
+					<li>2023-04-21</li>
+				</ul>
+		  </div>
+		  <div class="review">
+				<div class="img-crop">
+					<div class="inner">
+		  				<img class="thumbnail" src="${rDTO.thumbnail }">
+		 			</div>
+		 		 </div>
+				<ul>
+					<li class="li_tag">가족여행/액티비티</li>
+					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">좋았던 제주도 여행</a></li>
+					<li class="li_id">by 감자</li>
+					<li>조회 22 좋아요 4</li>
+					<li>2023-04-15</li>
+				</ul>
+		  </div>
 	</div>
 </div>

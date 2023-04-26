@@ -1,0 +1,27 @@
+.content_s{
+	height:500px;
+}
+.userTitle{
+	width:18%;
+	border:1px solid navy;
+	font-size:1.5em;
+	margin-top:20px;
+	margin-left:20px;
+	padding:10px;
+	text-align:center;
+}
+.content_s li{
+	float:left;
+	margin-top:180px;
+	width:30%;
+}
+#bold5{
+	font-weight:bold;
+}
+.content_s p{
+	display:inline-block;
+ 	width:40%;
+ 	border:1px solid #aaaaaa;
+ 	text-align:center;
+ 	padding:6px;
+}

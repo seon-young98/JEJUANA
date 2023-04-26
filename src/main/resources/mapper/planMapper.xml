@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team6.jejuana.dao.PlanDAO">
+<insert id="planSave" parameterType="com.team6.jejuana.dto.PlanDTO">
+    <selectKey order="BEFORE" keyProperty=""></selectKey>
+    insert into plan(plan_no, plan_name, start_date, end_date, transport, id, days)
+    values(plan_sq.nextval, #{plan_name}, to_date(#{start_date}), to_date(#{end_date}), #{transport}, #{id}, ${days})
+</insert>
+<select id="placeAllList"   resultType="com.team6.jejuana.dto.PlaceDTO">
+    select place_no, place_name, place_addr, latitude, longitude, content, rate, to_char(writedate, 'MM-DD'), id, thumbnail
+    from place order by place_no asc
+</select>
+<select id="placeSelectList"  resultType="com.team6.jejuana.dto.PlaceDTO">
+    select * from (select * from (select * from place where place_name like '%${param1}%' order by place_no asc)
+    <![CDATA[
+    where rownum <= 15*${param2} order by place_no desc)
+    ]]>
+    <![CDATA[
+    where rownum <= 15 order by place_no asc
+    ]]>
+</select>
+<select id="bookmarkList"  resultType="com.team6.jejuana.dto.PlaceDTO">
+    select * from (select * from (select p.place_no, p.place_name, p.place_addr, p.latitude, p.longitude, p.content, p.rate, to_char(p.writedate, 'MM-DD'), p.id, p.thumbnail
+    from place p join (select * from bookmark where id=#{param2}) b
+    on p.place_no=b.target_no and p.place_name like '%${param1}%')
+    <![CDATA[
+    where rownum <= 15*${param2} order by place_no desc)
+    ]]>
+    <![CDATA[
+    where rownum <= 15 order by place_no asc
+    ]]>
+
+</select>
+<select id="selectedPlace" resultType="com.team6.jejuana.dto.PlaceDTO">
+    select * from place where place_no=${param1}
+</select>
+</mapper>

@@ -5,6 +5,7 @@
     font-style: normal;
 }
 #container_A{
+	width:100%;
     margin: 0;
 }
 header{
