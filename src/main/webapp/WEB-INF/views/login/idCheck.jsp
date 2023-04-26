@@ -1,54 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<link rel="stylesheet" href="/jejuana/css/idCheck.css"/>
 <style>
-	header, footer{
-		display:none;
-	}
-	body{
-		overflow:hidden; 
-		height:230px;
-		width:550px;
-		margin: 0 auto;
-	}
-	.loginContainer{
-		text-align:center;
-		height:100%;
-		padding:10px;
-	}
-	.loginContainer>div>div>div{
-		font-family: 'GmarketSansMedium';
-		display:inline-block;
-	}
-	.loginContainer>div>div>p{
-		font-family: 'GmarketSansMedium';
-		display:inline-block;	
-	}
-	.loginContainer>div>input{
-		width: 20%;
-		height: 35px;
-		margin-top: 6px;
-		border: none;
-		background: #082032;
-		color: white;
-	}
-	.idCheckBox_B p{
-		font-family: 'GmarketSansMedium';
-		display:inline-block;
-	}
-	.idCheckBox_button{
-		font-family: 'GmarketSansMedium';
-		width: 20%;
-		height: 35px;
-		margin-top: 6px;
-		border: none;
-		background: #082032;
-		color: white;
-	}
-	#userid{
-		font-family: 'GmarketSansMedium';
-		height:35px;
-	}
+	
 </style>
 <script>
 	function setUserid(id){
@@ -87,7 +42,5 @@
 				</c:if>
 			</div>
 			<hr>
-			<img src="img/idCheckBox.png">
+			<img class="idCheck_img" src="img/idCheckBox.png">
 		</div>
-	</body>
-</html>

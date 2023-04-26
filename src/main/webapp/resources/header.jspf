@@ -12,9 +12,17 @@
 <!-- swiper -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<!-- swiper -->
+
+<!-- css연결 -->
 <link rel="stylesheet" href="/jejuana/css/header.css"/>
 <link rel="stylesheet" href="/jejuana/css/reset.css"/>
+
+
+
+
+<!-- fontawesome.com -->
+<script src="https://kit.fontawesome.com/803f3553c2.js" crossorigin="anonymous"></script>
+
 <script>
 	// 버튼 클릭 이벤트
 	function myFunction() {
@@ -47,12 +55,18 @@
 					<li><a href="#">여행지목록</a></li>
 					<li><a href="#">여행기록</a></li>
 					<li><a href="#">여행친구</a></li>
-					<div class="dropdown">
-						<button onclick="myFunction()" class="dropbtn">고구마님 환영합니다</button>
-						<div id="myDropdown" class="dropdown-content">
-							<a href="#">마이페이지</a> <a href="#">로그아웃</a>
-						</div>
-					</div>
+					<c:if test="${sessionScope.loginId==null }">
+						<button onclick="myFunction()" class="dropbtn">로그인 후 이용 가능합니다</button>
+							<div id="myDropdown" class="dropdown-content">
+								<a href="../login">로그인</a> <a href="../join">회원가입</a>
+							</div>
+					</c:if>
+					<c:if test="${sessionScope.loginId!=null }">
+						<button onclick="myFunction()" class="dropbtn"><%=(String)session.getAttribute("nickname") %>님 환영합니다</button>
+							<div id="myDropdown" class="dropdown-content">
+								<a href="#">마이페이지</a> <a href="../logout">로그아웃</a>
+							</div>
+					</c:if>
 				</ul>
 			</div>
 		</div>
