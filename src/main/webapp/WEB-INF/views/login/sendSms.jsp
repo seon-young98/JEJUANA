@@ -6,9 +6,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/jejuana/css/sendSms.css"/>
-<style>
-
-</style>
 
 <div class="sendSms_container">
 	
@@ -41,7 +38,6 @@
  
  <script>
  	var target = document.getElementById('getn');
-
  	
  	$(function(){
  		$("#getn").click(function(){
@@ -61,4 +57,3 @@
  	});
  	
  </script>
-

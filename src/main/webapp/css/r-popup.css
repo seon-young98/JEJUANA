@@ -1,0 +1,46 @@
+header, footer{
+	display:none;
+}
+
+.stars{
+	margin:15%;
+	text-align:center;
+}
+
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 5em;
+  font-size: 3rem;
+  justify-content: space-around;
+  padding: 0 15%;
+}
+ 
+.star-rating input { /*숫자*/
+  display: none;
+}
+ 
+.star-rating label { /*별*/
+  -webkit-text-fill-color: transparent; 
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+  cursor: pointer;
+}
+ 
+.star-rating :checked ~ label {
+  -webkit-text-fill-color: yellow;
+}
+ 
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  -webkit-text-fill-color: #fff58c;
+}
+
+#starli{
+	border: 1px solid red;
+	padding:2% 0;
+}
+
+input{
+	margin:5% 0;
+}

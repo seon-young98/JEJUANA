@@ -12,27 +12,18 @@ let ojphone_num;
 let ojEmail;
 let ojEmail2;
 let ojInformation;
-
 //아이디 조건변수
 let idCondition = /^[a-z0-9_]{5,20}$/
-
 //비밀번호 조건변수
 let pwdCondition = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
-
 //닉네임 조건변수
 let nickCondition = /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]{2,10}$/
-
 //이메일 @앞부분 조건변수
 let emailCondition = /^[a-zA-Z0-9._%+-]+$/
-
 //이메일 @뒷부분 조건변수
 let emailCondition2 = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-
 //휴대폰 조건변수
 let telCondition = /^01(0|1|6|7|8|9)[0-9]{7,8}/
-
-
-
 $(function(){
 	ojId = document.getElementById("id");
 	ojPwd = document.getElementById("password");
@@ -90,14 +81,12 @@ $(function(){
 });
 function joinform_check(){
 	//유효성 검사
-
 		//아이디
 		if($("#id").val()==""){
 			alert("아이디를 입력하세요.");
 			ojId.focus();
 			return false;
 		};
-
 		//비밀번호
 		if($("#password").val()==""){
 			alert("비밀번호를 입력하세요.");
@@ -180,7 +169,6 @@ function joinform_check(){
 		return true;
 	
 }
-
 </script>
 
 
@@ -636,6 +624,4 @@ function joinform_check(){
 	function information_false(){
 		$('[name=information]').prop('checked', false);		
 	}
-
 </script>
-	

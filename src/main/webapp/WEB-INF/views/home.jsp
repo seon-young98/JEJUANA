@@ -11,22 +11,24 @@
 				<img class="boxItem" src="img/jejuana.png">
 				<p class="boxItem">MAKE YOUR ROUTE OPTIMIZED</p>
 			</a>
+
 			<!-- 플래너 작성 -->
 			<div class="content_box1">
 				<div class="main_border_box">
+					<h1>Jejuana</h1>
 					<h3>여행 스케줄링 플래너</h3>
 					<div class="main_planner_img"><img src="img/main_planner_img.png"></div>
-					<button class="main1_button">시작하기</button>
+					<button class="main1_button" onclick="location.href='planner'">시작하기</button>
 				</div>
 			</div>
-			<!--코스추천페이지 -->
+			<!--코스추천페이지 
 			<div class="content_box2">
 				<div class="main_border_box">
 					<h3>제주아나 코스추천</h3>
 					<div><img src="img/main_course_img.png"></div>
 					<button class="main2_button">시작하기</button>
 				</div>
-			</div>
+			</div>-->
 		</div>
 		<div class="rightContainer">
 			<div class="main_imgBox">
@@ -65,10 +67,10 @@
 						</div>
 					</c:if>				
 				<ul>
-					<li><a href="#">여행지목록</a></li>
-					<li><a href="#">여행기록</a></li>
-					<li><a href="#">여행친구</a></li>
-					<li><a href="#">고객센터</a></li>
+					<li><a href="/jejuana/map_list">여행지목록</a></li>
+					<li><a href="/jejuana/review/reviewList">여행기록</a></li>
+					<!-- <li><a href="#">여행친구</a></li> -->
+					<li><a href="/jejuana/notice/noticeList">고객센터</a></li>
 				</ul>
 			</div>
 		</div>
@@ -100,4 +102,3 @@
       }
     });
 	</script>
-

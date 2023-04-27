@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <link rel="stylesheet" href="/jejuana/css/idCheck.css"/>
-<style>
-	
-</style>
+
 <script>
 	function setUserid(id){
 		//회원가입 폼에 체크한 아이디를 표기
@@ -42,5 +39,7 @@
 				</c:if>
 			</div>
 			<hr>
-			<img class="idCheck_img" src="img/idCheckBox.png">
+			<img src="img/idCheckBox.png">
 		</div>
+	</body>
+</html>

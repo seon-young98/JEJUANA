@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team6.jejuana.dao.BookMarkDAO">
+	<insert id="bookMarkInsert">
+		insert into bookmark(book_no, book_name, book_type, id)
+		values(book_seq.nextval, #{book_name}, #{book_type}, #{id})
+	</insert>
+	
+	<select id="bookListSelect" resultType="com.team6.jejuana.dto.BookMarkDTO">
+		select book_no, book_name, book_date from bookmark where id=#{parma1} order by book_no
+	</select>
+	
+	<delete id="dataDelete">
+ 		delete from bookmark where book_no=${no}
+ 	</delete>
+</mapper>

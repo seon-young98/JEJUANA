@@ -13,13 +13,13 @@ public class LoginServiceImpl implements  LoginService {
 	@Inject
 	LoginDAO dao;
 	
-	//�α���
+	//·Î±×ÀÎ
 	@Override
 	public LoginDTO loginOk(String id, String password) {
 		return dao.loginOk(id, password);
 	}
 	
-	//���̵� �ߺ�üũ
+	//¾ÆÀÌµð Áßº¹Ã¼Å©
 	@Override
 	public int idCheckCount(String id) {
 		return dao.idCheckCount(id);
