@@ -1,51 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/resources/mypageMenu.jspf" %>
-<style>
-	#bold2{
-		font-weight:bold;
-	}
-	.reviewTitle{
-		width:18%;
-		border:1px solid navy;
-		font-size:1.5em;
-		margin-top:20px;
-		margin-left:20px;
-		padding:10px;
-		text-align:center;
-	}
-	.reviewList li{
-		float:left;
-		width:11%;
-		height:40px;
-		line-height:40px;
-		border-bottom:1px solid #ddd;
-	}
-	.reviewList li:nth-child(6n+3){
-		width:40%;
-		white-space:nowrap;
-		overflow:hidden;
-		text-overflow:ellipsis;
-	}
-	.reviewList li:nth-child(6n-5){
-		margin-left:25px;
-	}
-	#reviewChange{
-		line-height:20px;
-	}
-	#chooseDelR{
-		margin-left:30px;
-		margin-top:10px;
-	}
-	.pagingDivR{
-		width:20%;
-		margin:0 auto;
-	}
-	.pagingDivR li{
-		float:left;
-		padding:10px 20px;
-	}
-</style>
+<link rel="stylesheet" href="/jejuana/css/mypageReview.css"/>
+
 <script>
 	$(function(){
 		
@@ -145,6 +102,3 @@
 
 
 </div>
-
-</body>
-</html>

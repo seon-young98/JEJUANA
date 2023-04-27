@@ -25,21 +25,6 @@ public class ManagerController {
 	@Autowired
 	ManagerService service;
 	
-	
-	//유저 목록 출력
-	@GetMapping("/commonmanager1")	//	/board/boardList
-	public ModelAndView comonmanager1(PagingDTO vo) {
-		
-		ModelAndView mav = new ModelAndView();
-		
-		vo.setTotalRecord(service.commontotalRecord(vo));
-		mav.addObject("list",service.commonpageSelect(vo));
-		mav.addObject("vo",vo);
-		mav.setViewName("manager/commonmanager1");
-		return mav;
-	}
-	
-	
 	//유저 관리자 변경
 		@PostMapping("commonUpdate")
 		public ModelAndView commonUpdate(ReviewDTO dto,PagingDTO vo) {

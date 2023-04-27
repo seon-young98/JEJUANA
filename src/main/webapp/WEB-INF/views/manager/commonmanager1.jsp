@@ -87,7 +87,7 @@ $(function(){
 								<tr>
 									<td><input type="checkbox" name="noList" value="${rDTO.common_no }"/></td>
 									<td>${rDTO.common_no }</td>
-									<td onclick="location.href='commonmanager2?common_no=${rDTO.common_no}&nowPage=${vo.nowPage }<c:if test="${vo.searchWord!=null}">&searchKey=${vo.searchKey}&searchWord=${vo.searchWord }</c:if>'" style="cursor:Pointer;">${rDTO.name }</td>
+									<td onclick="location.href='manager/commonmanager2?common_no=${rDTO.common_no}&nowPage=${vo.nowPage }<c:if test="${vo.searchWord!=null}">&searchKey=${vo.searchKey}&searchWord=${vo.searchWord }</c:if>'" style="cursor:Pointer;">${rDTO.name }</td>
 									<td>${rDTO.id }</td>
 									<td>${rDTO.phone_num }</td>
 									<td>${rDTO.sign_date }</td>
