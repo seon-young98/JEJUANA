@@ -14,7 +14,7 @@ public class PlaceDTO {
     private double latitude;
     private double longitude;
     private String content;
-    private int rate;
+    private double rate;
     private String writedate;
     private String id;
     private int activated;

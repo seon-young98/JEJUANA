@@ -39,8 +39,8 @@ public class PlanServiceImpl implements PlanService{
     }
 
     @Override
-    public List<PlaceDTO> bookmarkList(String searchWord, String userid) {
-        return dao.bookmarkList(searchWord, userid);
+    public List<PlaceDTO> bookmarkList(String searchWord, int pageNo, String userid) {
+        return dao.bookmarkList(searchWord, pageNo, userid);
     }
 
     @Override
@@ -51,5 +51,20 @@ public class PlanServiceImpl implements PlanService{
     @Override
     public List<PlanDTO> planList(String userid) {
         return dao.planList(userid);
+    }
+
+    @Override
+    public List<CourseDTO> courseSelect(int plan_no) {
+        return dao.courseSelect(plan_no);
+    }
+
+    @Override
+    public int planUpdate(PlanDTO dto) {
+        return dao.planUpdate(dto);
+    }
+
+    @Override
+    public int courseDel(int plan_no) {
+        return dao.courseDel(plan_no);
     }
 }

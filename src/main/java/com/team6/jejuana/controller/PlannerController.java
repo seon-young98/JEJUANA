@@ -51,10 +51,46 @@ public class PlannerController  {
 
         return "planner/plannerKakaoMap";
     }
+    @PostMapping(value = "/planUpdate",  produces = "application/text; charset=utf-8")
+    @ResponseBody
+    public String planUpdate(String plan_num, String plan_name, String start_date, String end_date, int days, String schedule,
+                           HttpSession session) {
+
+        PlanDTO planDTO = new PlanDTO();
+        int plan_no = Integer.parseInt(plan_num);
+        planDTO.setPlan_no(plan_no);
+        planDTO.setPlan_name(plan_name);
+        planDTO.setStart_date(start_date);
+        planDTO.setEnd_date(end_date);
+        planDTO.setDays(days);
+//        planDTO.setId((String) session.getAttribute("logId"));
+        planDTO.setId("ggamangso");
+        int result = service.planUpdate(planDTO);
+
+        List<CourseDTO> list = new ArrayList<CourseDTO>();
+
+        JSONArray jArray = new JSONArray(schedule);
+        System.out.println(jArray.get(0).getClass().getSimpleName());
+        for (int i = 0; i < jArray.length(); i++) {
+            JSONObject course = jArray.getJSONObject(i);
+            CourseDTO dto = new CourseDTO();
+            dto.setPlan_no(plan_no);
+            dto.setPlace_no(course.getInt("place_no"));
+            dto.setDays_order(course.getInt("days_order"));
+            dto.setCourse_order(course.getInt("course_order"));
+            list.add(dto);
+        }
+        int del_result = service.courseDel(plan_no);
+        int c_result = service.courseSave(list);
+
+
+
+        return ""+c_result;
+    }
 
     @PostMapping(value = "/planSave",  produces = "application/text; charset=utf-8")
     @ResponseBody
-    public String planSave(String plan_name, String start_date, String end_date, int days, String schedule,
+    public String planSave(String plan_num, String plan_name, String start_date, String end_date, int days, String schedule,
                            HttpSession session) {
 
         PlanDTO planDTO = new PlanDTO();
@@ -109,7 +145,7 @@ public class PlannerController  {
         System.out.println(searchWord+ " - "+ pageNo);
         String userid = (String) session.getAttribute("logId");
         userid = "ggamangso";
-        return service.bookmarkList(searchWord, userid);
+        return service.bookmarkList(searchWord, pageNo, userid);
     }
 
     @PostMapping("selectedPlace")
@@ -155,10 +191,13 @@ public class PlannerController  {
         String userid = (String) session.getAttribute("logId");
 
         List<PlanDTO> list = service.planList("ggamangso");
-
-
-
         return list;
+    }
+
+    @PostMapping("planSelect")
+    @ResponseBody
+    public List<CourseDTO> courseSelect(String plan_no) {
+        return service.courseSelect(Integer.parseInt(plan_no));
     }
 
 

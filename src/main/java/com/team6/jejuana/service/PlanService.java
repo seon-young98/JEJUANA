@@ -10,8 +10,12 @@ public interface PlanService {
     public int planSave(PlanDTO dto);
     public List<PlaceDTO> placeAllList();
     public List<PlaceDTO> placeSelectList(String searchWord, int pageNo);
-    public List<PlaceDTO> bookmarkList(String searchWord, String userid);
+    public List<PlaceDTO> bookmarkList(String searchWord,int pageNo, String userid);
     public PlaceDTO selectedPlace(int place_no);
     public int courseSave(List<CourseDTO> list);
     public List<PlanDTO> planList(String userid);
+    public List<CourseDTO> courseSelect(int plan_no);
+    public int planUpdate(PlanDTO dto);
+    public int courseDel(int plan_no);
+
 }

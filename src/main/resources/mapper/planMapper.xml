@@ -25,7 +25,7 @@
 </select>
 <select id="bookmarkList"  resultType="com.team6.jejuana.dto.PlaceDTO">
     select * from (select * from (select p.place_no, p.place_name, p.place_addr, p.latitude, p.longitude, p.content, p.rate, to_char(p.writedate, 'MM-DD'), p.id, p.thumbnail
-    from place p join (select * from bookmark where id=#{param2}) b
+    from place p join (select * from bookmark where id=#{param3}) b
     on p.place_no=b.target_no and p.place_name like '%${param1}%')
     <![CDATA[
     where rownum <= 15*${param2} order by place_no desc)
@@ -45,6 +45,16 @@
     </foreach>
 </insert>
 <select id="planList" resultType="com.team6.jejuana.dto.PlanDTO">
-    select plan_no, plan_name, to_char(start_date, 'YYYY-MM-DD') start_date, to_char(end_date, 'YYYY-MM-DD') end_date from plan where id=#{param1} order by start_date asc
+    select plan_no, plan_name, to_char(start_date, 'YYYY-MM-DD') start_date, to_char(end_date, 'YYYY-MM-DD') end_date, days from plan where id=#{param1} order by start_date asc
 </select>
+<select id="courseSelect" resultType="com.team6.jejuana.dto.CourseDTO">
+    select place_no, days_order, course_order from course where plan_no=${param1}
+</select>
+    <update id="planUpdate" parameterType="com.team6.jejuana.dto.PlanDTO">
+        update plan set plan_name=#{plan_name}, start_date=#{start_date}, end_date=#{end_date}, days=#{days}
+        where plan_no=${plan_no}
+    </update>
+<delete id="courseDel">
+    delete from course where plan_no=${param1}
+</delete>
 </mapper>
