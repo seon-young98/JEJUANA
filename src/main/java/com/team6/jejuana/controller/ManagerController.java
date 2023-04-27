@@ -25,11 +25,39 @@ public class ManagerController {
 	@Autowired
 	ManagerService service;
 	
+	@GetMapping("commonmanager1")
+	public ModelAndView commonmanager1(PagingDTO vo) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(1234);
+		
+		mav.setViewName("manager/commonmanager1");
+		
+		vo.setTotalRecord(service.commontotalRecord(vo));
+		mav.addObject("list",service.commonpageSelect(vo));
+
+		mav.addObject("nowpage",vo.getNowPage());
+		mav.addObject("vo",vo);
+		
+		if(vo.getSearchWord()!=null && !vo.getSearchWord().equals("")) {
+			mav.addObject("searchKey", vo.getSearchKey());
+			mav.addObject("searchWord", vo.getSearchWord());
+		}
+		
+		System.out.println(2345);
+		
+		return mav;
+	}
+	
 	//유저 관리자 변경
 		@PostMapping("commonUpdate")
 		public ModelAndView commonUpdate(ReviewDTO dto,PagingDTO vo) {
-			int result = service.commonMultiUpdate(dto.getNoList());
 			ModelAndView mav = new ModelAndView();
+			int result = service.commonMultiUpdate(dto.getNoList());
+			vo.setTotalRecord(service.commontotalRecord(vo));
+			mav.addObject("list",service.commonpageSelect(vo));
+			mav.addObject("nowpage",vo.getNowPage());
+			mav.addObject("vo",vo);
+			
 			mav.addObject("nowpage",vo.getNowPage());
 			
 			if(vo.getSearchWord()!=null && !vo.getSearchWord().equals("")) {
@@ -38,7 +66,7 @@ public class ManagerController {
 				
 			}
 
-			mav.setViewName("redirect:commonmanager1");
+			mav.setViewName("manager/commonmanager1");
 			return mav;
 		}
 		

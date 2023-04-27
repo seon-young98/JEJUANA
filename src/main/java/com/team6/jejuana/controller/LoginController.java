@@ -84,7 +84,7 @@ public class LoginController {
 	
 	//로그인 (DB)
 	@PostMapping("/loginOk")
-	public ModelAndView loginOk(String id, String password, HttpServletRequest request, HttpSession session, PagingDTO vo) {
+	public ModelAndView loginOk(String id, String password, HttpServletRequest request, HttpSession session,PagingDTO vo) {
 		LoginDTO dto = service.loginOk(id, password);
 		ModelAndView mav = new ModelAndView();
 		
@@ -93,11 +93,16 @@ public class LoginController {
 			session.setAttribute("loginPassword", dto.getPassword());
 			session.setAttribute("loginStatus", "Y");
 			session.setAttribute("nickname", dto.getNickname());
+			
+			//System.out.println(dto.toString());
 			if(Integer.parseInt(dto.getMember_type())==1) {
+				//System.out.println("qwer");
+				mav.setViewName("redirect:manager/commonmanager1");
 				vo.setTotalRecord(mservice.commontotalRecord(vo));
 				mav.addObject("list",mservice.commonpageSelect(vo));
+				mav.addObject("nowpage",vo.getNowPage());
 				mav.addObject("vo",vo);
-				mav.setViewName("manager/commonmanager1");
+				
 			}else {
 				mav.setViewName("login/loginOkResult");
 			}
@@ -105,6 +110,7 @@ public class LoginController {
 		}else {        
 			mav.setViewName("redirect:login");
 		}
+		System.out.println(mav);
 		return mav;		
 	}
 	

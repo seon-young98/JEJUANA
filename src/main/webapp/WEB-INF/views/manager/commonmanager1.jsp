@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <link rel="stylesheet" href="/jejuana/css/commonmanager1.css"/>
+
 <script>
 $(function(){
 	$("#searchForm").submit(function(){
@@ -143,5 +145,3 @@ $(function(){
 	</div>
 
 </div>
-<footer style="width:100%; height:74px; background:antiquewhite; text-align:center; position:fixed; bottom:0; left:0"><h1>footer</h1></footer>
-
