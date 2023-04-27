@@ -30,6 +30,9 @@ public class NoticeController {
 		
 		vo.setTotalRecord(service.totalRecord(vo));
 		
+		int m_type = 0;
+		String loginId = null;
+		
 		//공지사항리스트
 		mav.addObject("gList", service.gonggiSelect());
 		
@@ -39,12 +42,15 @@ public class NoticeController {
 		
 		String loginStatus = (String)session.getAttribute("loginStatus");
 		
-		String loginId = (String)session.getAttribute("loginId");
-		mav.addObject("loginId", loginId);
-		
-		int m_type = service.memberTypeSelect(loginId);
+		if(loginStatus=="Y") {
+			m_type = service.memberTypeSelect(loginId);
+			loginId = (String)session.getAttribute("loginId");
+		}else {
+			m_type = 1;
+			loginId = "null";
+		}
 		mav.addObject("m_type", m_type);
-		
+		mav.addObject("loginId", loginId);
 		mav.addObject("loginStatus", loginStatus);
 		
 		mav.setViewName("/notice/noticeList");
@@ -90,16 +96,25 @@ public class NoticeController {
 	@GetMapping("/noticeView")
 	public ModelAndView noticeView(int notice_no, HttpSession session, PagingTwoVO vo) {
 		ModelAndView mav = new ModelAndView();
-		String loginId = (String)session.getAttribute("loginId");
+		String loginId = null;
+		int m_type = 0;
+		String loginStatus = (String)session.getAttribute("loginStatus");
+				
+		NoticeDTO dto = service.noticeSelect(notice_no);
+
+		
+		if(loginStatus=="Y") {
+			m_type = service.memberTypeSelect(loginId);
+			loginId = (String)session.getAttribute("loginId");
+		}else {
+			m_type = 1;
+			loginId = "null";
+		}
 		
 		//조회수 증가
 		service.hitCount(notice_no, loginId);
 		
-		NoticeDTO dto = service.noticeSelect(notice_no);
-		
-		int m_type = service.memberTypeSelect(loginId);
 		mav.addObject("m_type", m_type);
-		
 		mav.addObject("loginId", loginId);
 		
 		mav.addObject("vo", vo);

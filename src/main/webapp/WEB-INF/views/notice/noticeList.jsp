@@ -45,12 +45,15 @@
 		<c:forEach var="dto" items="${list }">
 			<li>${recordNum }</li>
 			<li>
-			<input type="hidden" value="${dto.id }"/>
-			<input type="hidden" value="${loginId }"/>
 			<c:choose>
 			<c:when test="${dto.secretKey==true}"><c:if test="${dto.lvl==1 }"><p style="float:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳</p></c:if><img alt="secret" src="/jejuana/img/secret.png">
-				<c:if test="${dto.id==loginId || m_type==9 || dto.orgId==loginId}">
-				<p><a href="noticeView?notice_no=${dto.notice_no }&nowPage=${vo.nowPage}<c:if test='${vo.searchWord!=null }'>&searchKey=${vo.searchKey }&searchWord=${vo.searchWord }</c:if>">${dto.notice_subject }</a></p></c:if>${dto.notice_subject }</c:when>
+				<c:choose>
+				<c:when test="${dto.id==loginId }"><p><a href="noticeView?notice_no=${dto.notice_no }&nowPage=${vo.nowPage}<c:if test='${vo.searchWord!=null }'>&searchKey=${vo.searchKey }&searchWord=${vo.searchWord }</c:if>">${dto.notice_subject }</a></p></c:when>
+				<c:when test="${m_type==9 }"><p><a href="noticeView?notice_no=${dto.notice_no }&nowPage=${vo.nowPage}<c:if test='${vo.searchWord!=null }'>&searchKey=${vo.searchKey }&searchWord=${vo.searchWord }</c:if>">${dto.notice_subject }</a></p></c:when>
+				<c:when test="${dto.orgId==loginId }"><p><a href="noticeView?notice_no=${dto.notice_no }&nowPage=${vo.nowPage}<c:if test='${vo.searchWord!=null }'>&searchKey=${vo.searchKey }&searchWord=${vo.searchWord }</c:if>">${dto.notice_subject }</a></p></c:when>
+				<c:otherwise>${dto.notice_subject }</c:otherwise>
+				</c:choose>
+			</c:when>
 				<c:otherwise><a href="noticeView?notice_no=${dto.notice_no }&nowPage=${vo.nowPage}<c:if test='${vo.searchWord!=null }'>&searchKey=${vo.searchKey }&searchWord=${vo.searchWord }</c:if>">
 				<c:if test="${dto.lvl==1 }"><p style="float:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳</p></c:if>${dto.notice_subject }</a></c:otherwise>
 			</c:choose></li>
