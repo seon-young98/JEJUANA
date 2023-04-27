@@ -78,7 +78,7 @@ public class ReviewController {
 	//별점 DB 등록
 	@PostMapping("/reviewStarOk")
 	public ResponseEntity<String> reviewStarOk(int place_no, ReviewDTO dto, HttpServletRequest request) {
-		dto.setId((String)request.getSession().getAttribute("logId"));
+		dto.setId((String)request.getSession().getAttribute("loginId"));
 		dto.toString();
 		String htmlTag = "<script>";
 		
@@ -111,7 +111,7 @@ public class ReviewController {
 	//게시글 DB 등록
 	@PostMapping("/reviewWriteOk")
 	public ResponseEntity<String> reviewWriteOk(ReviewDTO dto, String thumbnail, HttpServletRequest request){
-		dto.setId((String)request.getSession().getAttribute("logId"));
+		dto.setId((String)request.getSession().getAttribute("loginId"));
 		dto.setIp(request.getRemoteAddr());
 		dto.setThumbnail(thumbnail);
 		
@@ -146,7 +146,6 @@ public class ReviewController {
 		
 		ReviewDTO dto = service.reviewSelect(plan_no);
 		List<ReviewDTO> list = service.reviewCourse(plan_no);
-		System.out.println(list.toString());
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto); //선택 레코드
@@ -179,7 +178,7 @@ public class ReviewController {
 	@PostMapping("/reviewEditOk")
 	public ResponseEntity<String> reviewEditOk(ReviewDTO dto, HttpSession session) {
 		//레코드 번호, 로그인 아이디가 같은 때 수정 : dto에 id 안 담겨 있기 때문에 session에서 불러옴
-		dto.setId((String)session.getAttribute("logId"));
+		dto.setId((String)session.getAttribute("loginId"));
 		String bodyTag = "<script>";
 		try {
 			service.reviewUpdate(dto);
@@ -204,7 +203,7 @@ public class ReviewController {
 	//게시글 DB에서 삭제
 	@GetMapping("/reviewDel")
 	public ModelAndView reviewDel(ReviewDTO dto, HttpSession session) {
-		dto.setId((String)session.getAttribute("logId"));
+		dto.setId((String)session.getAttribute("loginId"));
 			
 		int result = service.reviewDelete(dto);
 			

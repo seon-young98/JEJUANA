@@ -21,7 +21,7 @@ public class ReviewJoaController {
 		ModelAndView mav = new ModelAndView();
 		
 		ReviewJoaDTO dto = new ReviewJoaDTO();
-		dto.setId((String)request.getSession().getAttribute("logId"));
+		dto.setId((String)request.getSession().getAttribute("loginId"));
 		dto.setPlan_no(plan_no);
 		
 		int cnt = service.reviewJoaSelect(dto);

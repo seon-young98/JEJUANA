@@ -29,7 +29,7 @@ public class PlannerController {
 
     @GetMapping("/planner")
     public ModelAndView planner(HttpSession session) {
-        session.setAttribute("logId", "ggamangso");
+        session.setAttribute("loginId", "ggamangso");
         return new ModelAndView("planner/planner");
     }
 
@@ -61,7 +61,7 @@ public class PlannerController {
         planDTO.setStart_date(start_date);
         planDTO.setEnd_date(end_date);
         planDTO.setDays(days);
-//        planDTO.setId((String) session.getAttribute("logId"));
+//        planDTO.setId((String) session.getAttribute("loginId"));
         planDTO.setId("ggamangso");
         service.planSave(planDTO);
 
@@ -81,7 +81,7 @@ public class PlannerController {
         }
         
 //        ModelAndView mav = new ModelAndView();
-//        dto.setId((String) session.getAttribute("logId"));   //session.getAttribute("logId")
+//        dto.setId((String) session.getAttribute("loginId"));   //session.getAttribute("loginId")
 //        dto.setParticipants(dto.getParticipants() + 1);
 //        int result = service.planSave(dto);
 //        System.out.println(result);
@@ -109,7 +109,7 @@ public class PlannerController {
     @ResponseBody
     public List<PlaceDTO> bookmarkList(String searchWord, int pageNo, HttpSession session) {
         System.out.println(searchWord+ " - "+ pageNo);
-        String userid = (String) session.getAttribute("logId");
+        String userid = (String) session.getAttribute("loginId");
         userid = "ggamangso";
         return service.bookmarkList(searchWord, userid);
     }

@@ -44,7 +44,7 @@ public class BookMarkController {
 		BookMarkDTO dto = new BookMarkDTO();
 		dto.setBook_name(book_name);
 		dto.setBook_type(book_type);
-		dto.setId((String)session.getAttribute("logId"));
+		dto.setId((String)session.getAttribute("loginId"));
 		String htmlTag = "<script>";
 		
 		try {
@@ -77,7 +77,7 @@ public class BookMarkController {
 			@ResponseBody
 			public List<BookMarkDTO> list(HttpSession session) {
 
-				List<BookMarkDTO> blist = service.bookListSelect((String)session.getAttribute("logId"));		
+				List<BookMarkDTO> blist = service.bookListSelect((String)session.getAttribute("loginId"));		
 				System.out.println(blist);
 				return blist;
 			}

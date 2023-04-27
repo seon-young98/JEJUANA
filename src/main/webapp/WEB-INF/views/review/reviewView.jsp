@@ -72,7 +72,7 @@
 		}
 		
 		//댓글 작성
-		if(${logStatus!='Y' }){
+		if(${loginStatus!='Y' }){
 			$("#comment_button").attr("disabled", true);
 			$("#comment_content").attr("readonly", true);
 		}
@@ -168,9 +168,17 @@
 	<div id="course"></div>
 	
 	<div class="postbtn" style="word-wrap:break-word;">
-		<a href="reviewJoa?plan_no=${dto.plan_no }" class="joayo">좋아요 ${dto.joayo_hit }</a>
-		<c:if test="${logId!=dto.id }">
+		<c:if test="${loginStatus!='Y'}">
+			<a href="javascript:alert('로그인 후 이용 가능합니다.');" class="joayo">좋아요 ${dto.joayo_hit }</a>
+			<a href="javascript:alert('로그인 후 이용 가능합니다.');" class="bookmark">북마크</a>
+		</c:if>
+		<c:if test="${loginStatus=='Y' && loginId!=dto.id }">
+			<a href="reviewJoa?plan_no=${dto.plan_no }" class="joayo">좋아요 ${dto.joayo_hit }</a>
 			<a href="reviewBm?target_no=${dto.plan_no }" class="bookmark">북마크</a>
+		</c:if>
+		<c:if test="${loginId==dto.id }">
+			<a href="javascript:alert('자신이 작성한 글은 좋아요를 할 수 없습니다.');" class="joayo">좋아요 ${dto.joayo_hit }</a>
+			<a href="javascript:alert('자신이 작성한 글은 북마크를 할 수 없습니다.');" class="bookmark">북마크</a>
 		</c:if>
 	</div>
 	
@@ -188,7 +196,7 @@
 	<div>
 			<form method="post" id="commentForm">
 			<input type="hidden" name="target_no" value="${dto.plan_no }">
-			<textarea name="comment_content" id="comment_content" placeholder="<c:if test= "${logStatus=='Y' }">내용을 입력해 주세요</c:if><c:if test= "${logStatus!='Y' }">로그인 후 입력 가능합니다</c:if>"></textarea>
+			<textarea name="comment_content" id="comment_content" placeholder="<c:if test= "${loginStatus=='Y' }">내용을 입력해 주세요</c:if><c:if test= "${loginStatus!='Y' }">로그인 후 입력 가능합니다</c:if>"></textarea>
 			<button id="comment_button">댓글 등록</button>
 		</form>
 		<ul id="commentList">

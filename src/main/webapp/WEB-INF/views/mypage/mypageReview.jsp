@@ -2,7 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/resources/mypageMenu.jspf" %>
 <style>
-	.userTitle{
+	#bold2{
+		font-weight:bold;
+	}
+	.reviewTitle{
 		width:18%;
 		border:1px solid navy;
 		font-size:1.5em;
@@ -11,278 +14,137 @@
 		padding:10px;
 		text-align:center;
 	}
-	#bold5{
-		font-weight:bold;
+	.reviewList li{
+		float:left;
+		width:11%;
+		height:40px;
+		line-height:40px;
+		border-bottom:1px solid #ddd;
 	}
-	.join_inputBox{ 
-	 	display:inline-block;
-	 	width:42%;
-	 	float:left;
-	 	margin:50px 20px;
-	 	padding-left:50px;
+	.reviewList li:nth-child(6n+3){
+		width:40%;
+		white-space:nowrap;
+		overflow:hidden;
+		text-overflow:ellipsis;
 	}
-	.join_inputBox>div{
-	 	width:100%;
-	 	float:left;
-	 	margin-left:14px;
-	 	margin-bottom:20px;
-	 }
-	 .join_inputBox p{
-	 	display:inline-block;
-	 	width:50%;
-	 	border:1px solid #aaaaaa;
-	 	text-align:center;
-	 	padding:6px;	
-	 }
-	 .join_inputBox input{
-	 	font-size:12px;
-	 	padding:6px;
-	 	height:31px;
-	 	width:200px;
-	 }
-	 .userButton{
-	 	float:left;
-	 	margin:80px -153px 20px;
-	 }
-	 .userButton input{
-	 	font-size:12px;
-	 	padding:6px;
-	 	height:31px;
-	 	width:200px;
-	 }
-	 
-	#modalC {
-  	   width: 100%;
-       height: 100%;
-       position: absolute;
-       left: 0;
-       top: 0;
-       display: none;
-       flex-direction: column;
-       align-items: center;
-       justify-content: center;
+	.reviewList li:nth-child(6n-5){
+		margin-left:25px;
 	}
-	.modal-window {
-    	background: gray;
-        box-shadow: 0 8px 32px 0 #ddd;
-        backdrop-filter: blur( 13.5px );
-        -webkit-backdrop-filter: blur( 13.5px );
-        border-radius: 10px;
-        border: 1px solid rgba( 255, 255, 255, 0.18 );
-        width: 450px;
-        height: 450px;
-        position: relative;
-        top: -85px;
-        left:85px;
-        padding: 10px;
-    }
-    #p1{
-    	margin-top:115px;
-    	text-align:center;
-    	font-size:21px;
-    	font-weight:bold;
-    }
-    #p2{
-    	text-align:center;	
-    }
-    #pwdC{
-    	margin-top:20px;
-    	width:250px;
-    }
-    .btnC{
-    	text-align:center;
-    	margin-top:20px;
-    }
-    .btnC input{
-    	font-size:12px;
-	 	padding:6px;
-	 	height:31px;
-	 	width:200px;
-    }
-    .close-area{
-    	padding-top:10px;
-    	padding-left:400px;
-    	font-weight:bold;
-    }
+	#reviewChange{
+		line-height:20px;
+	}
+	#chooseDelR{
+		margin-left:30px;
+		margin-top:10px;
+	}
+	.pagingDivR{
+		width:20%;
+		margin:0 auto;
+	}
+	.pagingDivR li{
+		float:left;
+		padding:10px 20px;
+	}
 </style>
-
 <script>
-	
-	//비밀번호 조건변수
-	let pwdCondition = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
-	//닉네임 조건변수
-	let nickCondition = /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]{2,10}$/
-	//이메일 @앞부분 조건변수
-	let emailCondition = /^[a-zA-Z0-9._%+-]+$/
-	
-	//이메일 @뒷부분 조건변수
-	let emailCondition2 = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-	//휴대폰 조건변수
-	let telCondition = /^01(0|1|6|7|8|9)[0-9]{7,8}/
 	$(function(){
 		
-		//select박스 설정
-		var idval = $('#email2');
-			$("#email2_box").change(function(){
-				var element = $(this).find('option:selected');
-				var emailTag = element.attr('value');
-				idval.val(emailTag);
-			});
-			
-		//휴대폰 인증 팝업
-		$("input[value=휴대폰인증]").click(function(){
-				
-			var popupWidth = 550;
-			var popupHeight = 800;
-			var popupX = (document.body.offsetWidth / 2) - (550 / 2);
-			var popupY= (document.body.offsetheight / 2) - (800 / 2);
-			window.open('sendSms', 'chkSms', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY);
-				
-			this.value='휴대폰인증완료';
-			this.style.backgroundColor = "#082032";
-			this.style.border = "1px solid gray";
-			this.style.color = "white";
+		//전체 선택을 클릭하면 체크박스의 상태에 따라 선택 또는 해제 하는 기능 구현
+		$("#allCheckR").click(function(){
+			$(".reviewList input[name=noRList]").prop("checked",$("#allCheckR").prop("checked"))
 		});
 		
-		//유효성 검사
-		$("#userEditForm").submit(function(){
-				
-				//비밀번호
-				if($("#password").val()==""){
-					alert("비밀번호를 입력하세요.");
-					return false;
-				}
-				//비밀번호 검사
-				if(!pwdCondition.test($("#password").val())){
-					alert("비밀번호는 영대소문자, 특수기호 필수포함, 연속되는 숫자 사용금지, 공백문자가 포함되지 않게 사용가능합니다.");
-					return false;
-				}
+		//선택삭제 버튼을 클릭하면
+		$("#chooseDelR").click(function(){
+			//최소 1개 이상 삭제를 선택했을 때
 			
-				//닉네임
-				if($("#usernickname").val()==""){
-					alert("닉네임을 입력하세요.");
-					return false;
-				}
-				//닉네임 검사
-				if(!nickCondition.test($("#nickname").val())){
-					alert("닉네임은 특수기호, 공백문자 사용불가('_','-'포함)하며 최대 10글자까지 가능합니.");
-					return false;
-				}
-					
-				//이메일
-				if($("#email1").val()==""){
-					alert("이메일을 입력하세요.");
-					return false;
-				}
-				//이메일 검사
-				if(!emailCondition.test($("#email1").val())){
-					alert("올바른 이메일을 입력해주세요.");
-					return false;
-				}
-					
-				//도메인
-				if($("#email2").val()==""){
-					alert("도메인을 입력하거나 선택해주세요.");
-					return false;
-				}
-				
-				//도메인 검사
-				if(!emailCondition2.test($("#email2").val())){
-					alert("올바른 도메인을 입력해주세요.");
-					return false;
-				}
-				
-				//휴대폰
-				if($("#phone_num").val()==""){
-					alert("휴대폰번호를 입력하세요.");
-					return false;
-				}
-				//휴대폰 검사
-				if(!telCondition.test($("#phone_num").val())){
-					alert("올바른 휴대폰 번호를 입력하세요.");
-					return false;
-				}
+			var checkCount = 0;
 			
-				//form 태그
-				$("#userEditForm").attr("action","userEditOk");
-				
+			$(".reviewList input[name=noRList]").each(function(idx, obj){
+				if(obj.checked){ //$(obj).prop('checked')
+					checkCount++;
+				}
 			});
+			
+			if(checkCount>0){
+				if(confirm(checkCount+'개의 게시글을 삭제하시겠습니까?')){
+					$("#delRList").submit();
+				}
+			}else{
+				alert("삭제할 게시글이 없습니다.")
+			}
+		});
 		
-			//회원탈퇴
-			$("#userDelete").click(function(){
-				
-				var widthU = 400;
-				var heightU = 400;
-				
-				var leftU = (window.screen.width / 2) - (400/2);
-				var topU = (window.screen.height / 4);
-				
-				var windowStatusU = 'width='+widthU+', height='+heightU+', left='+leftU+', top='+topU+', scrollbars=no, status=no, resizable=no, titlebar=yes';
-				
-				window.open("userDelete", "userDelete", windowStatusU);
-			});
 	});
 </script>
 
 <div class="content_s">
-	<div class="userTitle">회원정보수정</div>
-	
-	<form method="post" id="userEditForm">
-		<div>
-			<div class="join_inputBox">
-			<c:forEach var="proDTO" items="${proDTO }">
-				<div>	
-					<p>아이디</p>
-					<input type="text" name="id" id="id" value="${proDTO.id }" readonly/>
-				</div>
-				<div>
-					<p>비밀번호</p>
-					<input type="password" name="password" id="password" minlength="8" maxlength="20" placeholder="비밀번호를 입력해주세요."/>
-					<span style="font-size:12px;display:block; margin-top:5px;">비밀번호는 8~20자의 영대소문자, 특수기호必로 사용하고, 연속되는 숫자,공백문자는 사용 불가합니다.</span>
-				</div>
-				<div style="width:200%">
-					<p style="width:25%">휴대전화</p>
-					<input type="text" name="phone_num" id="phone_num" placeholder="-를 제외하고 입력하세요." value="${proDTO.phone_num }">
-					<input type="button" name="telNumGet" id="telNumGet" value="휴대폰인증">
-				</div>
-				</c:forEach>
-				<div style="width:200%">
-					<p style="width:25%">이메일</p>
-					<input type="text" name="email1" id="email1" value="${email1 }"> @
-					<input type="text" name="email2" id="email2" placeholder="직접입력" value="${email2 }">
-					<select class="selectBox1" name="email2_box" id="email2_box">
-						<option value="naver.com">naver.com</option>
-						<option value="hanmail.net">hanmail.net</option>
-						<option value="nate.com">nate.com</option>
-						<option value="google.com">google.com</option>
-					</select>
-				</div>
-			</div>
+	<div class="reviewTitle">여행기록 관리</div>
+	<form method="post" action="/jejuana/mypage/mypageReviewMultiDel" id="delRList">
+		<ul class="reviewList">
+			<li><input type="checkbox" id="allCheckR"/> 전체선택</li>
+			<li>no</li>
+			<li>제목</li>
+			<li>조회수</li>
+			<li>등록일</li>
+			<li></li>
 			
-			<div class="join_inputBox">
-			<c:forEach var="proDTO" items="${proDTO }">
-				<div>
-					<p>이름</p>
-					<input type="text" name="name" id="username" value="${proDTO.name }" readonly/><br>
-				</div>
-				<div>
-					<p>닉네임</p>
-					<input type="text" name="nickname" id="nickname" minlength="2" maxlength="10" placeholder="닉네임을 입력해주세요." value="${proDTO.nickname }">
-				</div>
+			<c:set var="recordNum" value="${vo.totalRecord - (vo.nowPage-1)*vo.onePageRecord }"/>
+			
+			<c:forEach var="dto" items="${list }">
+				<li><input type="checkbox" name="noRList" value="${dto.plan_no }"></li>
+				<li>${recordNum }</li>
+				<li>${dto.review_subject }</li>
+				<li>${dto.review_hit }</li>
+				<li>${dto.writedate }</li>
+				<li><input type="button" value="수정" id="reviewChange"></li>
+				
+				<c:set var="recordNum" value="${recordNum-1 }"/>
 			</c:forEach>
-			</div>
-		</div>	
-		<div class="userButton">
-			<input type="submit" value="수정하기"/>
-			<input type="button" value="탈퇴하기" id="userDelete"/>
-		</div>
+		</ul>
 	</form>
-</div>	
 	
-
+	<div>
+		<input type="button" value="선택삭제" id="chooseDelR"/>
+	</div>
+	
+	<!-- 페이징 -->
+		<div class="pagingDivR">
+			<ul>
+				<c:if test="${vo.nowPage==1 }">
+					<li><</li>
+				</c:if>
+				<c:if test="${vo.nowPage>1 }">
+					<li><a href="mypageReview?nowPage=${vo.nowPage-1 }"><</a></li>
+				</c:if>
+				
+				<!-- 페이지 번호 -->
+				<c:forEach var="p" begin="${vo.startPageNum }" end="${vo.startPageNum+vo.onePageNumCount-1}">
+				<c:if test="${p <= vo.totalPage }">	
+					<c:if test="${p==vo.nowPage }">
+						<li style="font-weight:bold;">
+					</c:if>
+					<c:if test="${p!=vo.nowPage }">
+						<li>
+					</c:if>
+					<a href="mypageReview?nowPage=${p }">${p }</a></li>
+				</c:if>
+			</c:forEach>
+			
+			<!-- 다음 페이지 -->
+			<c:if test="${vo.nowPage<vo.totalPage }"> <!-- 다음 페이지가 있을 때 -->
+				<li><a href="mypageReview?nowPage=${vo.nowPage+1 }">></a></li>	
+			</c:if>	
+			<c:if test="${vo.nowPage==vo.totalPage }"> <!-- 현재 페이지가 마지막 페이지일 때 -->
+				<li>></li>
+			</c:if>
+			</ul>
+		</div>
+	
 </div>
 
 
+</div>
 
 </body>
 </html>

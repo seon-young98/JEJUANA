@@ -23,7 +23,7 @@ public class ReviewComController {
 	@PostMapping("/commentSend")
 	public String commentSend(ReviewComDTO dto, HttpServletRequest request) {
 		dto.setIp(request.getRemoteAddr());
-		dto.setId((String)request.getSession().getAttribute("logId"));
+		dto.setId((String)request.getSession().getAttribute("loginId"));
 		
 		int result = service.commentInsert(dto);
 		System.out.println(dto.toString());
@@ -40,7 +40,7 @@ public class ReviewComController {
 	//댓글 수정
 	@PostMapping("/commentEdit")
 	public String commentEdit(ReviewComDTO dto, HttpSession session) {
-		dto.setId((String)session.getAttribute("logId"));
+		dto.setId((String)session.getAttribute("loginId"));
 		int result = service.commentUpdate(dto);
 		return String.valueOf(result);
 	}
@@ -48,7 +48,7 @@ public class ReviewComController {
 	//댓글 삭제
 	@GetMapping("/commentDelete")
 	public String commentDelete(int comment_no, HttpSession session) {
-		String id = (String)session.getAttribute("logId");
+		String id = (String)session.getAttribute("loginId");
 		return String.valueOf(service.commentDelete(comment_no, id));
 	
 	}

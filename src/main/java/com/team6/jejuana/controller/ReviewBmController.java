@@ -21,7 +21,7 @@ public class ReviewBmController {
 		ModelAndView mav = new ModelAndView();
 	
 		ReviewBmDTO dto = new ReviewBmDTO();
-		dto.setId((String)request.getSession().getAttribute("logId"));
+		dto.setId((String)request.getSession().getAttribute("loginId"));
 		dto.setTarget_no(target_no);
 		
 		int cnt = service.reviewBmSelect(dto);

@@ -148,10 +148,10 @@ html, body {width:100%;height:100%;padding:0;margin:0}
 			</div>
 			
 			
-			<c:if test="${logStatus!='Y'}">
+			<c:if test="${loginStatus!='Y'}">
 						<button type="button"  class="btn btn-link" onclick="test1()" >북마크</button>
 					</c:if>
-					<c:if test="${logStatus=='Y'}">
+					<c:if test="${loginStatus=='Y'}">
 						<button type="button"  id="modal_btn" class="btn btn-link">북마크</button>
 			</c:if>
 			
@@ -160,9 +160,10 @@ html, body {width:100%;height:100%;padding:0;margin:0}
 			<div style="width:100%; height:74px; background:antiquewhite; text-align:center;"><h1>footer</h1></div>
 			<!-- 카카오 지도 -->
 	
-			
-
+<!-- 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=75c9e1cc14c0f4aab448e8ccbe6b84b2&libraries=services,clusterer,drawing"></script>
+ -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=806e918783759197bca10fffa91fc3e5&libraries=services,clusterer,drawing"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script><!-- 관광지 공유 api -->
 
 <!-- 북마크 모달창 출력 -->
