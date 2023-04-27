@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 public class CourseDTO {
     private int plan_no;
     private int place_no;
-    private int day;
-    private int order;
+    private int days_order;
+    private int course_order;
     private int activated;
 
 }

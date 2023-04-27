@@ -1,5 +1,6 @@
 package com.team6.jejuana.service;
 
+import com.team6.jejuana.dto.CourseDTO;
 import com.team6.jejuana.dto.PlaceDTO;
 import com.team6.jejuana.dto.PlanDTO;
 
@@ -11,4 +12,6 @@ public interface PlanService {
     public List<PlaceDTO> placeSelectList(String searchWord, int pageNo);
     public List<PlaceDTO> bookmarkList(String searchWord, String userid);
     public PlaceDTO selectedPlace(int place_no);
+    public int courseSave(List<CourseDTO> list);
+    public List<PlanDTO> planList(String userid);
 }

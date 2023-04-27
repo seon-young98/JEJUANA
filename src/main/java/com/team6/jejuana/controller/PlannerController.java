@@ -5,6 +5,7 @@ import com.team6.jejuana.dto.PlaceDTO;
 import com.team6.jejuana.dto.PlanDTO;
 import com.team6.jejuana.service.PlanService;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 @Controller
-public class PlannerController {
+public class PlannerController  {
     @Autowired
     PlanService service;
 
@@ -62,33 +64,30 @@ public class PlannerController {
         planDTO.setDays(days);
 //        planDTO.setId((String) session.getAttribute("logId"));
         planDTO.setId("ggamangso");
-        service.planSave(planDTO);
+        int result = service.planSave(planDTO);
 
+        int plan_no = planDTO.getPlan_no();
 
 
 
         List<CourseDTO> list = new ArrayList<CourseDTO>();
 
         JSONArray jArray = new JSONArray(schedule);
-        for(Object course:jArray){
-            System.out.println(course.toString());
+        System.out.println(jArray.get(0).getClass().getSimpleName());
+        for (int i = 0; i < jArray.length(); i++) {
+            JSONObject course = jArray.getJSONObject(i);
             CourseDTO dto = new CourseDTO();
-            JSONObject jsonCourse = new JSONObject(course);
-            dto.setPlace_no(jsonCourse.getInt("place_no"));
-            dto.setDay(jsonCourse.getInt("day"));
-            dto.setOrder(jsonCourse.getInt("order"));
+            dto.setPlan_no(plan_no);
+            dto.setPlace_no(course.getInt("place_no"));
+            dto.setDays_order(course.getInt("days_order"));
+            dto.setCourse_order(course.getInt("course_order"));
+            list.add(dto);
         }
-        
-//        ModelAndView mav = new ModelAndView();
-//        dto.setId((String) session.getAttribute("logId"));   //session.getAttribute("logId")
-//        dto.setParticipants(dto.getParticipants() + 1);
-//        int result = service.planSave(dto);
-//        System.out.println(result);
-//
-//        mav.setViewName("redirect:/");
+        int c_result = service.courseSave(list);
 
 
-        return "11";
+
+        return ""+c_result;
     }
 
     @PostMapping("placeAllList")
@@ -148,6 +147,18 @@ public class PlannerController {
         }
 
         return placeList;
+    }
+
+    @PostMapping("planList")
+    @ResponseBody
+    public List<PlanDTO> planList(HttpSession session){
+        String userid = (String) session.getAttribute("logId");
+
+        List<PlanDTO> list = service.planList("ggamangso");
+
+
+
+        return list;
     }
 
 

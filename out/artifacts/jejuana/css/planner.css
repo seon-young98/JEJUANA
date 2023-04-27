@@ -272,7 +272,7 @@ ul li {
     background-color: chocolate;
     text-align: center;
 }
-.order{
+.course_order{
     display: none;
 }
 .modal-content div[class=modal-body]{
@@ -283,4 +283,43 @@ ul li {
 .modal-dialog{
     height:100%;
     vertical-align: middle;
+}
+#chooseModal{
+    z-index: 1051;
+}
+
+#planList{
+    width:500px;
+    height:700px;
+    display:none;
+    position: absolute;
+    top:300px;
+    left:1000px;
+    background-color: black;
+    z-index: 1051;
+    padding: 20px;
+}
+#planListBody{
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #ff9451;
+    height:660px;
+
+}
+.plan_container{
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-row-gap: 10px;
+    color : black;
+    background-color: white;
+    margin-bottom: 10px;
+}
+.plan_item:last-child{
+    grid-column: 2;
+    grid-row: 1/span 3;
+    align-items: center;
+    background-color: #51b4ff;
+    align-self: center;
+    text-align: center;
 }
