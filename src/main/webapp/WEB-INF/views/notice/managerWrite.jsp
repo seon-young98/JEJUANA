@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/super-build/ckeditor.js"></script>
 <link rel="stylesheet" href="/jejuana/css/notice.css"/>
-
 <script>
 	$(function(){
 		 CKEDITOR.ClassicEditor.create(document.getElementById("content"), {
@@ -147,7 +146,7 @@
          });
 		 
 		 //폼 유효성검사
-		 $("#noticeForm").submit(function(){
+		 $("#managerForm").submit(function(){
 			if($("#subject").val()==""){
 				alert("제목을 입력하세요.");
 				return false;
@@ -161,20 +160,20 @@
     });
 </script>
 <div class="container">
-	<p class="container_p">문의하기</p>
-	<form method="post" action="noticeWriteOk" id="noticeForm">
+	<p class="container_p">공지작성하기</p>
+	<form method="post" action="managerWriteOk" id="managerForm">
 		<ul>
 			<li>제목</li>
-			<li><input type="text" name="notice_subject" id="subject" value="[문의]"/></li>
+			<li><input type="text" name="notice_subject" id="subject" value="[공지]"/></li>
 			<li>글내용</li>
 			<li>
 				<!-- 에디터 -->
 				<textarea name="notice_content" id="content"></textarea>
 			</li>
-			<li><input type="checkbox" name="secretKey"/> 비밀글 설정</li>
+			<li> </li>
 			<li><div>
 					<input type="button" value="목록보기" onclick="location.href='noticeList'">
-					<input type="submit" value="문의하기"/>
+					<input type="submit" value="공지등록하기"/>
 				</div>
 			</li>
 		</ul>

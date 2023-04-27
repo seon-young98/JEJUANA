@@ -20,4 +20,10 @@ public class NoticeDTO {
 	
 	//비밀글
 	private boolean secretKey;
+	
+	private int ref; //원글번호
+	private int lvl; //들여쓰기
+	private String orgId; //원글작성자
+	
+	private int member_type;
 }

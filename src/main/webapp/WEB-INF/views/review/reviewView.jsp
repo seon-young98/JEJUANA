@@ -44,9 +44,9 @@
 					$(comment).each(function(i, cDTO){
 						tag += "<li><div><b>"+cDTO.id+" ("+cDTO.writedate+")</b>";
 						//본인이 쓴 댓글일 때
-						if(cDTO.id == '${logId}'){
-							tag += "<input type='button' value='수정'/>";
-							tag += "<input type='button' value='삭제' title='"+cDTO.comment_no+"' />";
+						if(cDTO.id == '${loginId}'){
+							tag += "<input type='button' class='comment_edit' value='수정'/>";
+							tag += "<input type='button' class='comment_del' value='삭제' title='"+cDTO.comment_no+"' />";
 							
 							tag += "<p>"+cDTO.comment_content+"</p></div>";
 							
@@ -73,7 +73,7 @@
 		
 		//댓글 작성
 		if(${loginStatus!='Y' }){
-			$("#comment_button").attr("disabled", true);
+			$("#comment_btn").attr("disabled", true);
 			$("#comment_content").attr("readonly", true);
 		}
 		$("#commentForm").submit(function(){
@@ -185,7 +185,7 @@
 	<div class="view_subMenu">
 		<input type="hidden" name="plan_no" value="${dto.plan_no }">
 		<a href="reviewList">목록</a>
-		<c:if test="${logId==dto.id }">
+		<c:if test="${loginId==dto.id }">
 			<a href="reviewEdit?plan_no=${dto.plan_no }">수정</a>
 		<a href="javascript:reviewDel()">삭제</a>
 		</c:if>
@@ -196,8 +196,10 @@
 	<div>
 			<form method="post" id="commentForm">
 			<input type="hidden" name="target_no" value="${dto.plan_no }">
-			<textarea name="comment_content" id="comment_content" placeholder="<c:if test= "${loginStatus=='Y' }">내용을 입력해 주세요</c:if><c:if test= "${loginStatus!='Y' }">로그인 후 입력 가능합니다</c:if>"></textarea>
-			<button id="comment_button">댓글 등록</button>
+			<div class="coment">
+				<textarea name="comment_content" id="comment_content" placeholder="<c:if test= "${loginStatus=='Y' }">내용을 입력해 주세요</c:if><c:if test= "${loginStatus!='Y' }">로그인 후 입력 가능합니다</c:if>"></textarea>
+				<button id="comment_btn">댓글 등록</button>
+			</div>
 		</form>
 		<ul id="commentList">
 		</ul>

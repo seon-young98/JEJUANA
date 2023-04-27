@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/super-build/ckeditor.js"></script>
 <link rel="stylesheet" href="/jejuana/css/notice.css"/>
-
 <script>
 	$(function(){
 		 CKEDITOR.ClassicEditor.create(document.getElementById("content"), {
@@ -147,7 +146,7 @@
          });
 		 
 		 //폼 유효성검사
-		 $("#noticeForm").submit(function(){
+		 $("#noticeEditForm").submit(function(){
 			if($("#subject").val()==""){
 				alert("제목을 입력하세요.");
 				return false;
@@ -161,22 +160,28 @@
     });
 </script>
 <div class="container">
-	<p class="container_p">문의하기</p>
-	<form method="post" action="noticeWriteOk" id="noticeForm">
-		<ul>
+	<p class="container_p">수정하기</p>
+	<form method="post" action="/jejuana/notice/noticeEditOk" id="noticeEditForm">
+		<input type="hidden" name="notice_no" value="${dto.notice_no }"/>
+		<ul>	
 			<li>제목</li>
-			<li><input type="text" name="notice_subject" id="subject" value="[문의]"/></li>
+			<li><input type="text" name="notice_subject" id="subject" value="${dto.notice_subject }"/></li>
 			<li>글내용</li>
 			<li>
 				<!-- 에디터 -->
-				<textarea name="notice_content" id="content"></textarea>
+				<textarea name="notice_content" id="content">${dto.notice_content }</textarea>
 			</li>
-			<li><input type="checkbox" name="secretKey"/> 비밀글 설정</li>
+			<li><input type="checkbox" name="secretKey" <c:if test="${dto.secretKey==true }">checked</c:if>/> 비밀글 설정</li>
 			<li><div>
-					<input type="button" value="목록보기" onclick="location.href='noticeList'">
-					<input type="submit" value="문의하기"/>
+					<input type="button" value="목록보기" id="noticeList" onclick="location.href='noticeList?notice_no=${dto.notice_no}<c:if test='${vo.searchWord!=null }'>&searchKey=${vo.searchKey }&searchWord=${vo.searchWord }</c:if>'">
+					<input type="submit" value="수정하기"/>
 				</div>
 			</li>
 		</ul>
+		<input type="hidden" name="nowPage" value="${vo.nowPage }"/>
+		<c:if test="${vo.searchWord!=null }">
+			<input type="hidden" name="searchKey" value="${vo.searchKey }">
+			<input type="hidden" name="searchWord" value="${vo.searchWord }"/>
+		</c:if>
 	</form>
 </div>

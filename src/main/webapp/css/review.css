@@ -177,9 +177,27 @@ th, td{
 	float:right;
 }
 #comment_content{
-		width:50%;
-		height:80px;
-		resize:none;
+	width:80%;
+	height:50px;
+	resize:none;
+}
+.comment_edit, .comment_del {
+	background-color: white;
+    color: black;
+    border:none;
+}
+
+.coment{
+	margin:1% 0;
+	width:100%;
+}
+#comment_btn{
+	background-color: white;
+	width:15%;
+}
+
+.comment_edit{
+	margin-left:4%;
 }
 #commentList>li{
 	padding:10px 0;
