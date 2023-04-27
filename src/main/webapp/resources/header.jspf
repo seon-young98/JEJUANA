@@ -54,7 +54,7 @@
 					</c:if>
 					<c:if test="${sessionScope.loginId!=null }">
 						<button onclick="myFunction()" class="dropbtn"><%=(String)session.getAttribute("nickname") %>님 환영합니다</button>
-							<div id="myDropdown" class="dropdown-content"> 
+							<div id="myDropdown" class="dropdown-content">
 								<a href="/jejuana/mypage/mypageReview">마이페이지</a> <a href="/jejuana/logout">로그아웃</a>
 							</div>
 					</c:if>
