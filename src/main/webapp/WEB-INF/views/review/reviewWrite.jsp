@@ -259,6 +259,6 @@ $(function(){
 			<div id="starli"></div>
 		</div>
 		<a href="/jejuana/review/reviewList">목록</a>
-		<input type="submit" value="업로드하기">
+		<input type="submit" value="업로드하기" style="margin-bottom:13%; background:white; border:none;">
 	</form>
 </div>
