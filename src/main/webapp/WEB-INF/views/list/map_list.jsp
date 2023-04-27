@@ -365,7 +365,7 @@ function displayMarker(places,i) {
     var place_lastname = places[i].address_name.substr(12);
     
     var bk_login = '';
-    if ('${logStatus}'!='Y'){
+    if ('${loginStatus}'!='Y'){
     	bk_login = 'onclick="test1()"'; 	
     }
     var content = document.createElement('div');

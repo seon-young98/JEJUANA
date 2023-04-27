@@ -1,5 +1,5 @@
 footer{
-	position:absolute;
+	position:fixed;
 	bottom:0;
 	width:100%;
 	box-shadow: 0 0 4px black;
@@ -25,9 +25,9 @@ footer{
 .footer_select{
 	border:none;
 	font-size:17px;
-    -webkit-appearance:none; /* Å©·Ò È­»ìÇ¥ ¾ø¾Ö±â */
-    -moz-appearance:none; /* ÆÄÀÌ¾îÆø½º È­»ìÇ¥ ¾ø¾Ö±â */
-    appearance:none; /* È­»ìÇ¥ ¾ø¾Ö±â */
+    -webkit-appearance:none; /* í¬ë¡¬ í™”ì‚´í‘œ ì—†ì• ê¸° */
+    -moz-appearance:none; /* íŒŒì´ì–´í­ìŠ¤ í™”ì‚´í‘œ ì—†ì• ê¸° */
+    appearance:none; /* í™”ì‚´í‘œ ì—†ì• ê¸° */
 }
 
 .footer_right_box{

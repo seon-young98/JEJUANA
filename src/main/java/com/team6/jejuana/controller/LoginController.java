@@ -27,9 +27,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.team6.jejuana.dto.LoginDTO;
 import com.team6.jejuana.dto.MessageDTO;
-
+import com.team6.jejuana.dto.PagingDTO;
 import com.team6.jejuana.dto.SmsResponseDTO;
 import com.team6.jejuana.service.LoginService;
+import com.team6.jejuana.service.ManagerService;
 import com.team6.jejuana.service.SmsService;
 
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,8 @@ public class LoginController {
 	
 	@Autowired
 	LoginService service;
+	@Autowired
+    ManagerService mservice;
 	
 	//로그인페이지 이동      
 	@GetMapping("/login")
@@ -81,7 +84,7 @@ public class LoginController {
 	
 	//로그인 (DB)
 	@PostMapping("/loginOk")
-	public ModelAndView loginOk(String id, String password, HttpServletRequest request, HttpSession session) {
+	public ModelAndView loginOk(String id, String password, HttpServletRequest request, HttpSession session, PagingDTO vo) {
 		LoginDTO dto = service.loginOk(id, password);
 		ModelAndView mav = new ModelAndView();
 		
@@ -90,7 +93,15 @@ public class LoginController {
 			session.setAttribute("loginPassword", dto.getPassword());
 			session.setAttribute("loginStatus", "Y");
 			session.setAttribute("nickname", dto.getNickname());
-			mav.setViewName("login/loginOkResult");
+			if(Integer.parseInt(dto.getMember_type())==1) {
+				vo.setTotalRecord(mservice.commontotalRecord(vo));
+				mav.addObject("list",mservice.commonpageSelect(vo));
+				mav.addObject("vo",vo);
+				mav.setViewName("manager/commonmanager1");
+			}else {
+				mav.setViewName("login/loginOkResult");
+			}
+			
 		}else {        
 			mav.setViewName("redirect:login");
 		}
