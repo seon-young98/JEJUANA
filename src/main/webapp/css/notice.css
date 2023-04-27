@@ -1,0 +1,101 @@
+	#managerForm li{
+		padding: 10px 0;
+	}
+	#subject{
+		width:100%
+	}
+	/*CKEDITOR*/
+	.ck-editor__editable[role="textbox"] {
+	    /* editing area */
+	     min-height: 300px;
+	}
+	.ck-content .image {
+	     /* block images */
+	     max-width: 100%;
+	     margin: 20px auto;
+	}
+	.container{
+		margin:0 auto;
+		width:60%;
+	}
+	.container_p{
+		 font-size:1.5em;
+		 font-weight:bold;
+		 margin:20px 0;
+	}
+	#noticeEditForm li{
+		padding: 10px 0;
+	}
+	.title{
+		font-size:35px;
+		padding-top:50px;
+	}
+	.searchDiv{
+		padding:10px;
+		text-align:right;
+	}
+	.noticeList li{
+		float:left;
+		width:11%;
+		height:40px;
+		line-height:40px;
+		border-bottom:1px solid #ddd;
+	}
+	.noticeList li:nth-child(5n+2){
+		width:50%;
+		/*밑줄임 표시하기*/
+		white-space:nowrap; /*줄바꾸지 않음*/
+		overflow:hidden; /*넘치는 문자 숨기기*/
+		text-overflow:ellipsis;/*넘치는 데이터가 있을 때 밑줄임 표시하기*/
+	}
+	.pagingDivP{
+		width:30%;
+		margin:0 auto;
+	}
+	.pagingDivP li{
+		float:left;
+		padding:40px 20px;
+	}
+	a{
+		text-decoration:none;
+		color:black;
+	}
+	.noticeList img{
+		width:21px;
+		height:21px;
+		margin-top:9px;
+		float:left;
+	}
+	.btn div{
+		float:left;
+		margin:0 10px;
+	}
+	.btn{
+		float:right;
+	}
+	#noticeReplyForm li{
+		padding: 10px 0;
+	}
+	#view li{
+		border-bottom: 1px solid #ddd;
+		padding: 10px 0;
+	}
+	.titleView{
+		font-size:35px;
+		padding-top:50px;
+		padding-bottom:20px;
+	}
+	#s{
+		margin:10px 0;
+	}
+	#noList{
+		float:left;
+		margin:6px 10px;
+	}
+	#noticeForm li{
+		padding: 10px 0;
+	}
+	.btn_m input{
+		float:left;
+		margin:8px 20px 0 0;
+	}

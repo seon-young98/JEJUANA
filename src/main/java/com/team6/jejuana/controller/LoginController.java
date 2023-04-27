@@ -116,6 +116,22 @@ public class LoginController {
 		
 		return "login/idCheck";
 	}
+	
+	//회원가입
+	@RequestMapping(value="/joinOk", method=RequestMethod.POST)
+	public ModelAndView joinOk(LoginDTO dto) {
+		ModelAndView mav = new ModelAndView();
+				
+		int result = service.loginInsert(dto);
+				
+		if(result>0) {//회원가입 성공시 로그인페이지이동
+			mav.addObject("msg","회원가입에 성공했습니다. 로그인 페이지로 이동합니다.");
+			mav.setViewName("redirect:login");
+		}else {//회원가입 실패 시 로그인 폼으로 이동+메세지
+			mav.setViewName("login/join");
+		}
+		return mav;
+	}
 	//==================================================================
 	// 휴대폰 인증    
 	private final SmsService smsService;

@@ -39,7 +39,7 @@
 		<jsp-property-group>
 			<url-pattern>/WEB-INF/views/*</url-pattern>
 			<include-prelude>/resources/header.jspf</include-prelude>
-			
+			<include-coda>/resources/footer.jspf</include-coda>
 		</jsp-property-group>
 	</jsp-config> 
 	

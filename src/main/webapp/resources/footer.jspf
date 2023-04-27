@@ -11,7 +11,7 @@
 		<a href="#">ⓒ 제주아나 Corp.All rights reserved.</a>
 	</div>
 	<div class="footer_right_box">
-		<div >1:1문의</div>
+		<div ><a href="/jejuana/notice/noticeList">1:1문의</a></div>
 		<div class="footer_selectBox">
 			<select onchange="if(this.value) window.open(this.value);" class="footer_select">
 				<option hidden class="footer_option">관련사이트</option>
