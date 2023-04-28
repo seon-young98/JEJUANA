@@ -3,6 +3,7 @@ package com.team6.jejuana.service;
 import java.util.List;
 
 import com.team6.jejuana.dto.BookMarkDTO;
+import com.team6.jejuana.dto.PlaceDTO;
 
 public interface BookMarkService {
 	public int bookMarkInsert(BookMarkDTO dto);

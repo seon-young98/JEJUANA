@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.team6.jejuana.dao.BookMarkDAO;
 import com.team6.jejuana.dto.BookMarkDTO;
+import com.team6.jejuana.dto.PlaceDTO;
 
 @Service
 public class BookMarkServiceImpl implements BookMarkService {

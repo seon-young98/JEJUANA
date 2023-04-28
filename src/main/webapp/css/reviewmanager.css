@@ -15,7 +15,7 @@
 	width:100%;
 	height:50px;
 }
-
+.category1{margin-top:4%;font-size:50px;font-weight:bold;}
 .tsearch td{ border:1px solid black; }
 
 .searchselect li{list-style-type: none;float:left;}
@@ -30,15 +30,19 @@ table#tb td:nth-child(3){width:20%;}
 table#tb td:nth-child(4){width:15%;}
 table#tb td:nth-child(5){width:10%;}
 .screen{width:100%; height:1100px; background:gray;position:absolute;}
-.category1{width:100%;height:12%; background:red;margin-top:55px}
+.category1{width:100%;height:12%;margin-top:55px}
 .section1{width:10%;background:black;}
 .section1_1{background:white; height:20%;}
 .section2{width:90%;}
-.section2_1{background:olive; height:20%;margin-bottom:20px}
-.section2_1 span{font-weight:bold; font-size:20px;margin-left:20px}
-.section2_2{display:flex; background:orange;height:10%;width:90%;margin:20px;}
+.section2_1{background:olive; height:20%;margin-bottom:4%}
+.section2_1_1{font-weight:bold; font-size:20px;margin-left:4%}
+.section2_2{display:flex; background:orange;height:10%;width:90%;margin:20px;margin-left:4%}
 .section2_3{width:10%; background: aliceblue;}
 .section2_4{width:100%; margin-top:10px;display:inline-flex;}
+.tsearch{margin-left:22px}
+.section2_5{margin-left:35px;}
+.section2_6{height:45%;margin-top:40px;}
+.section2_7{margin-left:3%;width:100%;}
 #searchForm{width:80%}
 #searchKey{height:90%; margin:0px 35px;}
 #searchWord{height:90%; width:60%;}

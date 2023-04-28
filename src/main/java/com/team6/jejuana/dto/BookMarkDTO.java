@@ -7,13 +7,20 @@ public class BookMarkDTO {
 	private int book_type;
 	private String id;
 	private int targer_no;
+	private String book_addr;
 	
-	
-	
+
 	@Override
 	public String toString() {
 		return "BookMarkDTO [book_no=" + book_no + ", book_name=" + book_name + ", book_date=" + book_date
-				+ ", book_type=" + book_type + ", id=" + id + ", targer_no=" + targer_no + "]";
+				+ ", book_type=" + book_type + ", id=" + id + ", targer_no=" + targer_no + ", book_addr=" + book_addr
+				+ "]";
+	}
+	public String getBook_addr() {
+		return book_addr;
+	}
+	public void setBook_addr(String book_addr) {
+		this.book_addr = book_addr;
 	}
 	public int getBook_no() {
 		return book_no;

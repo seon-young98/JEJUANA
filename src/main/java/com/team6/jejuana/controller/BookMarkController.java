@@ -36,13 +36,14 @@ public class BookMarkController {
 	private DataSourceTransactionManager transactionManager;
 	
 	@GetMapping("/bookmarkTest")
-	public ResponseEntity<String> bookmarkTest(String book_name,int book_type, HttpSession session, HttpServletRequest request) {
-
+	public ResponseEntity<String> bookmarkTest(String book_name,String book_addr,int book_type, HttpSession session, HttpServletRequest request) {
+		
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 		def.setPropagationBehavior(DefaultTransactionDefinition.PROPAGATION_REQUIRED);
 		TransactionStatus status = transactionManager.getTransaction(def);
 		BookMarkDTO dto = new BookMarkDTO();
 		dto.setBook_name(book_name);
+		dto.setBook_addr(book_addr);
 		dto.setBook_type(book_type);
 		dto.setId((String)session.getAttribute("loginId"));
 		String htmlTag = "<script>";

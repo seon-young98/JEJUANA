@@ -61,7 +61,7 @@
 						</div>
 						<div class="main_logout_button main_mypage">
 							<!-- 마이페이지 링크 넣어주기 -->
-							<a href="mypage/mypageReview">마이페이지</a>
+							<a href="mypage/mypagePlan">마이페이지</a>
 						</div>
 					</c:if>				
 				<ul>

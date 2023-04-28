@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- fontawesome -->
+<script src="https://kit.fontawesome.com/803f3553c2.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/jejuana/css/review.css"/>
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
 <script>
@@ -13,7 +15,6 @@ $(function(){
 	});
 });
 </script>
-
 <div class="review_header">
 	<div class="page_feature">
 		<p class="topic">여행기록</p><br>
@@ -172,7 +173,7 @@ $(function(){
 						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> ${rDTO.joayo_hit }
 					</li>
 					<li class="review_hit">
-						<img src="/img/hit.png">
+						<img src="../img/hit.png" class="hitImg">
 						 ${rDTO.review_hit }
 					 </li>
 					<li class="review_date">${rDTO.writedate }</li>
@@ -189,154 +190,14 @@ $(function(){
 					<li class="li_tag">동쪽/식도락/힐링</li>
 					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">제주도 짱</a></li>
 					<li class="li_id">by 고구마</li>
-					<li>조회 12 
-						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 3
+					<li>
+						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 34
 					</li>
+					<li class="review_hit">
+						<img src="../img/hit.png" class="hitImg">
+						 56
+					 </li>
 					<li class="review_date">2023-04-21</li>
-				</ul>
-		  </div>
-		  <div class="review">
-				<div class="img-crop">
-					<div class="inner">
-		  				<img class="thumbnail" src="${rDTO.thumbnail }">
-		 			</div>
-		 		 </div>
-				<ul>
-					<li class="li_tag">가족여행/액티비티</li>
-					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">좋았던 제주도 여행</a></li>
-					<li class="li_id">by 감자</li>
-					<li>조회 22 
-						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 4
-					</li>
-					<li class="review_date">2023-04-15</li>
-				</ul>
-		  </div>
-		  <div class="review">
-				<div class="img-crop">
-					<div class="inner">
-		  				<img class="thumbnail" src="${rDTO.thumbnail }">
-		 			</div>
-		 		 </div>
-				<ul>
-					<li class="li_tag">동쪽/식도락/힐링</li>
-					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">제주도 짱</a></li>
-					<li class="li_id">by 고구마</li>
-					<li>조회 12 
-						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 3
-					</li>
-					<li class="review_date">2023-04-21</li>
-				</ul>
-		  </div>
-		  <div class="review">
-				<div class="img-crop">
-					<div class="inner">
-		  				<img class="thumbnail" src="${rDTO.thumbnail }">
-		 			</div>
-		 		 </div>
-				<ul>
-					<li class="li_tag">가족여행/액티비티</li>
-					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">좋았던 제주도 여행</a></li>
-					<li class="li_id">by 감자</li>
-					<li>조회 22 
-						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 4
-					</li>
-					<li class="review_date">2023-04-15</li>
-				</ul>
-		  </div>
-		  <div class="review">
-				<div class="img-crop">
-					<div class="inner">
-		  				<img class="thumbnail" src="${rDTO.thumbnail }">
-		 			</div>
-		 		 </div>
-				<ul>
-					<li class="li_tag">동쪽/식도락/힐링</li>
-					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">제주도 짱</a></li>
-					<li class="li_id">by 고구마</li>
-					<li>조회 12 
-						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 3
-					</li>
-					<li class="review_date">2023-04-21</li>
-				</ul>
-		  </div>
-		  <div class="review">
-				<div class="img-crop">
-					<div class="inner">
-		  				<img class="thumbnail" src="${rDTO.thumbnail }">
-		 			</div>
-		 		 </div>
-				<ul>
-					<li class="li_tag">가족여행/액티비티</li>
-					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">좋았던 제주도 여행</a></li>
-					<li class="li_id">by 감자</li>
-					<li>조회 22 
-						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 4
-					</li>
-					<li class="review_date">2023-04-15</li>
-				</ul>
-		  </div>
-		  <div class="review">
-				<div class="img-crop">
-					<div class="inner">
-		  				<img class="thumbnail" src="${rDTO.thumbnail }">
-		 			</div>
-		 		 </div>
-				<ul>
-					<li class="li_tag">동쪽/식도락/힐링</li>
-					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">제주도 짱</a></li>
-					<li class="li_id">by 고구마</li>
-					<li>조회 12 
-						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 3
-					</li>
-					<li class="review_date">2023-04-21</li>
-				</ul>
-		  </div>
-		  <div class="review">
-				<div class="img-crop">
-					<div class="inner">
-		  				<img class="thumbnail" src="${rDTO.thumbnail }">
-		 			</div>
-		 		 </div>
-				<ul>
-					<li class="li_tag">가족여행/액티비티</li>
-					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">좋았던 제주도 여행</a></li>
-					<li class="li_id">by 감자</li>
-					<li>조회 22 
-						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 4
-					</li>
-					<li class="review_date">2023-04-15</li>
-				</ul>
-		  </div>
-		  <div class="review">
-				<div class="img-crop">
-					<div class="inner">
-		  				<img class="thumbnail" src="${rDTO.thumbnail }">
-		 			</div>
-		 		 </div>
-				<ul>
-					<li class="li_tag">동쪽/식도락/힐링</li>
-					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">제주도 짱</a></li>
-					<li class="li_id">by 고구마</li>
-					<li>조회 12 
-						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 3
-					</li>
-					<li class="review_date">2023-04-21</li>
-				</ul>
-		  </div>
-		  <div class="review">
-				<div class="img-crop">
-					<div class="inner">
-		  				<img class="thumbnail" src="${rDTO.thumbnail }">
-		 			</div>
-		 		 </div>
-				<ul>
-					<li class="li_tag">가족여행/액티비티</li>
-					<li class="li_sub"><a href="reviewView?plan_no=${rDTO.plan_no }">좋았던 제주도 여행</a></li>
-					<li class="li_id">by 감자</li>
-					<li>조회 22 
-						<i class="fa-solid fa-heart" style="color: #d11a1a;"></i> 4
-					</li>
-					<li class="review_date">2023-04-15</li>
 				</ul>
 		  </div>
 	</div>

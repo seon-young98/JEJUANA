@@ -11,7 +11,7 @@
 	</select>
 	<!-- 일반 게시글 목록 -->
 	<select id="reviewAllSelect" resultType="com.team6.jejuana.dto.ReviewDTO">
-		select r.plan_no, r.review_subject, u.id, u.nickname, r.review_hit, to_char(r.writedate, 'YYYY-MM-DD HH24:MI') writedate, r.thumbnail, r.tag, r.joayo_hit
+		select r.plan_no, r.review_subject, u.id, u.nickname, r.review_hit, to_char(r.writedate, 'YYYY-MM-DD') writedate, r.thumbnail, r.tag, r.joayo_hit
 		from review r join common u on r.id=u.id
 		where activated=0
 		<if test="searchWord!=null"> <!-- 검색어 있을 경우 -->

@@ -34,7 +34,7 @@
 				</div>
 				
 				<!-- 메뉴 -->
-				<div class="section1_1">
+				<div class="section1_1" style="margin-top:-9px">
 				</div>
 			
 		<!-- 북마크 표현을 위한 모달창 출력 ------------------------------ -->		
@@ -46,8 +46,8 @@
 				       <thead>
 							<tr>
 								<th>장소명</th>
+								<th>주소</th>
 								<th>등록일시</th>
-							
 							</tr>
 					   </thead>
 					   <tbody id="resultData">
@@ -77,15 +77,14 @@
 			
 			
 			<c:if test="${loginStatus!='Y'}">
-						<button type="button"  class="btn btn-link" onclick="test1()" >북마크</button>
+						<button type="button"  class="bbtn" onclick="test1()" >북마크</button>
 					</c:if>
 					<c:if test="${loginStatus=='Y'}">
-						<button type="button"  id="modal_btn" class="btn btn-link">북마크</button>
+						<button type="button"  id="modal_btn" class="bbtn">북마크</button>
 			</c:if>
 			
 			
 	</div>
-			<div style="width:100%; height:74px; background:antiquewhite; text-align:center;"><h1>footer</h1></div>
 			<!-- 카카오 지도 -->
 	
 <!-- 
@@ -106,6 +105,7 @@ $('#modal_btn').one('click',function(){
 			$(result).each(function(i, data){
 					tag += "<tr '>";
 					tag += "<td>" +data.book_name+"</td>";
+					tag += "<td>" +data.book_addr+"</td>";
 					tag += "<td>" +data.book_date+"</td>";
 					tag += "<td onclick='deltest("+data.book_no+")'><button style='background:white;'>삭제</button></td>"
 					tag += "</tr>";
@@ -299,14 +299,13 @@ function displayMarker(places,i) {
     var content = document.createElement('div');
     content.classList.add('wrap');
     content.innerHTML =  '<div class="info">' + '<div class="title" style="margin-top:-12px;">' +  places[i].place_name.split('(')[0]+ '</div>';
-    
+    console.log(places[i].address_name);
     content.innerHTML += '<div class="body">' + '<div class="img">' +'<img src="'+imgs[i]+'" width="260" height="150" style="margin-top:0px;border:1px solid gray;margin-right:6px">' +'</div>';
 	content.innerHTML += '<div class="jibun ellipsis" style="letter-spacing:3px;white-space: normal; margin:6px; font-weight: bold; margin-bottom:26px;">'+ '<div>'+place_firstname+'</div>'+ '<div>'+place_lastname+'</div>'  +'</div>';
 	content.innerHTML += '<div class="" style="margin:-35px 88px; padding:8px; font-weight: bold; float:left;">' + '<p style="margin-left:45px;">평점 ★★★★☆ 리뷰'+i+'</p>' + '</div>';
-	content.innerHTML += '<div class="wrap_button" style="margin-right:4px;margin-top:-9px;display:-webkit-inline-box;">'+'<form method="get" action="${pageContext.request.contextPath}/bookmarkTest"><input type="hidden" name="book_name" value="'+places[i].place_name.split('(')[0]+'"><input type="hidden" name="book_type" value="'+1+'"><button type="submit" style="color:white;"'+bk_login+'>북마크</button></form>'+'<button><a id="kakao-link-btn" class="kakao"  href="javascript:sendLink(\''  +places[i].place_name.split('(')[0]+','+ place_lastname +'\')" style=" text-decoration: none; color:white;">공유</a></button>'+'<button type="button" ><a href='+places[i].place_url+' style=" text-decoration: none; color:white;">길찾기</a></button></div>';
+	content.innerHTML += '<div class="wrap_button" style="margin-right:4px;margin-top:-9px;display:-webkit-inline-box;">'+'<form method="get" action="${pageContext.request.contextPath}/bookmarkTest"><input type="hidden" name="book_name" value="'+places[i].place_name.split('(')[0]+'"><input type="hidden" name="book_type" value="'+1+'"><input type="hidden" name="book_addr" value="'+place_lastname+'"><button type="submit" style="color:white;"'+bk_login+'>북마크</button></form>'+'<button><a id="kakao-link-btn" class="kakao"  href="javascript:sendLink(\''  +places[i].place_name.split('(')[0]+','+ place_lastname +'\')" style=" text-decoration: none; color:white;">공유</a></button>'+'<button type="button" ><a href='+places[i].place_url+' style=" text-decoration: none; color:white;">길찾기</a></button></div>';
     
 	content.style.cssText = 'background:white;  ';
-    
     var closeBtn = document.createElement('button');
     closeBtn.innerHTML = '닫기';
     closeBtn.style.cssText = 'position:absolute; width:35px; height:30px; border:2px solid gray; border-radius:5px;margin-top:-253px;margin-left:-34px';

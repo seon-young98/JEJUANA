@@ -60,7 +60,7 @@ html, body {width:100%;height:100%;padding:0;margin:0}
 .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
 .info .title {margin-right:30px;height: 35px;background: white;font-size: 18px;font-weight: bold;margin-top:-8px;overflow:hidden;}
 .item {display:inline-flex;}
-.modal_wrap{display: none;width: 15%;height: 40%;position: absolute;top:50%;left: 50%;margin: -273px 0 0 -713px;background:#eee;z-index: 3;}
+.modal_wrap{display: none;width: 20%;height: 40%;position: absolute;top:50%;left: 50%;margin: -273px 0 0 -713px;background:#eee;z-index: 3;}
 .black_bg{display: none;position: absolute;content: ""; width: 100px;height: 100%;top:0;left: 0;z-index: 3;}
 .modal_close{width: 26px; height: 26px;position: absolute;top: -26px;right: 0;}
 .modal_close> a{display: block;width: 100%;height: 100%;background:url(https://img.icons8.com/metro/26/000000/close-window.png);text-indent: -9999px;}
@@ -68,3 +68,4 @@ html, body {width:100%;height:100%;padding:0;margin:0}
 .JejuIcon{float:left;width:10%}
 .section1_1_1{background: #258fff; height:9%}
 .JejuNowtemp{float:right;font-size:20px;}
+.bbtn{position:absolute;margin-top:190px;z-index:5}
