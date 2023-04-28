@@ -8,17 +8,17 @@
 	<div class="courseTitle">북마크(여행지)</div>
 	<form>
 		<div id="acc">
-			<input type="checkbox" id="allCheckC"/> 
-			 전체선택
+			<input type="checkbox" id="allCheckC"/> 전체선택
 		 </div>
 		<div class="container_flex">
 			<div class="courseBookmark">
 				<ul>
 					<li>
-						<input type="checkbox" value="" id="chooseDelC" >
+						<input type="checkbox" value="" class="chooseDelC1" >
+						<div class="chooseDel1_txt">선택</div>
 					</li>
 					<li>
-						<img src="/jejuana/review_thumbnail/img01.jpg"/>
+						<img src="/jejuana/img/review_thumbnail/img01.jpg"/>
 					</li>
 					<li style="font-weight:bold;">제주동문시장</li>
 					<li>
@@ -26,12 +26,16 @@
 							<hr style="margin:0; width:240px;"/>
 						</div>
 					</li>
-					<li style="font-size:14px;">
+					<li class="place_explanation">
 						<div>먹거리와 생활용품을 판매하는, 제주에서 가장 큰 시장</div>
 					</li>
-					<li style="font-size:14px;">별점: ★4.6</li>
+						<li style="font-size:14px;">
+							별점 :  
+							<i class="fa-solid fa-star" style="color: #f37321;"></i>
+							4.6
+						</li>
 					<li>
-						<input type="button" value="위치보기"/>
+						<input class="CourseBtn_view" type="button" value="위치보기"/>
 					</li>
 				</ul>
 			</div>
@@ -43,7 +47,7 @@
 		
 		<!-- 삭제버튼 -->
 		<div>
-			<input type="button" value="선택삭제" id="chooseDelC"/>
+			<input type="button" value="선택삭제" class="chooseDelC2"/>
 		</div>
 	
 	</form>
