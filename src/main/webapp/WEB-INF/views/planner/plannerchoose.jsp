@@ -122,7 +122,7 @@
             // 모달 닫기
             $("#planList").css("display", "none");
             $("#choose_modal_close").trigger("click");
-
+            document.getElementById("save").innerText = '수정';
 
         })
         $(document).on("click", "#total_schedule", function(){

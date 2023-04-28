@@ -17,5 +17,7 @@ public interface PlanService {
     public List<CourseDTO> courseSelect(int plan_no);
     public int planUpdate(PlanDTO dto);
     public int courseDel(int plan_no);
+    public double takeRate(int place_no);
+    public int checkRate(int place_no);
 
 }

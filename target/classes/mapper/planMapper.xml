@@ -57,4 +57,10 @@
 <delete id="courseDel">
     delete from course where plan_no=${param1}
 </delete>
+	<select id="checkRate" resultType="int">
+        select count(rate) from rate where place_no=${param1}
+    </select>
+    <select id="takeRate" resultType="double">
+        select round(avg(rate), 1) from rate where place_no =${param1}
+    </select>
 </mapper>

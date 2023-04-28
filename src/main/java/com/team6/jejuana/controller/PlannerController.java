@@ -136,8 +136,18 @@ public class PlannerController  {
     @ResponseBody
     public List<PlaceDTO> placeSelectList(String searchWord, int pageNo) {
 //        System.out.println(searchWord+ " - "+ pageNo);
+        List<PlaceDTO> list = service.placeSelectList(searchWord, pageNo);
+        for (int i = 0; i < list.size(); i++) {
+            int place_no = list.get(i).getPlace_no();
+            if(service.checkRate(place_no)>0){
+                double rate = service.takeRate(place_no);
+                list.get(i).setRate(rate);
+            }
 
-        return service.placeSelectList(searchWord, pageNo);
+        }
+        System.out.println(list.toString());
+
+        return list;
     }
     @PostMapping("bookmarkList")
     @ResponseBody

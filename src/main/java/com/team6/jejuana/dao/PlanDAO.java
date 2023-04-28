@@ -23,5 +23,9 @@ public interface PlanDAO {
 
     public int courseDel(int plan_no);
 
+    public double takeRate(int place_no);
+
+    public int checkRate(int place_no);
+
 
 }

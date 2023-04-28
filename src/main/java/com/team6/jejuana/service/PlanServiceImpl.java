@@ -67,4 +67,14 @@ public class PlanServiceImpl implements PlanService{
     public int courseDel(int plan_no) {
         return dao.courseDel(plan_no);
     }
+
+    @Override
+    public double takeRate(int place_no) {
+        return dao.takeRate(place_no);
+    }
+
+    @Override
+    public int checkRate(int place_no) {
+        return dao.checkRate(place_no);
+    }
 }
