@@ -29,7 +29,7 @@ ul li {
     width: 80%;
 }
 
-.header {
+.header , footer{
     display: none;
 
 }
@@ -215,13 +215,13 @@ ul li {
     padding: 5px;
     justify-content: center;
     width: 100%;
-    -ms-overflow-style: none; /* 익스플로러, 앳지 */
-    scrollbar-width: none; /* 파이어폭스 */
+    -ms-overflow-style: none; /* �씡�뒪�뵆濡쒕윭, �빏吏� */
+    scrollbar-width: none; /* �뙆�씠�뼱�룺�뒪 */
     overflow-y: auto;
 }
 
 #placeBox::-webkit-scrollbar {
-    display: none !important; /* 크롬, 사파리, 오페라 */
+    display: none !important; /* �겕濡�, �궗�뙆由�, �삤�럹�씪 */
 }
 
 #selectedPlace {

@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=806e918783759197bca10fffa91fc3e5"></script>
 <link href="<%=request.getContextPath()%>/css/planner.css" rel="stylesheet">
+
 <script>
     let lat = [];
     let lon = [];

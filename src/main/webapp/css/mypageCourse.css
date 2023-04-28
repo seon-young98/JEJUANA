@@ -31,6 +31,8 @@
 }
 .courseBookmark>ul{
 	margin:auto;
+	width: 260px;
+    height: 292px;
 }
 .courseBookmark li{
 	margin: 5px 10px 0px;
@@ -54,16 +56,32 @@
 .chooseDelC{
 	margin-left:10px;
 }
+.chooseDel1_txt{
+	display:inline-block;
+}
+.chooseDelC1{
+	border-radius:50px;
+	border:1px solid gray;
+	appearance: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    width:12px;
+    height:12px;
+}
+.chooseDelC1:checked{
+	background:#F37321;
+	border:none;
+}
 #jo{
 	float:left;
 	font-size:14px;
 	/*padding-top:5px;*/
 }
-.content_s{
-	font-family: 'GmarketSansMedium';
+#jo>div, #jo>i{
+	display:inline-block;
 }
+/*버튼효과*/
 .CourseBtn_view:hover{
-	/*color:#F37321;*/
 	background:#F37321;
 }
 .CourseBtn_view{
@@ -89,4 +107,5 @@
 	background: #2C394B;
 	border-radius:5px;
 	padding-top:5px;
+	margin-left:10px;
 }

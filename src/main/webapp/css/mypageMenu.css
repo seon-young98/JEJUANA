@@ -10,9 +10,6 @@
 	padding:20px 0 20px 0;
 	
 }
-.nickname>div{
-	
-}
 .nickname>div>span{
 	font-family: 'GmarketSansMedium';
 	margin-bottom: 5px;
@@ -67,6 +64,7 @@ a{
 	color:black;
 }
 .content_s{
+	font-family: 'GmarketSansMedium';
 	padding-bottom:20px;
 	float:left;
 	/*border:1px solid gray;*/
