@@ -1,3 +1,6 @@
+.header , footer{
+    display: none;
+
 ul {
     padding: 0;
     margin: 10px 20px;
@@ -29,7 +32,7 @@ ul li {
     width: 80%;
 }
 
-.header , footer{
+.header {
     display: none;
 
 }
@@ -169,33 +172,41 @@ ul li {
 .place_container {
     display: grid;
     background: #ffffff;
-    grid-template-columns: 90px auto 50px;
-    grid-template-rows: 50px 50px;
+    grid-template-columns: 90px auto 90px 50px;
+    grid-template-rows: 40px 40px;
     padding: 5px;
     margin: 3px auto;
     grid-gap: 3px;
     border-radius: 20px;
 }
 
-.place_item:nth-child(1) {
+.place_item:nth-child(1) { /*사진*/
+    grid-column: 1/2;
     grid-row: 1/span 2;
 }
-
-.place_item:nth-child(4) {
-    grid-column: 3;
+.place_item:nth-child(2) {/*이름*/
+    grid-column: 2/span 2;
+    grid-row: 1/2;
+}
+.place_item:nth-child(3) {/*설명*/
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+.place_item:nth-child(4) { /*별점*/
+    grid-column: 3/4;
+    grid-row: 2/3;
+}
+.place_item:nth-child(5) {/*버튼*/
+    grid-column: 4/5;
     grid-row: 1/span 2;
     align-items: center;
 }
 
-.place_item:nth-child(2) {
-    grid-column: 2;
-    grid-row: 1;
+.star{
+    margin-right: 15px;
 }
 
-.place_item:nth-child(3) {
-    grid-column: 2;
-    grid-row: 2;
-}
+
 
 .place_item {
     display: flex;
@@ -215,13 +226,13 @@ ul li {
     padding: 5px;
     justify-content: center;
     width: 100%;
-    -ms-overflow-style: none; /* �씡�뒪�뵆濡쒕윭, �빏吏� */
-    scrollbar-width: none; /* �뙆�씠�뼱�룺�뒪 */
+    -ms-overflow-style: none; /* 익스플로러, 앳지 */
+    scrollbar-width: none; /* 파이어폭스 */
     overflow-y: auto;
 }
 
 #placeBox::-webkit-scrollbar {
-    display: none !important; /* �겕濡�, �궗�뙆由�, �삤�럹�씪 */
+    display: none !important; /* 크롬, 사파리, 오페라 */
 }
 
 #selectedPlace {
@@ -272,7 +283,7 @@ ul li {
     background-color: chocolate;
     text-align: center;
 }
-.order{
+.course_order{
     display: none;
 }
 .modal-content div[class=modal-body]{
@@ -281,6 +292,45 @@ ul li {
 
 }
 .modal-dialog{
-    height:100%;
     vertical-align: middle;
+}
+#chooseModal{
+    z-index: 1051;
+}
+
+#planList{
+    width:500px;
+    height:700px;
+    display:none;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    top : 300px;
+    background-color: black;
+    z-index: 1052;
+    padding: 20px;
+}
+#planListBody{
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #ff9451;
+    height:660px;
+
+}
+.plan_container{
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    grid-row-gap: 10px;
+    color : black;
+    background-color: white;
+    margin-bottom: 10px;
+}
+.plan_item:last-child{
+    grid-column: 2;
+    grid-row: 1/span 2;
+    align-items: center;
+    background-color: #51b4ff;
+    align-self: center;
+    text-align: center;
 }

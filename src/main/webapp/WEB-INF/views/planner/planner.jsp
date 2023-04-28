@@ -8,7 +8,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=806e918783759197bca10fffa91fc3e5"></script>
 <link href="<%=request.getContextPath()%>/css/planner.css" rel="stylesheet">
-
 <script>
     let lat = [];
     let lon = [];
@@ -86,8 +85,8 @@
                 for (let j = 0; j < $(".schedule_detail").eq(i).find(".place").length; j++) {
                     let place = {place_no:$(".schedule_detail").eq(i)
                             .find(".place").eq(j).find(".place_no").val(),
-                        day:(i + 1),
-                        order:(j+1)
+                        days_order:(i + 1),
+                        course_order:(j+1)
                                         };
                     // place.place_no = $(".schedule_detail").eq(i)
                     // .find(".place").eq(j).find(".place_no").val();
@@ -137,7 +136,7 @@
             colorSetup(days);// 시작일과 종료일의 차이로 여행 날짜수 구해준값을 파라미터로 넣고
             for (let i = 1; i <= days; i++) {// 날수+1 번 반복해서 코스를 짤 수 있는 블럭을 넣어줌
                 let tag = "<div class='schedule_detail'>";
-                tag += "<input type='hidden' class='day' value='" + i + "'/>";
+                tag += "<input type='hidden' class='days_order' value='" + i + "'/>";
                 tag += "<div class='schedule_header'><div class='day' style='border-bottom-color:" + random_color[i - 1] + "' >Day" + i + "</div></div>";
                 tag += "<div class='schedule_body' id='day" + i + "'></div>";
                 tag += "<div class='schedule_footer'>";
@@ -273,7 +272,7 @@
                 success(result) {
                     $(result).each(function (i, dto) {
                         let tag = "<div class='place " + day + "'>";
-                        tag += "<input type='hidden' class='order' name='order'  value='" + (i + 1 + a) + "'/>";
+                        tag += "<input type='hidden' class='course_order' name='course_order'  value='" + (i + 1 + a) + "'/>";
                         tag += "<div class='place_dis'></div>";
                         tag += "<div class='place_name'>" + dto.place_name + "</div>";
                         tag += "<div class='place_del " + day + "'>삭제</div>";
@@ -304,7 +303,7 @@
                 }
                 displayMarker(latlon[i], i + 1);
             })
-            drawPath(latlon, random_color[parseInt($(this).siblings(".day").val()) - 1]);
+            drawPath(latlon, random_color[parseInt($(this).siblings(".days_order").val()) - 1]);
         });
         $("#place_tab").click(function(){
             $("#selectedPlace").html("");

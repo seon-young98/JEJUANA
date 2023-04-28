@@ -1,6 +1,7 @@
 package com.team6.jejuana.service;
 
 import com.team6.jejuana.dao.PlanDAO;
+import com.team6.jejuana.dto.CourseDTO;
 import com.team6.jejuana.dto.PlaceDTO;
 import com.team6.jejuana.dto.PlanDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,42 @@ public class PlanServiceImpl implements PlanService{
     }
 
     @Override
-    public List<PlaceDTO> bookmarkList(String searchWord, String userid) {
-        return dao.bookmarkList(searchWord, userid);
+    public List<PlaceDTO> bookmarkList(String searchWord, int pageNo, String userid) {
+        return dao.bookmarkList(searchWord, pageNo, userid);
+    }
+
+    @Override
+    public int courseSave(List<CourseDTO> list) {
+        return dao.courseSave(list);
+    }
+
+    @Override
+    public List<PlanDTO> planList(String userid) {
+        return dao.planList(userid);
+    }
+
+    @Override
+    public List<CourseDTO> courseSelect(int plan_no) {
+        return dao.courseSelect(plan_no);
+    }
+
+    @Override
+    public int planUpdate(PlanDTO dto) {
+        return dao.planUpdate(dto);
+    }
+
+    @Override
+    public int courseDel(int plan_no) {
+        return dao.courseDel(plan_no);
+    }
+
+    @Override
+    public double takeRate(int place_no) {
+        return dao.takeRate(place_no);
+    }
+
+    @Override
+    public int checkRate(int place_no) {
+        return dao.checkRate(place_no);
     }
 }

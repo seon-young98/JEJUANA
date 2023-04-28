@@ -5,6 +5,7 @@ import com.team6.jejuana.dto.PlaceDTO;
 import com.team6.jejuana.dto.PlanDTO;
 import com.team6.jejuana.service.PlanService;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,19 +18,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 
+
 @Controller
-public class PlannerController {
+public class PlannerController  {
     @Autowired
     PlanService service;
 
     @GetMapping("/planner")
     public ModelAndView planner(HttpSession session) {
-        session.setAttribute("loginId", "ggamangso");
+        session.setAttribute("logId", "ggamangso");
         return new ModelAndView("planner/planner");
     }
 
@@ -50,46 +51,79 @@ public class PlannerController {
 
         return "planner/plannerKakaoMap";
     }
+    @PostMapping(value = "/planUpdate",  produces = "application/text; charset=utf-8")
+    @ResponseBody
+    public String planUpdate(String plan_num, String plan_name, String start_date, String end_date, int days, String schedule,
+                           HttpSession session) {
+
+        PlanDTO planDTO = new PlanDTO();
+        int plan_no = Integer.parseInt(plan_num);
+        planDTO.setPlan_no(plan_no);
+        planDTO.setPlan_name(plan_name);
+        planDTO.setStart_date(start_date);
+        planDTO.setEnd_date(end_date);
+        planDTO.setDays(days);
+//        planDTO.setId((String) session.getAttribute("logId"));
+        planDTO.setId("ggamangso");
+        int result = service.planUpdate(planDTO);
+
+        List<CourseDTO> list = new ArrayList<CourseDTO>();
+
+        JSONArray jArray = new JSONArray(schedule);
+        System.out.println(jArray.get(0).getClass().getSimpleName());
+        for (int i = 0; i < jArray.length(); i++) {
+            JSONObject course = jArray.getJSONObject(i);
+            CourseDTO dto = new CourseDTO();
+            dto.setPlan_no(plan_no);
+            dto.setPlace_no(course.getInt("place_no"));
+            dto.setDays_order(course.getInt("days_order"));
+            dto.setCourse_order(course.getInt("course_order"));
+            list.add(dto);
+        }
+        int del_result = service.courseDel(plan_no);
+        int c_result = service.courseSave(list);
+
+
+
+        return ""+c_result;
+    }
 
     @PostMapping(value = "/planSave",  produces = "application/text; charset=utf-8")
     @ResponseBody
-    public String planSave(String plan_name, String start_date, String end_date, int days, String schedule,
-                           HttpSession session) throws ParseException {
+    public String planSave(String plan_num, String plan_name, String start_date, String end_date, int days, String schedule,
+                           HttpSession session) {
 
         PlanDTO planDTO = new PlanDTO();
         planDTO.setPlan_name(plan_name);
         planDTO.setStart_date(start_date);
         planDTO.setEnd_date(end_date);
         planDTO.setDays(days);
-//        planDTO.setId((String) session.getAttribute("loginId"));
+//        planDTO.setId((String) session.getAttribute("logId"));
         planDTO.setId("ggamangso");
-        service.planSave(planDTO);
+        int result = service.planSave(planDTO);
 
+        int plan_no = planDTO.getPlan_no();
 
 
 
         List<CourseDTO> list = new ArrayList<CourseDTO>();
 
         JSONArray jArray = new JSONArray(schedule);
-        for(Object course:jArray){
-            System.out.println(course.toString());
+        System.out.println(jArray.get(0).getClass().getSimpleName());
+        for (int i = 0; i < jArray.length(); i++) {
+            JSONObject course = jArray.getJSONObject(i);
             CourseDTO dto = new CourseDTO();
-            JSONObject jsonCourse = new JSONObject(course);
-            dto.setPlace_no(jsonCourse.getInt("place_no"));
-            dto.setDay(jsonCourse.getInt("day"));
-            dto.setOrder(jsonCourse.getInt("order"));
+            dto.setPlan_no(plan_no);
+            dto.setPlace_no(course.getInt("place_no"));
+            dto.setDays_order(course.getInt("days_order"));
+            dto.setCourse_order(course.getInt("course_order"));
+            list.add(dto);
         }
-        
-//        ModelAndView mav = new ModelAndView();
-//        dto.setId((String) session.getAttribute("loginId"));   //session.getAttribute("loginId")
-//        dto.setParticipants(dto.getParticipants() + 1);
-//        int result = service.planSave(dto);
-//        System.out.println(result);
-//
-//        mav.setViewName("redirect:/");
+        int c_result = service.courseSave(list);
 
 
-        return "11";
+
+        return ""+c_result;
     }
 
     @PostMapping("placeAllList")
@@ -102,16 +136,26 @@ public class PlannerController {
     @ResponseBody
     public List<PlaceDTO> placeSelectList(String searchWord, int pageNo) {
 //        System.out.println(searchWord+ " - "+ pageNo);
+        List<PlaceDTO> list = service.placeSelectList(searchWord, pageNo);
+        for (int i = 0; i < list.size(); i++) {
+            int place_no = list.get(i).getPlace_no();
+            if(service.checkRate(place_no)>0){
+                double rate = service.takeRate(place_no);
+                list.get(i).setRate(rate);
+            }
 
-        return service.placeSelectList(searchWord, pageNo);
+        }
+        System.out.println(list.toString());
+
+        return list;
     }
     @PostMapping("bookmarkList")
     @ResponseBody
     public List<PlaceDTO> bookmarkList(String searchWord, int pageNo, HttpSession session) {
         System.out.println(searchWord+ " - "+ pageNo);
-        String userid = (String) session.getAttribute("loginId");
+        String userid = (String) session.getAttribute("logId");
         userid = "ggamangso";
-        return service.bookmarkList(searchWord, userid);
+        return service.bookmarkList(searchWord, pageNo, userid);
     }
 
     @PostMapping("selectedPlace")
@@ -149,6 +193,21 @@ public class PlannerController {
         }
 
         return placeList;
+    }
+
+    @PostMapping("planList")
+    @ResponseBody
+    public List<PlanDTO> planList(HttpSession session){
+        String userid = (String) session.getAttribute("logId");
+
+        List<PlanDTO> list = service.planList("ggamangso");
+        return list;
+    }
+
+    @PostMapping("planSelect")
+    @ResponseBody
+    public List<CourseDTO> courseSelect(String plan_no) {
+        return service.courseSelect(Integer.parseInt(plan_no));
     }
 
 
