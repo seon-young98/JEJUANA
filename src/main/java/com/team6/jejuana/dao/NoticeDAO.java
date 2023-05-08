@@ -19,4 +19,9 @@ public interface NoticeDAO {
 	public NoticeDTO replyDataSelect(int notice_no);
 	public int replyWrite(NoticeDTO dto);
 	public int applyDelete(NoticeDTO dto);
+	public int complainInsert(NoticeDTO dto);
+	
+	//½Å°í
+	public String complainSelect(int plan_no);
+	public int complainUpdate(int plan_no, String complain);
 }

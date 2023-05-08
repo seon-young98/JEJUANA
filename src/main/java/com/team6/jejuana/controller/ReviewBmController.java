@@ -15,7 +15,7 @@ public class ReviewBmController {
 	@Autowired
 	ReviewBmService service;
 	
-	//ë¶ë§ˆí¬
+	//ºÏ¸¶Å©
 	@GetMapping("/review/reviewBm")
 	public ModelAndView reviewBm(int target_no, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -32,13 +32,15 @@ public class ReviewBmController {
 			System.out.println(dto.toString());
 			try {
 				service.reviewBmInsert(dto);
-				mav.addObject("msg", "ë¶ë§ˆí¬ì— ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤.");
+				System.out.println(dto.toString());
+				mav.addObject("msg", "ºÏ¸¶Å©¿¡ ÀúÀåµÇ¾ú½À´Ï´Ù.");
 			}catch(Exception e) {
 				e.printStackTrace();
-				mav.addObject("msg", "ë¶ë§ˆí¬ ì €ì¥ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
+				System.out.println(dto.toString());
+				mav.addObject("msg", "ºÏ¸¶Å© ÀúÀå¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
 			}
 		}else {
-			mav.addObject("msg", "ì´ë¯¸ ë“±ë¡ëœ ë¶ë§ˆí¬ì…ë‹ˆë‹¤.");
+			mav.addObject("msg", "ÀÌ¹Ì µî·ÏµÈ ºÏ¸¶Å©ÀÔ´Ï´Ù.");
 		}
 		mav.setViewName("review/result");
 		

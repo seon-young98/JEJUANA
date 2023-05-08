@@ -11,26 +11,26 @@
 		select * from
 			(select * from
 				(
-					select n.notice_no, n.notice_subject, to_char(n.notice_date,'YYYY-MM-DD') notice_date, n.id, n.notice_hit, n.secretKey, n.ref, n.orgId, n.lvl, c.nickname
+					select n.step,n.notice_no, n.notice_subject, to_char(n.notice_date,'YYYY-MM-DD') notice_date, n.id, n.notice_hit, n.secretKey, n.ref, n.orgId, n.lvl, c.nickname
 					from notice n join common c on n.id=c.id where gonggi=0 
 					<if test="searchWord!=null">
 						and ${searchKey} like '%${searchWord}%'
 					</if>
-					order by ref desc	
+					order by ref desc, step asc 
 				)
 				<![CDATA[		
-				where rownum<=${onePageRecord*nowPage} order by ref asc
+				where rownum<=${onePageRecord*nowPage} order by ref asc, step desc
 				]]>
 			)
 			<choose>
 					<when test="nowPage!=totalPage">
 						<![CDATA[		
-						where rownum<=${onePageRecord} order by ref desc
+						where rownum<=${onePageRecord} order by ref desc, step asc
 						]]>
 					</when>
 					<when test="nowPage==totalPage">
 						<![CDATA[		
-						where rownum<=${lastPageRecord} order by ref desc
+						where rownum<=${lastPageRecord} order by ref desc, step asc
 						]]>
 					</when>
 				</choose>
@@ -49,7 +49,7 @@
 		update notice set notice_hit = notice_hit+1 where notice_no=${param1} and id!=#{param2}
 	</update>
 	<select id="noticeSelect" resultType="com.team6.jejuana.dto.NoticeDTO">
-		select n.notice_no, n.notice_subject, n.id, n.notice_content, n.notice_hit, n.notice_date, c.member_type, n.secretKey, n.ref, n.lvl 
+		select n.notice_no, n.notice_subject, c.nickname, n.id, n.notice_content, n.notice_hit, n.notice_date, c.member_type, n.secretKey, n.ref, n.lvl, n.complain 
 		from notice n join common c on n.id=c.id where notice_no=${param1}
 	</select>
 	<select id="memberTypeSelect" resultType="int">
@@ -73,7 +73,19 @@
 		select ref, id from notice where notice_no=${param1}
 	</select>
 	<insert id="replyWrite">
-		insert into notice(notice_no, notice_subject, notice_content, id, ip, secretKey, ref, lvl, orgId)
-		values(notice_sq.nextval, #{notice_subject}, #{notice_content}, #{id}, #{ip}, #{secretKey}, ${ref}, 1, #{orgId})
+		insert into notice(notice_no, notice_subject, notice_content, id, ip, secretKey, ref, lvl, orgId, step)
+		values(notice_sq.nextval, #{notice_subject}, #{notice_content}, #{id}, #{ip}, #{secretKey}, ${ref}, 1, #{orgId}, 1)
 	</insert>
+	<insert id="complainInsert">
+		insert into notice(notice_no, notice_subject, notice_content, id, ip, secretKey, ref, complain, plan_no)
+		values(notice_sq.nextval, #{notice_subject}, #{notice_content}, #{id}, #{ip}, #{secretKey}, notice_sq.currval, #{complain}, ${plan_no})
+	</insert>
+	<!-- 신고 -->
+	 <select id="complainSelect" resultType="String">
+	 	select complain from notice where plan_no=${plan_no}
+	 </select>
+	 <insert id="complainUpdate">
+	 	update review set complain=#{param2} where plan_no=${param1}
+	 </insert>
+	 
 </mapper>

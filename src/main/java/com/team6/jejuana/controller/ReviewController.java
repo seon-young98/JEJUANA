@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team6.jejuana.dto.PlanDTO;
 import com.team6.jejuana.dto.ReviewDTO;
 import com.team6.jejuana.dto.ReviewSearchVO;
 import com.team6.jejuana.service.ReviewService;
@@ -27,7 +28,7 @@ public class ReviewController {
 	@Autowired
 	ReviewService service;
 	
-	//ëª©ë¡
+	//¸ñ·Ï
 	@GetMapping("/reviewList")
 	public ModelAndView reviewList(ReviewSearchVO vo) {
 		ModelAndView mav = new ModelAndView();
@@ -42,13 +43,13 @@ public class ReviewController {
 		return mav;
 	}
 	
-	//ê¸€ì“°ê¸°
+	//±Û¾²±â
 	@GetMapping("/reviewWrite")
 	public ModelAndView reviewWrite(int plan_no) {
 		ReviewDTO dto = service.reviewWriteSelect(plan_no);
 		List<ReviewDTO> place = service.reviewCourse(plan_no);
 		
-		//System.out.println(place.toString()); //placetest ë°ì´í„°(ë²ˆí˜¸,ì´ë¦„,ë³„ì ,ë³„ì ì¤€ì‚¬ëŒìˆ˜) ë„˜ì–´ê°
+		//System.out.println(place.toString()); //placetest µ¥ÀÌÅÍ(¹øÈ£,ÀÌ¸§,º°Á¡,º°Á¡ÁØ»ç¶÷¼ö) ³Ñ¾î°¨
 		System.out.println(place.toString());
 		List<ReviewDTO> tags = service.tagSelect();
 		ModelAndView mav = new ModelAndView();
@@ -63,11 +64,11 @@ public class ReviewController {
 		return mav;
 	}
 	
-	//ë³„ì ë“±ë¡
+	//º°Á¡µî·Ï
 	@GetMapping("/reviewStar")
 	public ModelAndView reviewStar(int place_no) {		
 		ReviewDTO onePlace = service.onePlaceSelect(place_no);
-		//ë²ˆí˜¸, ì´ë¦„, ë³„ì , ì‚¬ëŒìˆ˜
+		//¹øÈ£, ÀÌ¸§, º°Á¡, »ç¶÷¼ö
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", onePlace);
 		mav.setViewName("review/reviewStar");
@@ -75,7 +76,7 @@ public class ReviewController {
 		return mav;
 	}
 		
-	//ë³„ì  DB ë“±ë¡
+	//º°Á¡ DB µî·Ï
 	@PostMapping("/reviewStarOk")
 	public ResponseEntity<String> reviewStarOk(int place_no, ReviewDTO dto, HttpServletRequest request) {
 		dto.setId((String)request.getSession().getAttribute("loginId"));
@@ -84,19 +85,24 @@ public class ReviewController {
 		
 		int result = service.starSelect(dto);
 		if(result<1) {
-			try {
-				service.starInsert(dto);
-				service.starUpdate(place_no, dto.getRate());
-				htmlTag += "alert('ë³„ì ì´ ì •ìƒì ìœ¼ë¡œ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.');";
-				htmlTag += "window.close();";
-				
-			}catch(Exception e) {
-				e.printStackTrace();
-				htmlTag += "alert('ë³„ì  ë“±ë¡ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤. ');";
+			if(dto.getRate() == 0) {
+				htmlTag += "alert('º°Á¡À» ¼±ÅÃÇØ ÁÖ¼¼¿ä. ');";
 				htmlTag += "history.back();";
+			}else {
+				try {
+					service.starInsert(dto);
+					service.starUpdate(place_no, dto.getRate());
+					htmlTag += "alert('º°Á¡ÀÌ Á¤»óÀûÀ¸·Î µî·ÏµÇ¾ú½À´Ï´Ù.');";
+					htmlTag += "window.close();";
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+					htmlTag += "alert('º°Á¡ µî·Ï¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù. ');";
+					htmlTag += "history.back();";
+				}
 			}
 		}else {
-			htmlTag += "alert('ì´ë¯¸ ë³„ì ì´ ë“±ë¡ëœ ì—¬í–‰ì§€ì…ë‹ˆë‹¤.');";
+			htmlTag += "alert('ÀÌ¹Ì º°Á¡ÀÌ µî·ÏµÈ ¿©ÇàÁöÀÔ´Ï´Ù.');";
 			htmlTag += "window.close();";
 		}
 		htmlTag += "</script>";
@@ -108,7 +114,7 @@ public class ReviewController {
 		return new ResponseEntity<String>(htmlTag, headers, HttpStatus.OK);
 	}
 	
-	//ê²Œì‹œê¸€ DB ë“±ë¡
+	//°Ô½Ã±Û DB µî·Ï
 	@PostMapping("/reviewWriteOk")
 	public ResponseEntity<String> reviewWriteOk(ReviewDTO dto, String thumbnail, HttpServletRequest request){
 		dto.setId((String)request.getSession().getAttribute("loginId"));
@@ -116,7 +122,7 @@ public class ReviewController {
 		dto.setThumbnail(thumbnail);
 		
 		String htmlTag = "<script>";
-		//ì—…ë¡œë“œ ì‹¤íŒ¨ ì‹œ ì˜ˆì™¸ ë°œìƒ
+		//¾÷·Îµå ½ÇÆĞ ½Ã ¿¹¿Ü ¹ß»ı
 		try {
 			service.reviewInsert(dto);
 			
@@ -124,7 +130,7 @@ public class ReviewController {
 			
 		}catch(Exception e) {
 			e.printStackTrace();
-			htmlTag += "alert('ê¸€ ë“±ë¡ ì‹¤íŒ¨');";
+			htmlTag += "alert('±Û µî·Ï ½ÇÆĞ');";
 			htmlTag += "history.back();";
 		}
 		htmlTag += "</script>";
@@ -133,32 +139,39 @@ public class ReviewController {
 		headers.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
 		headers.add("Content-Type", "text/html; charset=UTF-8");
 		
-		//                                ë‚´ìš©
+		//                                ³»¿ë
 		return new ResponseEntity<String>(htmlTag, headers, HttpStatus.OK);
 
 	}
 	
-	//ê¸€ ë³´ê¸°
+	//±Û º¸±â
 	@GetMapping("/reviewView")
-	public ModelAndView reviewView(int plan_no) {
-		//ì¡°íšŒ ìˆ˜ ì¦ê°€
-		service.reviewHitCount(plan_no);
-		
+	public ModelAndView reviewView(int plan_no, HttpSession session) {
 		ReviewDTO dto = service.reviewSelect(plan_no);
+		String userid = (String)session.getAttribute("loginId");
+		
+		//Á¶È¸ ¼ö Áõ°¡
+		if(!dto.getId().equals(userid)) {
+			service.reviewHitCount(plan_no);
+		}
+		
 		List<ReviewDTO> list = service.reviewCourse(plan_no);
 		
+		int cnt = service.complainCount(plan_no);
+		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto", dto); //ì„ íƒ ë ˆì½”ë“œ
-		mav.addObject("list", list); //ì½”ìŠ¤ ì •ë³´
+		mav.addObject("cnt", cnt); //½Å°í
+		mav.addObject("dto", dto); //¼±ÅÃ ·¹ÄÚµå
+		mav.addObject("list", list); //ÄÚ½º Á¤º¸
 		mav.setViewName("review/reviewView");
 		return mav;
 	}
 	
-	//ê²Œì‹œê¸€ ìˆ˜ì • 
+	//°Ô½Ã±Û ¼öÁ¤ 
 	@GetMapping("/reviewEdit")
 	public ModelAndView reviewEdit(int plan_no) {
 		ReviewDTO dto = service.reviewEditSelect(plan_no);
-		// "" '' ì¸ì‹
+		// "" '' ÀÎ½Ä
 		String subject = dto.getReview_subject().replaceAll("\"", "&quot;");
 		subject.replaceAll("'", "&#39;");
 		dto.setReview_subject(subject);
@@ -174,10 +187,10 @@ public class ReviewController {
 		return mav;
 	}
 		
-	//ê²Œì‹œê¸€ ìˆ˜ì • DB ë“±ë¡
+	//°Ô½Ã±Û ¼öÁ¤ DB µî·Ï
 	@PostMapping("/reviewEditOk")
 	public ResponseEntity<String> reviewEditOk(ReviewDTO dto, HttpSession session) {
-		//ë ˆì½”ë“œ ë²ˆí˜¸, ë¡œê·¸ì¸ ì•„ì´ë””ê°€ ê°™ì€ ë•Œ ìˆ˜ì • : dtoì— id ì•ˆ ë‹´ê²¨ ìˆê¸° ë•Œë¬¸ì— sessionì—ì„œ ë¶ˆëŸ¬ì˜´
+		//·¹ÄÚµå ¹øÈ£, ·Î±×ÀÎ ¾ÆÀÌµğ°¡ °°Àº ¶§ ¼öÁ¤ : dto¿¡ id ¾È ´ã°Ü ÀÖ±â ¶§¹®¿¡ session¿¡¼­ ºÒ·¯¿È
 		dto.setId((String)session.getAttribute("loginId"));
 		String bodyTag = "<script>";
 		try {
@@ -186,7 +199,7 @@ public class ReviewController {
 			bodyTag += "location.href='reviewView?plan_no="+dto.getPlan_no()+"'";
 		}catch(Exception e) {
 			e.printStackTrace();	
-			bodyTag += "alert('ê²Œì‹œê¸€ ìˆ˜ì • ì‹¤íŒ¨');";
+			bodyTag += "alert('°Ô½Ã±Û ¼öÁ¤ ½ÇÆĞ');";
 			bodyTag += "history.back();";
 		}
 		bodyTag += "</script>";
@@ -200,7 +213,7 @@ public class ReviewController {
 		return entity;
 	}
 		
-	//ê²Œì‹œê¸€ DBì—ì„œ ì‚­ì œ
+	//°Ô½Ã±Û DB¿¡¼­ »èÁ¦
 	@GetMapping("/reviewDel")
 	public ModelAndView reviewDel(ReviewDTO dto, HttpSession session) {
 		dto.setId((String)session.getAttribute("loginId"));
@@ -217,5 +230,6 @@ public class ReviewController {
 		}
 		return mav;
 	}
+	
 
 }

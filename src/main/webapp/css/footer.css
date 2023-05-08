@@ -6,7 +6,7 @@ footer{
 	background:#f5f5f5;
 }
 .footer_left_box{
-	margin-top:19px;
+	margin-top:20px;
 	margin-bottom:19px;
 	width:60%;
 	float:left;
@@ -25,9 +25,9 @@ footer{
 .footer_select{
 	border:none;
 	font-size:17px;
-    -webkit-appearance:none; /* í¬ë¡¬ í™”ì‚´í‘œ ì—†ì• ê¸° */
-    -moz-appearance:none; /* íŒŒì´ì–´í­ìŠ¤ í™”ì‚´í‘œ ì—†ì• ê¸° */
-    appearance:none; /* í™”ì‚´í‘œ ì—†ì• ê¸° */
+    -webkit-appearance:none; /* Å©·Ò È­»ìÇ¥ ¾ø¾Ö±â */
+    -moz-appearance:none; /* ÆÄÀÌ¾îÆø½º È­»ìÇ¥ ¾ø¾Ö±â */
+    appearance:none; /* È­»ìÇ¥ ¾ø¾Ö±â */
 }
 
 .footer_right_box{
@@ -54,4 +54,15 @@ footer{
 	width:70px;
 	text-align:right;
 	font-size:15px;
+}
+.footer_select{
+	background-color: transparent;
+}
+.notice_a{
+	text-decoration:none;
+	color:#082032;
+}
+.footer_right_box>div>a{
+	text-decoration:none;
+	color:#082032;
 }

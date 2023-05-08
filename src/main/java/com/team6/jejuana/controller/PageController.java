@@ -2,6 +2,7 @@ package com.team6.jejuana.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -23,5 +24,18 @@ public class PageController {
 		return mav;
 	}
 	
+	@GetMapping("/policy")
+	public ModelAndView test123() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("login/policy");
+		return mav;
+	}
+	
+	@GetMapping("/userAgreements")
+	public ModelAndView userAgreements() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("login/userAgreements");
+		return mav;
+	}
 
 }

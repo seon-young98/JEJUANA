@@ -80,4 +80,20 @@ public class NoticeServiceImpl implements NoticeService {
 		return dao.applyDelete(dto);
 	}
 
+	@Override
+	public int complainInsert(NoticeDTO dto) {
+		return dao.complainInsert(dto);
+	}
+
+	@Override
+	public String complainSelect(int plan_no) {
+		return dao.complainSelect(plan_no);
+	}
+
+	@Override
+	public int complainUpdate(int plan_no, String complain) {
+		return dao.complainUpdate(plan_no, complain);
+	}
+
+
 }

@@ -13,22 +13,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlanDTO {
-    private int plan_no; //í”Œëœ ë²ˆí˜¸
-    private String plan_name; // í”Œëœì´ë¦„
-    private String start_date; //ì¼ì • ì‹œì‘ì¼
-    private String end_date;   // ì¼ì • ì¢…ë£Œì¼
-    private String transport;  // êµí†µìˆ˜ë‹¨ public/ownCar
-    private int number_person;  // ëª¨ì§‘ì¸ì›ìˆ˜
-    private int participants;  // ì°¸ê°€ì¸ì›ìˆ˜
-    private String temp;  // ì„ì‹œì €ì¥ì—¬ë¶€
-    private String id;  //ì‘ì„±ì
-    private int days;   //ê¸°ê°„
-    private int activated; // ë¹„í™œì„± ì—¬ë¶€
+    private int plan_no; //ÇÃ·£ ¹øÈ£
+    private String plan_name; // ÇÃ·£ÀÌ¸§
+    private String start_date; //ÀÏÁ¤ ½ÃÀÛÀÏ
+    private String end_date;   // ÀÏÁ¤ Á¾·áÀÏ
+    private String transport;  // ±³Åë¼ö´Ü public/ownCar
+    private int number_person;  // ¸ğÁıÀÎ¿ø¼ö
+    private int participants;  // Âü°¡ÀÎ¿ø¼ö
+    private String temp;  // ÀÓ½ÃÀúÀå¿©ºÎ
+    private String id;  //ÀÛ¼ºÀÚ
+    private int days;   //±â°£
+    private int activated; // ºñÈ°¼º ¿©ºÎ
+	private String book_name; //ºÏ¸¶Å© ÀÌ¸§
 
     private int d_day;
 	private int review_date;
 	
-	//ì—¬ëŸ¬ ê°œì˜ ë ˆì½”ë“œ í•œë²ˆì— ì‚­ì œí•  ë•Œ í•„ìš”í•œ ë ˆì½”ë“œ ë²ˆí˜¸
+	//¿©·¯ °³ÀÇ ·¹ÄÚµå ÇÑ¹ø¿¡ »èÁ¦ÇÒ ¶§ ÇÊ¿äÇÑ ·¹ÄÚµå ¹øÈ£
 	private List<Integer> noPList;
 
 	@Override
@@ -62,7 +63,7 @@ public class PlanDTO {
 	public void setStart_date(String start_date) throws ParseException {
 		this.start_date = start_date;
 		
-		//d-dayê³„ì‚°
+		//d-day°è»ê
 
 		String todayFm = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -177,5 +178,6 @@ public class PlanDTO {
 	public void setNoPList(List<Integer> noPList) {
 		this.noPList = noPList;
 	}
+
 	
 }

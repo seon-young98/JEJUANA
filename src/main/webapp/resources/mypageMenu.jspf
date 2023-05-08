@@ -5,19 +5,20 @@
 
 <div>
 	<div class="aside">
-	<div class="nickname">
-		<div>
-			<c:forEach var="proDTO" items="${proDTO }">
-				<span>
-					${proDTO.nickname }
-				</span>
-				<p style="color:gray">${proDTO.id }</p>
-			</c:forEach>
-		</div>
-	</div>	
-	<div class="mypage">마이페이지</div>
+		<div class="nickname">
+			<div>
+				<c:forEach var="proDTO" items="${proDTO }">
+					<i class="fa-solid fa-user-pen"></i>
+					<span>
+						${proDTO.nickname }
+					</span>
+					<p style="color:gray">${proDTO.id }</p>
+				</c:forEach>
+			</div>
+		</div>	
 		<div class="menu">
-			<ul>
+			<div class="mypage">마이페이지</div>
+			<ul class="mypageList">
 				<li id="bold1"><a href="/jejuana/mypage/mypagePlan">나의 일정 관리</a></li>
 				<li id="bold2"><a href="/jejuana/mypage/mypageReview">여행기록 관리</a></li>
 				<li id="bold6">
@@ -33,3 +34,4 @@
 			</ul>
 		</div>
 	</div>
+

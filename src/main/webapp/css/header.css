@@ -88,4 +88,7 @@ header{
 
 .dropdown-content a:hover {background-color: #f7c7a8}
 
-.show {display:block;}
+.show {
+	display:block;
+	z-index: 99999;
+}

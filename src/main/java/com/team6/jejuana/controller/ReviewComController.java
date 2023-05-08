@@ -16,40 +16,40 @@ import com.team6.jejuana.service.ReviewComService;
 
 @RestController
 public class ReviewComController {
-	@Autowired
-	ReviewComService service;
-	
-	//ÎåìÍ∏Ä Îì±Î°ù
-	@PostMapping("/commentSend")
-	public String commentSend(ReviewComDTO dto, HttpServletRequest request) {
-		dto.setIp(request.getRemoteAddr());
-		dto.setId((String)request.getSession().getAttribute("loginId"));
-		
-		int result = service.commentInsert(dto);
-		System.out.println(dto.toString());
-		return result+"";
-	}
-	
-	//ÎåìÍ∏Ä Î™©Î°ù
-	@GetMapping("/commentList")
-	public List<ReviewComDTO> commentList(int target_no) {
-		List<ReviewComDTO> list = service.commentListSelect(target_no);
-		return list;
-	}
-	
-	//ÎåìÍ∏Ä ÏàòÏ†ï
-	@PostMapping("/commentEdit")
-	public String commentEdit(ReviewComDTO dto, HttpSession session) {
-		dto.setId((String)session.getAttribute("loginId"));
-		int result = service.commentUpdate(dto);
-		return String.valueOf(result);
-	}
-	
-	//ÎåìÍ∏Ä ÏÇ≠Ï†ú
-	@GetMapping("/commentDelete")
-	public String commentDelete(int comment_no, HttpSession session) {
-		String id = (String)session.getAttribute("loginId");
-		return String.valueOf(service.commentDelete(comment_no, id));
-	
-	}
+   @Autowired
+   ReviewComService service;
+   
+   //¥Ò±€ µÓ∑œ
+   @PostMapping("/commentSend")
+   public String commentSend(ReviewComDTO dto, HttpServletRequest request) {
+      dto.setIp(request.getRemoteAddr());
+      dto.setId((String)request.getSession().getAttribute("loginId"));
+      
+      int result = service.commentInsert(dto);
+      System.out.println(dto.toString());
+      return result+"";
+   }
+   
+   //¥Ò±€ ∏Ò∑œ
+   @GetMapping("/commentList")
+   public List<ReviewComDTO> commentList(int target_no) {
+      List<ReviewComDTO> list = service.commentListSelect(target_no);
+      return list;
+   }
+   
+   //¥Ò±€ ºˆ¡§
+   @PostMapping("/commentEdit")
+   public String commentEdit(ReviewComDTO dto, HttpSession session) {
+      dto.setId((String)session.getAttribute("loginId"));
+      int result = service.commentUpdate(dto);
+      return String.valueOf(result);
+   }
+   
+   //¥Ò±€ ªË¡¶
+   @GetMapping("/commentDelete")
+   public String commentDelete(int comment_no, HttpSession session) {
+      String id = (String)session.getAttribute("loginId");
+      return String.valueOf(service.commentDelete(comment_no, id));
+   
+   }
 }

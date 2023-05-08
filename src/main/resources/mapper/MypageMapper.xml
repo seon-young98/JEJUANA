@@ -4,28 +4,28 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team6.jejuana.dao.MypageDAO">
 	<select id="totalRecord" resultType="int">
-		select count(plan_no) totalRecord from plan where activated=0
+		select count(plan_no) totalRecord from plan where activated=0 and id=#{param1}
 	</select>
 	<select id="planAllSelect" resultType="com.team6.jejuana.dto.PlanDTO">
 		select * from
 			(select * from
 				(
 					select plan_no, plan_name, to_char(start_date,'YYYY-MM-DD') start_date, to_char(end_date,'YYYY-MM-DD') end_date, id
-					from plan where activated=0 and id=#{id} order by plan_no desc	
+					from plan where activated=0 and id=#{id} order by start_date	
 				)
 				<![CDATA[		
-				where rownum<=${onePageRecord*nowPage} order by plan_no asc
+				where rownum<=${onePageRecord*nowPage} order by start_date desc
 				]]>
 			)
 			<choose>
 					<when test="nowPage!=totalPage">
 						<![CDATA[		
-						where rownum<=${onePageRecord} order by plan_no desc
+						where rownum<=${onePageRecord} order by start_date asc
 						]]>
 					</when>
 					<when test="nowPage==totalPage">
 						<![CDATA[		
-						where rownum<=${lastPageRecord} order by plan_no desc
+						where rownum<=${lastPageRecord} order by start_date asc
 						]]>
 					</when>
 				</choose>
@@ -40,14 +40,14 @@
 		</foreach>
 	</update>
 	<select id="totalRecordReview" resultType="int">
-		select count(plan_no) totalRecord from review where activated=0
+		select count(plan_no) totalRecord from review where id=#{param1}
 	</select>
 	<select id="reviewAllSelect" resultType="com.team6.jejuana.dto.ReviewDTO">
 		select * from
 			(select * from
 				(
-					select plan_no, review_subject, review_hit, id, to_char(writedate,'MM-DD HH24:MI') writedate
-					from review where activated=0 and id=#{id} order by plan_no desc	
+					select plan_no, review_subject, review_hit, id, to_char(writedate,'MM-DD HH24:MI') writedate, activated, complain
+					from review where id=#{id} order by plan_no desc	
 				)
 				<![CDATA[		
 				where rownum<=${onePageRecord*nowPage} order by plan_no asc
@@ -84,5 +84,83 @@
 	</update>
 	<delete id="userDelete">
 		delete from common where id=#{param1}
+	</delete>
+	<select id="reviewSelect" resultType="int">
+		select plan_no from review
+	</select>
+	<select id="reviewEditSelect" resultType="com.team6.jejuana.dto.ReviewDTO">	
+		select plan_no, review_subject, review_content, tag from review where plan_no=${param1}
+	</select>
+	<select id="tagSelect" resultType="com.team6.jejuana.dto.ReviewDTO"> 
+		select tag_content from tag
+	</select>
+	<update id="reviewUpdate" parameterType="com.team6.jejuana.dto.ReviewDTO">
+		update review set review_subject=#{review_subject}, review_content=#{review_content}, tag=#{tag}, thumbnail=#{thumbnail}
+		where plan_no=${plan_no} and id=#{id}
+	</update>
+	<select id="totalRecordCourse" resultType="int">
+		select count(book_no) totalRecord from bookmark where book_type=2 and id=#{param1}
+	</select>
+	<select id="bookmarkCourse" resultType="com.team6.jejuana.dto.ReviewDTO">
+		select * from
+			(select * from
+				(
+					select b.book_no, r.review_subject, r.id, r.thumbnail, r.tag, p.days, r.joayo_hit, b.target_no 
+					from bookmark b, review r, plan p 
+					where b.target_no=r.plan_no and r.plan_no=p.plan_no and b.id=#{id} and b.book_type=2 and r.activated=0 
+					order by book_no desc	
+				)
+				<![CDATA[		
+				where rownum<=${onePageRecord*nowPage} order by book_no asc
+				]]>
+			)
+			<choose>
+					<when test="nowPage!=totalPage">
+						<![CDATA[		
+						where rownum<=${onePageRecord} order by book_no desc
+						]]>
+					</when>
+					<when test="nowPage==totalPage">
+						<![CDATA[		
+						where rownum<=${lastPageRecord} order by book_no desc
+						]]>
+					</when>
+				</choose>
+	</select>
+	<select id="totalRecordPlace" resultType="int">
+		select count(book_no) totalRecord from bookmark where book_type=1 and id=#{param1}
+	</select>
+	<select id="bookmarkPlace" resultType="com.team6.jejuana.dto.BookMarkDTO">
+		select * from
+			(select * from
+				(
+					select book_no, book_name, book_addr, rate from bookmark where book_type=1 and id=#{id}
+					order by book_no desc	
+				)
+				<![CDATA[		
+				where rownum<=${onePageRecord*nowPage} order by book_no asc
+				]]>
+			)
+			<choose>
+					<when test="nowPage!=totalPage">
+						<![CDATA[		
+						where rownum<=${onePageRecord} order by book_no desc
+						]]>
+					</when>
+					<when test="nowPage==totalPage">
+						<![CDATA[		
+						where rownum<=${lastPageRecord} order by book_no desc
+						]]>
+					</when>
+				</choose>
+	</select>
+	<update id="mypageBookmarkMultiDel">
+		delete from bookmark  
+		<foreach item="item" collection="list" open="where book_no in (" separator="," close=")">
+			#{item}		
+		</foreach>
+	</update>
+	<delete id="reviewDelete">
+		delete from review where plan_no=${param1}
 	</delete>
 </mapper>

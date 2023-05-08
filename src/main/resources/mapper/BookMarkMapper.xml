@@ -4,15 +4,23 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team6.jejuana.dao.BookMarkDAO">
 	<insert id="bookMarkInsert">
-		insert into bookmark(book_no, book_name, book_addr, book_type, id)
-		values(book_seq.nextval, #{book_name}, #{book_addr}, #{book_type}, #{id})
+		insert into bookmark(book_no, book_name, book_addr, book_type, id, rate)
+		values(book_sq.nextval, #{book_name}, #{book_addr}, #{book_type}, #{id}, ${rate})
 	</insert>
 	
 	<select id="bookListSelect" resultType="com.team6.jejuana.dto.BookMarkDTO">
-		select book_no, book_name,book_addr, book_date from bookmark where id=#{parma1} order by book_no
+		select book_no, book_name,book_addr, book_date, to_char(rate,'9.9') rate from bookmark where id=#{parma1} and book_type=1 order by book_no
 	</select>
 	
 	<delete id="dataDelete">
  		delete from bookmark where book_no=${no}
  	</delete>
+ 	<!-- 별점추가 -->
+ 	<select id="bookmarkRateck" resultType="int">
+ 		select count(rate) from place where place_name=#{param1}
+ 	</select>
+ 	
+ 	<select id="bookmarkRate" resultType="double">
+		select rate from place where place_name=#{param1}
+	</select>
 </mapper>

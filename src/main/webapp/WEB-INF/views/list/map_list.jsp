@@ -11,43 +11,50 @@
 		<!-- 맨위 -->
 		<div id="screen">
 			<div class="section1">
-				<div class="section1_1_1">
-			        <div id="weather" >	
-			        	<span class="nowtime"></span>
-						<span>제주도</span>
-				        <h3 class="JejuIcon"></h3>
-				        <ul>
-					        <li class="JejuNowtemp">현재기온 :  </li>
-				        </ul>
+				<!-- <div class="map_listbg"> -->
+					<div class="section1_1_1">
+				        <div id="weather" >	
+				        	<span class="nowtime"></span>
+							<span>제주도</span>
+					        <h3 class="JejuIcon"></h3>
+					        <ul>
+						        <li class="JejuNowtemp">현재기온 :  </li>
+					        </ul>
+						</div>
 					</div>
-				</div>
-				
-				<div class="section1_3">
-					<form onsubmit="searchPlaces(); return false;" style="height:100%;" >
-							<div class="section1_3_1">
-								<input type="text" class="form-control search-menu" id="keyword" placeholder="검색..." >
-							</div>
-							<div class="section1_3_2">
-								<button type="submit" name="name1"><img src="/jejuana/img/button_search.png"alt="검색"></button>
-							</div> 
-					</form>
-				</div>
-				
-				<!-- 메뉴 -->
-				<div class="section1_1" style="margin-top:-9px">
-				</div>
-			
+					
+					<div class="section1_3">
+						<form onsubmit="searchPlaces(); return false;" style="height:100%;" >
+								<div class="section1_3_1">
+									<input type="text" class="form-control search-menu" id="keyword" value="">
+								</div>
+								<div class="section1_3_2">
+									<button type="submit" name="name1"><img src="/jejuana/img/button_search.png"alt="검색"></button>
+								</div> 
+						</form>
+					</div>
+					
+					<!-- 메뉴 -->
+					<div class="section1_1">
+					</div>
+			<!-- </div> -->
 		<!-- 북마크 표현을 위한 모달창 출력 ------------------------------ -->		
 		<div class="black_bg" ></div>
 			<div class="modal_wrap">
-			    <div class="modal_close" ><a href="#">close</a></div>
+			    
 			    <div class="modal_style">
 			       <table>
-				       <thead>
-							<tr>
-								<th>장소명</th>
-								<th>주소</th>
-								<th>등록일시</th>
+				       <thead class="modal_thead">
+							<tr style="font-size:20xp; text-align:center;">
+								<td>장소명</td>
+								<td>주소</td>
+								<td>등록일시</td>
+								<td>평점</td>
+								<td>
+									<div class="modal_close">
+											<i class="fa-solid fa-rectangle-xmark fa-xl" style="font-size:25px;"></i>
+									</div>
+								</td>
 							</tr>
 					   </thead>
 					   <tbody id="resultData">
@@ -56,7 +63,7 @@
 			    </div>
 			 </div>
 		        <hr>
-		        <div class="map_wrap" id="menu_wrap">
+		        <div class="map_wrap scroll" id="menu_wrap">
 		        	<ul id="placesList" ></ul>
 		        	<div id="pagination"></div>
 	        	</div>
@@ -77,10 +84,10 @@
 			
 			
 			<c:if test="${loginStatus!='Y'}">
-						<button type="button"  class="bbtn" onclick="test1()" >북마크</button>
+						<button type="button" class="bbtn" onclick="test1()" ><i class="fa-regular fa-bookmark fa-lg" style="color: #082032;"></i></button>
 					</c:if>
 					<c:if test="${loginStatus=='Y'}">
-						<button type="button"  id="modal_btn" class="bbtn">북마크</button>
+						<button type="button"  id="modal_btn" class="bbtn"><i class="fa-regular fa-bookmark fa-lg" style="color: #082032;"></i></button>
 			</c:if>
 			
 			
@@ -103,13 +110,13 @@ $('#modal_btn').one('click',function(){
 			
 			var tag = "";
 			$(result).each(function(i, data){
-					tag += "<tr '>";
+					tag += "<tr class='modal_tr'>";
 					tag += "<td>" +data.book_name+"</td>";
 					tag += "<td>" +data.book_addr+"</td>";
-					tag += "<td>" +data.book_date+"</td>";
-					tag += "<td onclick='deltest("+data.book_no+")'><button style='background:white;'>삭제</button></td>"
+					tag += "<td>" +data.book_date.substr(0,11)+"</td>";
+					tag += "<td>" +data.rate+"</td>";
+					tag += "<td onclick='deltest("+data.book_no+")'><button class='delbtn'>삭제</button></td>"
 					tag += "</tr>";
-					
 			});
 			
 			
@@ -184,7 +191,14 @@ var ps = new kakao.maps.services.Places();
 searchPlaces();
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
+	var keyword1 = "제주도";
+	
     var keyword = document.getElementById('keyword').value;
+    
+    if (keyword.indexOf(keyword1)){
+    	keyword = keyword1 +' '+ keyword
+    }
+	
     $(function(){
 		//검색결과 유효성 검사
 			$("button[name=name1]").click(function(){
@@ -227,12 +241,12 @@ function placesSearchCB(data, status, pagination) {
 }
 //마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(y,x) {
-    var imageSrc = '/jejuana/img/marker.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(45, 45),  // 마커 이미지의 크기
+    var imageSrc = '/jejuana/img/marker1.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new kakao.maps.Size(80, 80),  // 마커 이미지의 크기
         imgOptions =  {
-            spriteSize : new kakao.maps.Size(47, 48), // 스프라이트 이미지의 크기
+            spriteSize : new kakao.maps.Size(30, 50), // 스프라이트 이미지의 크기
             spriteOrigin : new kakao.maps.Point(0, 0), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+            offset: new kakao.maps.Point(12, 60) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
         },
         markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
             marker = new kakao.maps.Marker({
@@ -274,7 +288,9 @@ function displayPlaces(places) {
         fragment.appendChild(itemEl);
 }
     // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
+    console.log(listEl);
     listEl.appendChild(fragment);
+    console.log(listEl);
     menuEl.scrollTop = 0;
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
@@ -298,17 +314,16 @@ function displayMarker(places,i) {
     }
     var content = document.createElement('div');
     content.classList.add('wrap');
-    content.innerHTML =  '<div class="info">' + '<div class="title" style="margin-top:-12px;">' +  places[i].place_name.split('(')[0]+ '</div>';
-    console.log(places[i].address_name);
-    content.innerHTML += '<div class="body">' + '<div class="img">' +'<img src="'+imgs[i]+'" width="260" height="150" style="margin-top:0px;border:1px solid gray;margin-right:6px">' +'</div>';
-	content.innerHTML += '<div class="jibun ellipsis" style="letter-spacing:3px;white-space: normal; margin:6px; font-weight: bold; margin-bottom:26px;">'+ '<div>'+place_firstname+'</div>'+ '<div>'+place_lastname+'</div>'  +'</div>';
-	content.innerHTML += '<div class="" style="margin:-35px 88px; padding:8px; font-weight: bold; float:left;">' + '<p style="margin-left:45px;">평점 ★★★★☆ 리뷰'+i+'</p>' + '</div>';
-	content.innerHTML += '<div class="wrap_button" style="margin-right:4px;margin-top:-9px;display:-webkit-inline-box;">'+'<form method="get" action="${pageContext.request.contextPath}/bookmarkTest"><input type="hidden" name="book_name" value="'+places[i].place_name.split('(')[0]+'"><input type="hidden" name="book_type" value="'+1+'"><input type="hidden" name="book_addr" value="'+place_lastname+'"><button type="submit" style="color:white;"'+bk_login+'>북마크</button></form>'+'<button><a id="kakao-link-btn" class="kakao"  href="javascript:sendLink(\''  +places[i].place_name.split('(')[0]+','+ place_lastname +'\')" style=" text-decoration: none; color:white;">공유</a></button>'+'<button type="button" ><a href='+places[i].place_url+' style=" text-decoration: none; color:white;">길찾기</a></button></div>';
+    content.innerHTML =  '<div class="info">' + '<div class="title" style="margin-top:-9px;">' +  places[i].place_name.split('(')[0]+ '</div>';
+    content.innerHTML += '<div class="body">' + '<div class="img">' +'<img src="'+imgs[i]+'" width="260" height="150" style="margin-top:0px;border:1px solid gray;margin-right:6px;box-shadow: 0px 0px 5px black;">' +'</div>';
+	//content.innerHTML += '<div class="" style="margin:2px 100px; font-weight: bold; float:left;">' + '<p style="margin-left:45px;">평점 ★★★★☆ 리뷰'+i+'</p>' +' </div>';
+	content.innerHTML += '<div class="jibun ellipsis" style="letter-spacing:3px;white-space: normal; margin:6px; font-weight: bold; margin-bottom:16px;">'+ '<div>'+place_firstname+'</div>'+ '<div>'+place_lastname+'</div>'  +'</div>';
+	content.innerHTML += '<div class="wrap_button" style="margin-right:4px;margin-top:-16px;display:-webkit-inline-box;">'+'<form method="get" action="${pageContext.request.contextPath}/bookmarkTest"><input type="hidden" name="book_name" value="'+places[i].place_name.split('(')[0]+'"><input type="hidden" name="book_type" value="'+1+'"><input type="hidden" name="book_addr" value="'+place_lastname+'"><button type="submit" style="color:white;"'+bk_login+'>북마크</button></form>'+'<button><a id="kakao-link-btn" class="kakao"  href="javascript:sendLink(\''  +places[i].place_name.split('(')[0]+','+ place_lastname +'\')" style=" text-decoration: none; color:white;">공유</a></button>'+'<button type="button" style="border-right:1px solid gray;" ><a href='+places[i].place_url+' style=" text-decoration: none; color:white;">길찾기</a></button></div>';
     
 	content.style.cssText = 'background:white;  ';
     var closeBtn = document.createElement('button');
-    closeBtn.innerHTML = '닫기';
-    closeBtn.style.cssText = 'position:absolute; width:35px; height:30px; border:2px solid gray; border-radius:5px;margin-top:-253px;margin-left:-34px';
+    closeBtn.innerHTML = '<i class="fa-solid fa-rectangle-xmark fa-xl" style="font-size:20px;"></i>';
+    closeBtn.style.cssText = 'position:absolute; width:20px; height:18px; border:none; border-radius:5px;margin-top:-233px;margin-left:-28px; background:white;';
     
     closeBtn.onclick = function () {
         overlay.setMap(null);
@@ -339,7 +354,7 @@ function test1(){
 	function getListItem(index, places) {
 	
 	    var el = document.createElement('li'),
-	    itemStr = '<img src="'+imgs[index]+'" width="95px" height="95px" style="object-fit:cover;">' +
+	    itemStr = '<img src="'+imgs[index]+'" width="95px" height="95px" style="object-fit:cover; box-shadow:0px 0px 5px black;">' +
 	                '<div class="info">' +
 	                '   <span>' + places.place_name + '</span>';
 	
@@ -452,7 +467,7 @@ function (WeatherResult) {
     var weathericonUrl =
         '<img src= "http://openweathermap.org/img/wn/'
         + WeatherResult.weather[0].icon +
-        '.png" alt="' + WeatherResult.weather[0].description + '"'+' style="width:200%; margin-top:-8px;margin-left:50px;"'+'/>'
+        '.png" alt="' + WeatherResult.weather[0].description + '"'+' style="width:100%; margin-top:-13px;margin-left:200px;"'+'/>'
     $('.JejuIcon').html(weathericonUrl);
 });
 </script>  
@@ -468,8 +483,8 @@ function sendLink(title) {
       description:'(으)로 놀러가자~',
       imageUrl: 'https://a.cdn-hotels.com/gdcs/production85/d946/73f139d8-4c1d-4ef6-97b0-9b2ccf29878a.jpg?impolicy=fcrop&w=1600&h=1066&q=medium',
       link: {
-        mobileWebUrl: 'http://localhost:8080/jejuana/map_list#',
-        webUrl: 'http://localhost:8080/jejuana/map_list#'
+          mobileWebUrl: 'http://localhost:9090/jejuana/map_list#',
+          webUrl: 'http://localhost:9090/jejuana/map_list#'
       }
     },
     social: {

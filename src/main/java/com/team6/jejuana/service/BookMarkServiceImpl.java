@@ -32,4 +32,18 @@ public class BookMarkServiceImpl implements BookMarkService {
 		return dao.dataDelete(no);
 	}
 
+
+	@Override
+	public double bookmarkRate(String book_name) {
+		return dao.bookmarkRate(book_name);
+	}
+
+
+	@Override
+	public int bookmarkRateck(String book_name) {
+		return dao.bookmarkRateck(book_name);
+	}
+
+
+
 }

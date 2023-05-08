@@ -9,7 +9,7 @@ import com.team6.jejuana.dto.ReviewDTO;
 public interface ManagerDAO {
 	
 	
-	//ê´€ë¦¬ì - ìœ ì €
+	//°ü¸®ÀÚ - À¯Àú
 	public int commontotalRecord(PagingDTO dto);
 	
 	public List<ReviewDTO> commonpageSelect(PagingDTO dto);
@@ -21,7 +21,7 @@ public interface ManagerDAO {
 	public int commonEditOk(LoginDTO dto);
 	
 	
-	//ê´€ë¦¬ì - ê²Œì‹œê¸€
+	//°ü¸®ÀÚ - °Ô½Ã±Û
 	public int reviewtotalRecord(PagingDTO dto);
 	
 	public List<ReviewDTO> reviewpageSelect(PagingDTO dto);
@@ -29,4 +29,7 @@ public interface ManagerDAO {
 	public int reviewMultiUpdate(List<Integer> noList);
 	
 	
+	public ReviewDTO reviewSelect(int plan_no);
+	
+	public int reviewUpdate(int plan_no);
 }

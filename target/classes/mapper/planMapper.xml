@@ -57,10 +57,16 @@
 <delete id="courseDel">
     delete from course where plan_no=${param1}
 </delete>
-	<select id="checkRate" resultType="int">
+   <select id="checkRate" resultType="int">
         select count(rate) from rate where place_no=${param1}
     </select>
     <select id="takeRate" resultType="double">
         select round(avg(rate), 1) from rate where place_no =${param1}
+    </select>
+
+    <select id="bookPlanList" resultType="com.team6.jejuana.dto.PlanDTO">
+        select p.plan_no, p.plan_name, to_char(p.start_date, 'YYYY-MM-DD') start_date, to_char(p.end_date, 'YYYY-MM-DD') end_date, p.days, b.book_name from plan p join bookmark b on p.plan_no=b.target_no and b.id=#{param1} and b.book_type=2
+
+
     </select>
 </mapper>

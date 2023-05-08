@@ -9,7 +9,7 @@ public class LoginDTO {
 	private String email1;
 	private String email2;
 	private String sign_date;
-	private String member_type;
+	private int member_type;
 	private String phone_num;
 	private int common_no;
 	
@@ -81,10 +81,10 @@ public class LoginDTO {
 	public void setSign_date(String sign_date) {
 		this.sign_date = sign_date;
 	}
-	public String getMember_type() {
+	public int getMember_type() {
 		return member_type;
 	}
-	public void setMember_type(String member_type) {
+	public void setMember_type(int member_type) {
 		this.member_type = member_type;
 	}
 	public int getCommon_no() {

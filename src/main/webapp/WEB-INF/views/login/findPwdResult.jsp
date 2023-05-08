@@ -81,8 +81,8 @@ $(function(){
 		</div>
 		<div id="pass" class="resultBox" style="display:none">
 			<div class="result_msg">비밀번호 변경</div>
-			<input type="text" id="password1" name="password1" placeholder="변경할 비밀번호 입력">
-			<input type="text" id="password2" name="password2" placeholder="변경할 비밀번호 재입력">
+			<input type="password" id="password1" name="password1" placeholder="변경할 비밀번호 입력">
+			<input type="password" id="password2" name="password2" placeholder="변경할 비밀번호 재입력">
 			<div class="edit_button">
 				<input type="submit" value="비밀번호 변경">
 			</div>

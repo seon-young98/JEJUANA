@@ -19,5 +19,7 @@ public interface PlanService {
     public int courseDel(int plan_no);
     public double takeRate(int place_no);
     public int checkRate(int place_no);
+    public List<PlanDTO> bookPlanList(String userid);
+
 
 }

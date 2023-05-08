@@ -25,39 +25,26 @@ public class ManagerController {
 	@Autowired
 	ManagerService service;
 	
-	@GetMapping("commonmanager1")
-	public ModelAndView commonmanager1(PagingDTO vo) {
-		ModelAndView mav = new ModelAndView();
-		System.out.println(1234);
+	
+	//
+	@GetMapping("/commonmanager1")	//	/board/boardList
+	public ModelAndView comonmanager1(PagingDTO vo) {
 		
-		mav.setViewName("manager/commonmanager1");
+		ModelAndView mav = new ModelAndView();
 		
 		vo.setTotalRecord(service.commontotalRecord(vo));
 		mav.addObject("list",service.commonpageSelect(vo));
-
-		mav.addObject("nowpage",vo.getNowPage());
 		mav.addObject("vo",vo);
-		
-		if(vo.getSearchWord()!=null && !vo.getSearchWord().equals("")) {
-			mav.addObject("searchKey", vo.getSearchKey());
-			mav.addObject("searchWord", vo.getSearchWord());
-		}
-		
-		System.out.println(2345);
-		
+		mav.setViewName("manager/commonmanager1");
 		return mav;
 	}
 	
-	//유저 관리자 변경
+	
+	//
 		@PostMapping("commonUpdate")
 		public ModelAndView commonUpdate(ReviewDTO dto,PagingDTO vo) {
-			ModelAndView mav = new ModelAndView();
 			int result = service.commonMultiUpdate(dto.getNoList());
-			vo.setTotalRecord(service.commontotalRecord(vo));
-			mav.addObject("list",service.commonpageSelect(vo));
-			mav.addObject("nowpage",vo.getNowPage());
-			mav.addObject("vo",vo);
-			
+			ModelAndView mav = new ModelAndView();
 			mav.addObject("nowpage",vo.getNowPage());
 			
 			if(vo.getSearchWord()!=null && !vo.getSearchWord().equals("")) {
@@ -66,11 +53,11 @@ public class ManagerController {
 				
 			}
 
-			mav.setViewName("manager/commonmanager1");
+			mav.setViewName("redirect:commonmanager1");
 			return mav;
 		}
 		
-	//유저 세부정보 출력
+	//
 	@GetMapping("/commonmanager2")
 	public ModelAndView usermanager2(int common_no,PagingDTO vo) {
 		ModelAndView mav = new ModelAndView();
@@ -90,13 +77,13 @@ public class ManagerController {
 		
 		if(cnt>0){
 			message = "<script>alert('success!');location.href='commonmanager1';</script>";
-		}else {// 수정실패시 -> 이전페이지(알림)
+		}else {//
 			message = "<script>alert('failure!.');location.href='commonmanager1';</script>";
 		}
 		return message;
 	}
 	
-	//게시글 목록 출력
+	//
 	@GetMapping("/reviewmanager")	//	/board/boardList
 	public ModelAndView reviewmanager(PagingDTO vo) {
 		
@@ -110,13 +97,45 @@ public class ManagerController {
 		return mav;
 	}
 	
+	//������ �۳��� ����
+	@GetMapping("/reviewView")
+	public ModelAndView reviewView(int plan_no, PagingDTO vo) {
+		ModelAndView mav = new ModelAndView();
 		
-	//게시글의 활성화/비활성화 변경
+		mav.addObject("dto", service.reviewSelect(plan_no));
+		mav.addObject("vo", vo);
+		
+		mav.setViewName("/manager/reviewView");
+		
+		return mav;
+	}
+		
+	//
 	@PostMapping("reviewUpdate")
 	public ModelAndView reviewUpdate(ReviewDTO dto,PagingDTO vo) {
-		int result = service.reviewMultiUpdate(dto.getNoList());//삭제
+	
+		int result = service.reviewMultiUpdate(dto.getNoList());//
+		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("nowpage",vo.getNowPage());
+		mav.addObject("nowPage",vo.getNowPage());
+		
+		if(vo.getSearchWord()!=null && !vo.getSearchWord().equals("")) {
+			mav.addObject("searchKey", vo.getSearchKey());
+			mav.addObject("searchWord", vo.getSearchWord());
+			
+		}
+
+		mav.setViewName("redirect:reviewmanager");
+		return mav;
+	}
+	
+	@PostMapping("reviewUpdateOne")
+	public ModelAndView reviewUpdateOne(ReviewDTO dto,PagingDTO vo) {
+	
+		int result = service.reviewUpdate(dto.getPlan_no());//
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("nowPage",vo.getNowPage());
 		
 		if(vo.getSearchWord()!=null && !vo.getSearchWord().equals("")) {
 			mav.addObject("searchKey", vo.getSearchKey());

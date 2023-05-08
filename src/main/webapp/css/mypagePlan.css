@@ -1,24 +1,59 @@
 .planTitle{
 	font-family: 'GmarketSansMedium';
-	width:18%;
-	border:1px solid navy;
-	font-size:1.5em;
-	margin-top:20px;
-	margin-left:20px;
-	padding:10px;
-	text-align:center;
+	width:100%;
+	/*border:1px solid navy;*/
+	font-size:32px;
+	margin-top:25px;
+	margin-left:65px;
+	margin-bottom:10px;
+	/*padding:10px;*/
+	/*text-align:center;*/
 }
 #allCheckP{
 	font-family: 'GmarketSansMedium';
-	margin-left:20px;
-	margin-top:10px;
+	/*margin-left:20px;
+	margin-top:10px;*/
+}
+#allCheckP{
+	margin-left:10px;
+}
+#allCheckP{
+	border-radius:50px;
+	border:1px solid gray;
+	appearance: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    width:12px;
+    height:12px;
+}
+#allCheckP:checked{
+	background:#2C394B;
+	border:none;
+}
+#noPList{
+	margin-left:10px;
+}
+#noPList{
+	border-radius:50px;
+	border:1px solid gray;
+	appearance: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    width:12px;
+    height:12px;
+}
+#noPList:checked{
+	background:#2C394B;
+	border:none;
 }
 .planList{
 	width:90%;
-	border:1px solid navy;
-	margin:25px auto;
+	/*border:1px solid navy;*/
+	margin:15px auto;
 	height:100px;
 	overflow:hidden;
+	box-shadow:0px 0px 4px gray;
+	background:rgb(255,255,255,0.6);
 }
 .planList>ul{
 	font-family: 'GmarketSansMedium';
@@ -55,7 +90,9 @@
 	font-weight:bold;
 	margin-bottom:10px;
 }
-
+.planReviewY:hover{
+	background:#F37321;
+}
 .planReviewY{
 	font-family: 'GmarketSansMedium';
 	width: 90px;
@@ -78,7 +115,7 @@
 	width:100%;
 	margin:0 auto;
 	margin-left:40%;
-	margin-top:20px;
+	margin-top:5px;
 	margin-bottom:20px;
 }
 .pagingDivP>ul{
@@ -95,6 +132,9 @@
 body>div{
 	height:100%;
 }
+#chooseDelP:hover{
+	background:#F37321;
+}
 #chooseDelP{
 	font-family: 'GmarketSansMedium';
 	width: 100px;
@@ -106,7 +146,10 @@ body>div{
 	border-radius:5px;
 	padding-top:5px;
 }
-#planChahge{
+#planChange:hover{
+	background:#F37321;
+}
+#planChange{
 	font-family: 'GmarketSansMedium';
 	width: 50px;
 	margin-left:60px;
@@ -119,4 +162,12 @@ body>div{
 #acp{
 	font-family:'GmarketSansMedium';
 	margin-left:45px;
+}
+.fa-plane-circle-check{
+	color:#2747a1;
+	margin:0;
+	font-size:25px;
+}
+#PlanBtn{
+	padding: 6px 20px;
 }

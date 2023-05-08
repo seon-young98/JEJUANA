@@ -23,7 +23,7 @@ public class NoticeController {
 	@Inject
 	NoticeService service;
 	
-	//ë¬¸ì˜ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸ë³´ê¸°
+	//¹®ÀÇ°Ô½ÃÆÇ ¸®½ºÆ®º¸±â
 	@GetMapping("/noticeList")
 	public ModelAndView notice(PagingTwoVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -33,20 +33,20 @@ public class NoticeController {
 		int m_type = 0;
 		String loginId = null;
 		
-		//ê³µì§€ì‚¬í•­ë¦¬ìŠ¤íŠ¸
+		//°øÁö»çÇ×¸®½ºÆ®
 		mav.addObject("gList", service.gonggiSelect());
 		
-		//ë¬¸ì˜ì‚¬í•­ë¦¬ìŠ¤íŠ¸
+		//¹®ÀÇ»çÇ×¸®½ºÆ®
 		mav.addObject("vo", vo);
 		mav.addObject("list", service.noticeAllSelect(vo));
 		
 		String loginStatus = (String)session.getAttribute("loginStatus");
 		
 		if(loginStatus=="Y") {
-			m_type = service.memberTypeSelect(loginId);
 			loginId = (String)session.getAttribute("loginId");
+			m_type = service.memberTypeSelect(loginId);
 		}else {
-			m_type = 1;
+			m_type = 2;
 			loginId = "null";
 		}
 		mav.addObject("m_type", m_type);
@@ -57,7 +57,7 @@ public class NoticeController {
 		return mav;
 	}
 	
-	//ë¬¸ì˜ê¸€ì‘ì„±í•˜ê¸°
+	//¹®ÀÇ±ÛÀÛ¼ºÇÏ±â
 	@GetMapping("/noticeWrite")
 	public ModelAndView noticeWrite() {
 		ModelAndView mav = new ModelAndView();
@@ -65,7 +65,18 @@ public class NoticeController {
 		return mav;
 	}
 	
-	//ë¬¸ì˜ê¸€ë“±ë¡í•˜ê¸°(DB)
+	//½Å°í±ÛÀÛ¼ºÇÏ±â
+	@GetMapping("/complainWrite")
+	public ModelAndView complainWrite(int plan_no, String review_subject, String id) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("plan_no", plan_no);
+		mav.addObject("review_subject", review_subject);
+		mav.addObject("id", id);
+		mav.setViewName("/notice/complainWrite");
+		return mav;
+	}
+	
+	//¹®ÀÇ±Ûµî·ÏÇÏ±â(DB)
 	@PostMapping("noticeWriteOk")
 	public ModelAndView noticeWriteOk(NoticeDTO dto, HttpServletRequest request) {
 		dto.setIp(request.getRemoteAddr());
@@ -77,7 +88,7 @@ public class NoticeController {
 			int cnt = service.noticeInsert(dto);
 			
 			if(cnt>0) {
-				mav.addObject("msg", "ê¸€ì´ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.");
+				mav.addObject("msg", "±ÛÀÌ µî·ÏµÇ¾ú½À´Ï´Ù.");
 				mav.addObject("url", "/jejuana/notice/noticeList");
 				mav.setViewName("/notice/editOk");
 			}else {
@@ -86,13 +97,44 @@ public class NoticeController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			
-			mav.addObject("msg", "ê¸€ ë“±ë¡ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+			mav.addObject("msg", "±Û µî·Ï¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 			mav.setViewName("/notice/noticeFail");
 		}
 		return mav;
 	}
 	
-	//ê¸€ë‚´ìš©ë³´ê¸°
+	//½Å°í±Ûµî·ÏÇÏ±â(DB)
+	@PostMapping("complainWriteOk")
+	public ModelAndView complainWriteOk(NoticeDTO dto, HttpServletRequest request) {
+		dto.setIp(request.getRemoteAddr());
+		dto.setId((String)request.getSession().getAttribute("loginId"));
+			
+		ModelAndView mav = new ModelAndView();
+			
+		try {
+			int cnt = service.complainInsert(dto);
+			
+			//½Å°íÃ³¸®
+			String complain = service.complainSelect(dto.getPlan_no());
+			int result = service.complainUpdate(dto.getPlan_no(), complain);
+			
+			if(cnt>0) {
+				mav.addObject("msg", "±ÛÀÌ µî·ÏµÇ¾ú½À´Ï´Ù.");
+				mav.addObject("url", "/jejuana/notice/noticeList");
+				mav.setViewName("/notice/editOk");
+			}else {
+				throw new Exception();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+				
+			mav.addObject("msg", "±Û µî·Ï¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
+			mav.setViewName("/notice/noticeFail");
+		}
+		return mav;
+	}
+	
+	//±Û³»¿ëº¸±â
 	@GetMapping("/noticeView")
 	public ModelAndView noticeView(int notice_no, HttpSession session, PagingTwoVO vo) {
 		ModelAndView mav = new ModelAndView();
@@ -104,14 +146,14 @@ public class NoticeController {
 
 		
 		if(loginStatus=="Y") {
-			m_type = service.memberTypeSelect(loginId);
 			loginId = (String)session.getAttribute("loginId");
+			m_type = service.memberTypeSelect(loginId);
 		}else {
-			m_type = 1;
+			m_type = 2;
 			loginId = "null";
 		}
 		
-		//ì¡°íšŒìˆ˜ ì¦ê°€
+		//Á¶È¸¼ö Áõ°¡
 		service.hitCount(notice_no, loginId);
 		
 		mav.addObject("m_type", m_type);
@@ -124,7 +166,7 @@ public class NoticeController {
 		return mav;
 	}
 	
-	//ê¸€ë‚´ìš©ìˆ˜ì •í•˜ê¸°
+	//±Û³»¿ë¼öÁ¤ÇÏ±â
 	@GetMapping("/noticeEdit")
 	public ModelAndView noticeEdit(int notice_no, PagingTwoVO vo) {
 		ModelAndView mav = new ModelAndView();
@@ -138,7 +180,7 @@ public class NoticeController {
 		return mav;
 	}
 	
-	//ê¸€ë‚´ìš©ìˆ˜ì •í•˜ê¸°(DB)
+	//±Û³»¿ë¼öÁ¤ÇÏ±â(DB)
 	@PostMapping("/noticeEditOk")
 	public ModelAndView noticeEditOk(NoticeDTO dto, PagingTwoVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
@@ -149,7 +191,7 @@ public class NoticeController {
 			int result = service.noticeUpdate(dto);
 			
 			if(result>0) {
-				mav.addObject("msg", "ê¸€ì´ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.");
+				mav.addObject("msg", "±ÛÀÌ ¼öÁ¤µÇ¾ú½À´Ï´Ù.");
 				if(vo.getSearchWord()!=null) {
 					mav.addObject("url", "/jejuana/notice/noticeView?notice_no="+dto.getNotice_no()+"&nowPage="+vo.getNowPage()+"&searchKey="+vo.getSearchKey()+"&searchWord="+vo.getSearchWord());
 				}else {
@@ -162,13 +204,13 @@ public class NoticeController {
 			
 		}catch(Exception e) {
 			e.printStackTrace();
-			mav.addObject("msg", "ê¸€ ìˆ˜ì •ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+			mav.addObject("msg", "±Û ¼öÁ¤¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 			mav.setViewName("/notice/noticeFail");
 		}
 		return mav;
 	}
 	
-	//ê¸€ë‚´ìš©ì‚­ì œí•˜ê¸°
+	//±Û³»¿ë»èÁ¦ÇÏ±â
 	@GetMapping("/noticeDelete")
 	public ModelAndView noticeDelete(NoticeDTO dto, PagingTwoVO vo) {
 		int result = service.noticeDelete(dto);
@@ -176,7 +218,7 @@ public class NoticeController {
 		ModelAndView mav = new ModelAndView();
 		
 		if(result>0) {
-			mav.addObject("msg", "ê¸€ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.");
+			mav.addObject("msg", "±ÛÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù.");
 			if(vo.getSearchWord()!=null) {
 				mav.addObject("url", "/jejuana/notice/noticeList?nowPage="+vo.getNowPage()+"&searchKey="+vo.getSearchKey()+"&searchWord="+vo.getSearchWord());
 			}else {
@@ -184,13 +226,13 @@ public class NoticeController {
 			}
 			mav.setViewName("/notice/editOk");
 		}else {
-			mav.addObject("msg", "ê¸€ ì‚­ì œì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+			mav.addObject("msg", "±Û »èÁ¦¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 			mav.setViewName("/notice/noticeFail");
 		}
 		return mav;
 	}
 	
-	//ë‹µë³€ì‚­ì œí•˜ê¸°
+	//´äº¯»èÁ¦ÇÏ±â
 	@GetMapping("/applyDelete")
 	public ModelAndView applyDelete(NoticeDTO dto, PagingTwoVO vo) {
 		
@@ -205,7 +247,7 @@ public class NoticeController {
 		ModelAndView mav = new ModelAndView();
 			
 		if(result>0) {
-			mav.addObject("msg", "ê¸€ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.");
+			mav.addObject("msg", "±ÛÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù.");
 			if(vo.getSearchWord()!=null) {
 				mav.addObject("url", "/jejuana/notice/noticeList?nowPage="+vo.getNowPage()+"&searchKey="+vo.getSearchKey()+"&searchWord="+vo.getSearchWord());
 			}else {
@@ -213,13 +255,13 @@ public class NoticeController {
 			}
 			mav.setViewName("/notice/editOk");
 		}else {
-			mav.addObject("msg", "ê¸€ ì‚­ì œì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+			mav.addObject("msg", "±Û »èÁ¦¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 			mav.setViewName("/notice/noticeFail");
 		}
 		return mav;
 	}
 	
-	//ê³µì§€ì‘ì„±í•˜ê¸°
+	//°øÁöÀÛ¼ºÇÏ±â
 	@GetMapping("/managerWrite")
 	public ModelAndView managerWrite() {
 		ModelAndView mav = new ModelAndView();
@@ -227,7 +269,7 @@ public class NoticeController {
 		return mav;
 	}
 	
-	//ê³µì§€ë“±ë¡í•˜ê¸°(DB)
+	//°øÁöµî·ÏÇÏ±â(DB)
 	@PostMapping("managerWriteOk")
 	public ModelAndView managerWriteOk(NoticeDTO dto, HttpServletRequest request) {
 		dto.setIp(request.getRemoteAddr());
@@ -239,7 +281,7 @@ public class NoticeController {
 			int cnt = service.managerInsert(dto);
 				
 			if(cnt>0) {
-				mav.addObject("msg", "ê¸€ì´ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.");
+				mav.addObject("msg", "±ÛÀÌ µî·ÏµÇ¾ú½À´Ï´Ù.");
 				mav.addObject("url", "/jejuana/notice/noticeList");
 				mav.setViewName("/notice/editOk");
 			}else {
@@ -248,13 +290,13 @@ public class NoticeController {
 		}catch(Exception e) {
 			e.printStackTrace();
 				
-			mav.addObject("msg", "ê¸€ ë“±ë¡ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+			mav.addObject("msg", "±Û µî·Ï¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 			mav.setViewName("/notice/noticeFail");
 		}
 		return mav;
 	}
 	
-	//ë‹µë³€ì‘ì„±í•˜ê¸°
+	//´äº¯ÀÛ¼ºÇÏ±â
 	@GetMapping("/noticeReply/{notice_no}/{secretKey}")
 	public ModelAndView noticeReply(@PathVariable("notice_no") int notice_no, @PathVariable("secretKey") boolean secretKey) {
 		ModelAndView mav = new ModelAndView();
@@ -266,7 +308,7 @@ public class NoticeController {
 		return mav;
 	}
 	
-	//ë‹µë³€ë“±ë¡í•˜ê¸°(DB)
+	//´äº¯µî·ÏÇÏ±â(DB)
 	@PostMapping("/noticeReplyOk")
 	public ModelAndView noticeReplyOk(NoticeDTO dto, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -275,7 +317,7 @@ public class NoticeController {
 		dto.setIp(request.getRemoteAddr());
 		
 		try {
-			//ì›ê¸€ì˜ ref, idë¥¼ ì„ íƒí•œë‹¤.
+			//¿ø±ÛÀÇ ref, id¸¦ ¼±ÅÃÇÑ´Ù.
 			NoticeDTO orgDataDTO = service.replyDataSelect(dto.getNotice_no());
 			
 			dto.setRef(orgDataDTO.getRef());
@@ -284,7 +326,7 @@ public class NoticeController {
 			int result = service.replyWrite(dto);
 			
 			if(result>0) {
-				mav.addObject("msg", "ë‹µë³€ì´ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.");
+				mav.addObject("msg", "´äº¯ÀÌ µî·ÏµÇ¾ú½À´Ï´Ù.");
 				mav.addObject("url", "/jejuana/notice/noticeList");
 				mav.setViewName("/notice/editOk");
 			}else {
@@ -294,7 +336,7 @@ public class NoticeController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			
-			mav.addObject("msg", "ë‹µë³€ ë“±ë¡ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+			mav.addObject("msg", "´äº¯ µî·Ï¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
 			mav.setViewName("/notice/noticeFail");
 		}
 		

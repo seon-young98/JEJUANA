@@ -1,50 +1,55 @@
-.header , footer{
-    display: none;
-
-ul {
+ul{
     padding: 0;
     margin: 10px 20px;
 }
-
-ul li {
+ul li{
     list-style-type: none;
     margin: 2px;
     padding: 3px;
     width: 100%;
     height: available;
-
-
 }
-
+div{
+    font-family: 'GmarketSansMedium', serif;
+}
 #planner_body, #map {
     float: left;
     position: absolute;
     height: 100%
 }
-
 #planner_body {
-    width: 450px;
-}
 
+    width: 439px;
+    padding: 10px;
+    margin: auto;
+}
+#planner_body>ul{
+    height:100%;
+}
 #map {
     top: 0;
-    left: 450px;
-    width: 80%;
+    left: 439px;
+    width: 77%;
 }
-
-.header {
+.header, footer {
     display: none;
 
 }
 
 #schedule {
     width: 100%;
-    height: 850px;
+    /* height: 86.4%; */
+    max-height: 740px;
     background-color: #f1f1f1;
-    overflow-y: auto;
+    overflow-y: scroll;
     scrollbar-width: thin;
+    position: absolute;
+    bottom: 46px;
+    top: 130px;
+}
 
-
+#schedule::-webkit-scrollbar{
+    display: none!important;
 }
 
 #transport_radio {
@@ -59,10 +64,12 @@ ul li {
 .label {
     width: 25%;
     height: 100%;
+    padding-top:4px;
 }
 
 .ib {
-    width: 70%;
+    width: 65%;
+    font-size:14px;
 }
 
 .content {
@@ -84,49 +91,49 @@ ul li {
 }
 
 #buttons {
-    float: bottom;
+    display: -webkit-inline-box;
 }
 
 #myModal {
     width: 400px;
-    height: 92%;
-    left: 450px;
-    top: 4%;
+    height: 100%;
+    left: 439px;
+    top: 0;
     position: absolute;
     display: none;
     z-index: 3;
     background-color: #f9f9f9;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    border-left:1px solid gray
 
 }
 #modalheader{
-    width:100%;
-    height:40px;
-    display : flex;
-    justify-content: center;
-
+    width: 100%;
+    height: 40px;
+    display: flex;
+    margin-top: 5px;
+    justify-content: flex-start;
+}
+#place_tab:hover{
+    cursor:pointer;
+}
+#bookmark_tab:hover{
+    cursor:pointer;
 }
 #place_tab, #bookmark_tab{
     margin: 0 5px;
-    width: 40%;
-    height:40px;
+    width: 45%;
+    height: 40px;
     line-height: 40px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px ;
-    background-color: #0a244d;
+    background-color: #9b9b9b;
     text-align: center;
+    border-radius: 6px;
     color: white;
-
-
 }
 #modalbody {
     width: 100%;
     height: 90%;
-
-}
-#moreList{
-
 
 }
 #modalfooter {
@@ -140,7 +147,7 @@ ul li {
 .schedule_detail {
     margin: 5px;
     padding: 5px;
-    border: 1px solid gray;
+    border: 2px solid gray;
     border-radius: 5px;
     width: 95%;
 
@@ -150,29 +157,34 @@ ul li {
     height: 30px;
 
 }
-
+.placeAdd:hover{
+    color: #F37321;
+}
 .placeAdd {
     position: relative;
-    left: 300px;
-    width: 50px;
+    left: 280px;
+    width: 100px;
+    font-size:14px;
+    margin-top:30px;
 }
 
 #xbox {
     position: absolute;
-    left: 385px;
-    top: -15px;
+    left: 383px;
+    top: -1px;
     padding: 0;
     border: none;
 }
 #placeSave{
     display: flex;
     justify-content: space-around;
+    margin-top: 5px;
 }
 
 .place_container {
     display: grid;
     background: #ffffff;
-    grid-template-columns: 90px auto 90px 50px;
+    grid-template-columns: 90px auto 90px 60px;
     grid-template-rows: 40px 40px;
     padding: 5px;
     margin: 3px auto;
@@ -216,9 +228,10 @@ ul li {
 
 
 #searchWord {
-    margin: 3px 20px;
-    width: 90%;
+    margin: 3px 0px;
+    width: 98%;
     height: 90%;
+    margin-top:5px;
 }
 
 #placeBox {
@@ -236,18 +249,31 @@ ul li {
 }
 
 #selectedPlace {
-    background-color: rgba(217, 217, 217, 0.2);
-    margin: 5px 10px;
-    height: 80px;
+    /*background-color: rgba(217, 217, 217, 0.2);*/
+    height: 110px;
+    overflow: scroll;
+    border-bottom: 1px solid gray;
+    margin-top: 5px;
+    border-top: 1px solid gray;
+    background-color: #ededed;
+    margin-left: 4px;
+    margin-right: 4px;
 }
-#selectedPlace .place_item{
+#selectedPlace .selected_place_item{
     margin:5px 10px;
     float: left;
 
 }
-.button{
-    background-color: #ff9451;
-
+#saveBtn:hover{
+    background:#F37321;
+}
+#saveBtn{
+    background-color: #082032;
+    color:white;
+    padding-right : 181px;
+    padding-left : 181px;
+    padding-top: 4px;
+    padding-bottom :3px;
 }
 .place{
     display: grid;
@@ -260,7 +286,9 @@ ul li {
 }
 .place_name{
     border: 1px solid dimgray;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
+    font-size: 13px;
+    font-weight: 800;
     line-height: 40px;
     padding-left: 10px;
     margin: 10px;
@@ -280,8 +308,9 @@ ul li {
 }
 .place_del{
     align-self: center;
-    background-color: chocolate;
+    /*background-color: chocolate;*/
     text-align: center;
+    border: none;
 }
 .course_order{
     display: none;
@@ -299,22 +328,30 @@ ul li {
 }
 
 #planList{
-    width:500px;
-    height:700px;
-    display:none;
+    width: 500px;
+    /* height: 700px; */
+    display: none;
+    grid-template-rows: 40px auto;
+    grid-template-columns: 1fr 1fr;
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    top : 300px;
-    background-color: black;
+    top: 0;
+    background-color: #082032;
     z-index: 1052;
     padding: 20px;
+    bottom: 20px;
+    border-radius: 20px;
+    grid-column-gap: 3px;
 }
 #planListBody{
-    border-radius: 20px;
+    grid-column: 1/3;
+    grid-row: 2/3;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
     padding: 20px;
-    background-color: #ff9451;
-    height:660px;
+    background-color: #fff;
+    min-height: 500px;
 
 }
 .plan_container{
@@ -325,6 +362,7 @@ ul li {
     color : black;
     background-color: white;
     margin-bottom: 10px;
+    border-bottom: 1px solid gray;
 }
 .plan_item:last-child{
     grid-column: 2;
@@ -334,3 +372,164 @@ ul li {
     align-self: center;
     text-align: center;
 }
+/*addCss*/
+.modal-content{
+    font-family: 'GmarketSansMedium', serif;
+}
+#newPlannerChoose:hover{
+    background:#F37321;
+}
+#oldPlannerChoose:hover{
+    background:#F37321;
+}
+#newPlannerChoose,#oldPlannerChoose{
+    margin-top: 6px;
+    border: none;
+    background: #082032;
+    padding:10px;
+    color: white;
+}
+#newPlannerChoose{
+    padding-left:20px;
+    padding-right:20px;
+}
+#start_date, #end_date{
+    font-size: 13px;
+    border: 1px solid gray;
+    padding: 3px;
+}
+#total_schedule:hover{
+    background:#F37321;
+}
+#total_schedule{
+    border: none;
+    background: #082032;
+    padding:10px;
+    color: white;
+    text-align: center;
+}
+#xbox{
+    background-color: transparent;
+}
+#planner_body>ul{
+    position:relative;
+    margin:0;
+}
+.planner_bodyBtn{
+    position: absolute;
+    bottom: -6px;
+    text-align:center;
+}
+#save:hover{
+    background:#F37321;
+}
+#save{
+    border: none;
+    background: #082032;
+    padding:10px;
+    color: white;
+    width: 180px;
+}
+#cancel:hover{
+    background:#F37321;
+}
+#cancel{
+    border: none;
+    background: #082032;
+    padding:10px;
+    color: white;
+    width: 180px;
+    margin-left: 13px;
+}
+#container_A{
+    overflow:hidden;
+}
+.selected_place_item{
+    position: relative;
+}
+.selected_place_name{
+    display: none;
+    color : white;
+    background-color: #2C394B;
+    opacity: 0.9;
+    top:0;
+    left: 0;
+    right:0;
+    position: absolute;
+    height:25px;
+    text-align: center;
+    line-height: 25px;
+    overflow: hidden;
+}
+.delete{
+    display: none;
+}
+
+.selected_delete{
+    position: absolute;
+    top:-6px;
+    right:-6px;
+}
+#selectedPlace::-webkit-scrollbar {
+    display: none !important; /* 크롬, 사파리, 오페라 */
+}
+.fa-square-xmark{
+    font-size: 20px;
+    color: gray;
+}
+#searchWord:focus {
+    outline:none;
+}
+#searchForm{
+    text-align:center;
+}
+.btn-primary:hover{
+    background:#082032;
+}
+.btn-primary{
+    background: #9b9b9b;
+    border: none;
+    width: 60px;
+    height: 40px;
+    color: white;
+}
+#modalfooter{
+    display:none;
+}
+
+#gohome{
+    position: absolute;
+    top : 15px;
+    right : 15px;
+    z-index: 100;
+    background-color: white;
+    border-radius: 10px;
+    border : none;
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+.place_img{
+    box-shadow : 0 0 4px gray;
+}
+#myPlan, #bookPlan{
+    border-bottom: 1px solid gray;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    line-height: 40px;
+    text-align: center;
+    }
+#myPlan{
+    grid-column: 1/2;
+    grid-row:1/2;
+    background-color : #F37321;
+    color: whitesmoke;
+}
+#bookPlan{
+    grid-column: 2/3;
+    grid-row: 1/2;
+    background-color: #d9d9d9;
+    color: #082032;
+}
+

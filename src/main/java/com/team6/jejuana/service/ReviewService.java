@@ -6,34 +6,36 @@ import com.team6.jejuana.dto.ReviewDTO;
 import com.team6.jejuana.dto.ReviewSearchVO;
 
 public interface ReviewService {
-	//ì—¬í–‰ê¸°ë¡ ë©”ì¸
-	public List<ReviewDTO> reviewBestSelect(); //ì¸ê¸°ê¸€ ëª©ë¡
-	public List<ReviewDTO> reviewAllSelect(ReviewSearchVO vo); //ê¸€ ëª©ë¡
+	//¿©Çà±â·Ï ¸ŞÀÎ
+	public List<ReviewDTO> reviewBestSelect(); //ÀÎ±â±Û ¸ñ·Ï
+	public List<ReviewDTO> reviewAllSelect(ReviewSearchVO vo); //±Û ¸ñ·Ï
 	
-	//ê¸€ì‘ì„± ì°½
-	public ReviewDTO reviewWriteSelect(int plan_no); //ì‘ì„±í•  í”Œëœ ì„ íƒ
-	public List<ReviewDTO> planSelect(int plan_no); //ì´ ì—¬í–‰ì§€ ê°¯ìˆ˜/ëª©ë¡
-	public List<ReviewDTO> tagSelect(); //íƒœê·¸ëª©ë¡
-	public int reviewInsert(ReviewDTO dto); //ê¸€ë“±ë¡
+	//±ÛÀÛ¼º Ã¢
+	public ReviewDTO reviewWriteSelect(int plan_no); //ÀÛ¼ºÇÒ ÇÃ·£ ¼±ÅÃ
+	public List<ReviewDTO> planSelect(int plan_no); //ÃÑ ¿©ÇàÁö °¹¼ö/¸ñ·Ï
+	public List<ReviewDTO> tagSelect(); //ÅÂ±×¸ñ·Ï
+	public int reviewInsert(ReviewDTO dto); //±Ûµî·Ï
 		
-	//ë³„ì 
-	public ReviewDTO onePlaceSelect(int place_no); //ì—¬í–‰ì§€ 1ê°œ ì„ íƒ
-	public int starSelect(ReviewDTO dto); //ì¤‘ë³µë°©ì§€ í™•ì¸
-	public int starInsert(ReviewDTO dto); //ë³„ì  DB ë“±ë¡
-	public int starUpdate(int place_no, int rate); //ë³„ì  ë¶€ì—¬
+	//º°Á¡
+	public ReviewDTO onePlaceSelect(int place_no); //¿©ÇàÁö 1°³ ¼±ÅÃ
+	public int starSelect(ReviewDTO dto); //Áßº¹¹æÁö È®ÀÎ
+	public int starInsert(ReviewDTO dto); //º°Á¡ DB µî·Ï
+	public int starUpdate(int place_no, int rate); //º°Á¡ ºÎ¿©
 	
-	//ê¸€ì„ íƒ(í™•ì¸)
+	//±Û¼±ÅÃ(È®ÀÎ)
 	public ReviewDTO reviewSelect(int plan_no);
-	//ì¡°íšŒìˆ˜ ì¦ê°€
+	//Á¶È¸¼ö Áõ°¡
 	public void reviewHitCount(int plan_no);
-	//ë‹¤ë…€ì˜¨ ì½”ìŠ¤
+	//´Ù³à¿Â ÄÚ½º
 	public List<ReviewDTO> reviewCourse(int plan_no);
 		
-	//ìˆ˜ì •í•  ê¸€ ì„ íƒ
+	//¼öÁ¤ÇÒ ±Û ¼±ÅÃ
 	public ReviewDTO reviewEditSelect(int plan_no);
-	//ê¸€ìˆ˜ì •(DB)
+	//±Û¼öÁ¤(DB)
 	public int reviewUpdate(ReviewDTO dto);
 	
-	//ê¸€ ì‚­ì œ
+	//±Û »èÁ¦
 	public int reviewDelete(ReviewDTO dto);
+	
+	public int complainCount(int plan_no);
 }

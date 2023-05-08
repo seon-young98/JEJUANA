@@ -17,7 +17,6 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/img/**" location="/img/" />
 	<resources mapping="/css/**" location="/css/" />
-	<resources mapping="/thumbnail_rev/**" location="/thumbnail_rev/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

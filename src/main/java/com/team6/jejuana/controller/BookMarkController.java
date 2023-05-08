@@ -45,18 +45,31 @@ public class BookMarkController {
 		dto.setBook_name(book_name);
 		dto.setBook_addr(book_addr);
 		dto.setBook_type(book_type);
+		double rate = 0.0;
+		
+		//º°Á¡Ãß±â
+		Integer ck = service.bookmarkRateck(dto.getBook_name());
+		
+		if(ck>0) {
+			rate = service.bookmarkRate(dto.getBook_name());
+			dto.setRate(rate);
+		}else {
+			dto.setRate(rate);
+		}
+				
+		
 		dto.setId((String)session.getAttribute("loginId"));
 		String htmlTag = "<script>";
 		
 		try {
 			service.bookMarkInsert(dto);
 			transactionManager.commit(status);
-			htmlTag += "alert('ë¶ë§ˆí¬ì— ë“±ë¡ ì™„ë£Œí•˜ì˜€ìŠµë‹ˆë‹¤!');";
+			htmlTag += "alert('ºÏ¸¶Å©¿¡ µî·Ï ¿Ï·áÇÏ¿´½À´Ï´Ù!');";
 			htmlTag += "location.href='map_list'";
-		//ê²°ê³¼
+		//°á°ú
 		}catch(Exception e) {
-			
-			htmlTag += "alert('ë“±ë¡ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.');";
+			System.out.println(dto);
+			htmlTag += "alert('µî·ÏµÇÁö ¾Ê¾Ò½À´Ï´Ù.');";
 			htmlTag += "history.back();";
 			e.printStackTrace();
 			transactionManager.rollback(status);
@@ -67,13 +80,13 @@ public class BookMarkController {
 		headers.setContentType(new MediaType("text","html", Charset.forName("UTF-8")));
 		headers.add("Content_Type", "text/html; charSet=UTF-8");
 		
-		//						   ë‚´ìš©
+		//						   ³»¿ë
 		return new ResponseEntity<String>(htmlTag, headers, HttpStatus.OK);
 		
 
 	}
 	
-	//ë¶ë§ˆí¬ëª©ë¡
+	//ºÏ¸¶Å©¸ñ·Ï
 			@GetMapping("/blist")
 			@ResponseBody
 			public List<BookMarkDTO> list(HttpSession session) {
@@ -85,7 +98,7 @@ public class BookMarkController {
 //		
 			
 			
-	//ë¶ë§ˆí¬ ì‚­ì œ
+	//ºÏ¸¶Å© »èÁ¦
 	@GetMapping("/list/bookDelete")
 	public ModelAndView bookDelete(int no) {
 

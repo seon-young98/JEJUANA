@@ -12,7 +12,7 @@
 	margin:10px 11px 10px 10px;
 	width:23%;
 	height:330px;
-	background:#F5F5F5;
+	background:rgb(255,255,255,0.5);
 	border-radius:4px;
 	display:flex;	
 }
@@ -69,18 +69,35 @@
     height:12px;
 }
 .chooseDelC1:checked{
-	background:#F37321;
+	background:#2C394B;
+	border:none;
+}
+#allCheckC{
+	margin-left:10px;
+}
+#allCheckC{
+	border-radius:50px;
+	border:1px solid gray;
+	appearance: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    width:12px;
+    height:12px;
+}
+#allCheckC:checked{
+	background:#2C394B;
 	border:none;
 }
 #jo{
 	float:left;
 	font-size:14px;
+	margin-top:8px;
 	/*padding-top:5px;*/
 }
-#jo>div, #jo>i{
+#jo>div{
 	display:inline-block;
 }
-/*¹öÆ°È¿°ú*/
+/*  추가  */
 .CourseBtn_view:hover{
 	background:#F37321;
 }
@@ -108,4 +125,19 @@
 	border-radius:5px;
 	padding-top:5px;
 	margin-left:10px;
+}
+.pagingDivP{
+	width:100%;
+	margin:0 auto;
+	margin-left:40%;
+	margin-top:5px;
+	margin-bottom:20px;
+}
+.pagingDivP>ul{
+	width:100%;
+	margin:0 auto;
+}
+.pagingDivP li{
+	float:left;
+	padding:10px 20px;
 }

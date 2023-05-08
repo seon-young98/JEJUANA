@@ -17,7 +17,7 @@ public class ManagerServiceImpl implements ManagerService {
 	@Inject
 	ManagerDAO dao;
 
-	//ê´€ë¦¬ì - ìœ ì €
+	//°ü¸®ÀÚ - À¯Àú
 	@Override
 	public int commontotalRecord(PagingDTO dto) {
 		return dao.commontotalRecord(dto);
@@ -34,7 +34,7 @@ public class ManagerServiceImpl implements ManagerService {
 	}
 	
 	
-	//ê´€ë¦¬ì - ê²Œì‹œê¸€	
+	//°ü¸®ÀÚ - °Ô½Ã±Û	
 	@Override
 	public int reviewtotalRecord(PagingDTO dto) {
 		return dao.reviewtotalRecord(dto);
@@ -58,6 +58,16 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public int commonEditOk(LoginDTO dto) {
 		return dao.commonEditOk(dto);
+	}
+
+	@Override
+	public ReviewDTO reviewSelect(int plan_no) {
+		return dao.reviewSelect(plan_no);
+	}
+
+	@Override
+	public int reviewUpdate(int plan_no) {
+		return dao.reviewUpdate(plan_no);
 	}
 
 	

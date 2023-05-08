@@ -12,7 +12,7 @@
 	</select>
 	<insert id="loginInsert">
 		insert into common(common_no, id, password, name, nickname, email, member_type, phone_num)
-		values(common_seq.nextval,#{id}, #{password}, #{name}, #{nickname}, #{email}, 0, ${phone_num})
+		values(common_sq.nextval,#{id}, #{password}, #{name}, #{nickname}, #{email}, 0, #{phone_num})
 	</insert>
 	<select id="idSelect" resultType="string">
 		select rpad(substr(id,1,length(id)/2),

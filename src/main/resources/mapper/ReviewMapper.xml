@@ -38,7 +38,7 @@
 	 </select>
 	 <!-- 별점 중복 확인 -->
 	 <select id="starSelect" resultType="int">
-		select count(rate_no) from rate where plan_no=${plan_no} and id=#{id}
+		select count(rate_no) from rate where plan_no=${plan_no} and id=#{id} and place_no=${place_no}
 	</select>
 	<!-- 별점 정보 등록 -->
 	 <insert id="starInsert">
@@ -61,7 +61,7 @@
 	</insert>
 	<!-- 해당 플랜의 course 정보 불러오기 -->
 	<select id="reviewCourse" resultType="com.team6.jejuana.dto.ReviewDTO">
-		select a.days_order, b.place_name, b.place_no, c.days 
+		select a.days_order, b.place_name, b.place_no, c.days
 		from course a join place b
 		on a.place_no = b.place_no
 		join plan c on a.plan_no = c.plan_no
@@ -95,4 +95,7 @@
 	<delete id="reviewDelete">
 		delete from review where plan_no=${plan_no} and id=#{id}
 	</delete>
+	<select id="complainCount" resultType="int">
+		select count(plan_no) from notice where plan_no=${plan_no}
+	</select>
 </mapper>

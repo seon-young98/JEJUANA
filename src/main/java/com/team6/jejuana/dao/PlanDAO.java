@@ -26,6 +26,6 @@ public interface PlanDAO {
     public double takeRate(int place_no);
 
     public int checkRate(int place_no);
-
+    public List<PlanDTO> bookPlanList(String userid);
 
 }

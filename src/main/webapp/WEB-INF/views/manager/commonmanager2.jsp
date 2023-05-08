@@ -102,70 +102,94 @@ function joinform_check(){
 	
 }
 </script>
-<div>
-	<div class="category1">
-		<button>회원관리</button>
-		<button>게시글관리</button>
-		<button>추천 코스 관리</button>
-		<button>공지사항 관리</button>
-	</div>
+<div class="screen">
 	<div class="section">
 		<div class="section1">
-			<div class="section1_1"> 여행목록 관리 </div>
+			<div class="section1_1" style="background: white;height: 140px;">
+				<a class="commonmangerLink" href="<%=request.getContextPath() %>/manager/commonmanager1">
+					<i id="img1" class="fa-solid fa-circle-user fa-2xl"></i>
+					<p class="section1_1_1">회원관리</p>
+				</a>
+			</div>
 			<div class="category2">
-				<button>회원관리</button>
-			</div>	
+				<button class="category2_1" onclick="location.href='commonmanager1'">회원관리</button>
+				<button class="category2_1" onclick="location.href='reviewmanager'">게시글
+					관리</button>
+			</div>
 		</div>
-		
-		<form method="post" action="commonEditOk">
+
+		<form method="post" action="commonEditOk" class="commonEditeOk">
+			<div class="category1">
+				<div>
+					<div>관리자 페이지</div>
+					<p>현재 생성되어 있는 회원정보를 확인 할 수 있습니다.</p>
+				</div>
+			</div>
 			<div class="section2">
-				<div class="section2_1"> 현재 생성되어 있는 회원정보를 확인 할수 있습니다. </div>	
-				<span>| 회원검색</span>					
-						<div>
-						 
-							<table class="tsearch">
-								<tr>
-									<td>번호</td>
-									<td><input type="hidden" name="common_no" id="common_no" value="${dto.common_no }">${dto.common_no }</td>
-								</tr>
-								<tr>	
-									<td>아이디</td>
-									<td><input type="text" name="id" id="id" value="${dto.id }"></td>
-								</tr>
-								<tr>
-									<td>이름</td>
-									<td><input type="text" name="name" id="name" value="${dto.name }"></td>
-								</tr>
-								<tr>
-									<td>이메일</td>
-									<td><input type="text" name="email" id="email" value="${dto.email }"></td>
-								</tr>
-								<tr>
-									<td>핸드폰</td>
-									<td><input type="text" name="phone_num" id="phone_num" value="${dto.phone_num }"></td>
-								</tr>
-								<tr>
-									<td>닉네임</td>
-									<td><input type="text" name="nickname" id="nickname" value="${dto.nickname }"></td>
-								</tr>
-								<tr>
-									<td>회원분류</td>
-									<td>
-										<c:if test="${dto.member_type == 0}">일반회원</c:if>
-										<c:if test="${dto.member_type == 1}">관리자</c:if>
-										<c:if test="${dto.member_type == 2}">정지회원</c:if>
-									</td>
-								</tr>
-							</table>
+				<div class="section2_1">
+					<p class="section2_1_2">회원정보</p>
+				</div>
+				<div class="user_table">
+					<div class="tsearch">
+						<div class="user_info">
+							<div class="user_infoBox">번호</div>
+							<div class="user_infoCon">
+								<input type="text" name="common_no" id="common_no" value="${dto.common_no }" disabled>
+							</div>
 						</div>
-						<div style="width:50%;">
-							<input type="submit" value="정보수정"/>
+						<div class="user_info">
+							<div class="user_infoBox">아이디</div>
+							<div class="user_infoCon">
+								<input type="text" name="id" id="id" value="${dto.id }">
+							</div>
 						</div>
-					
+						<div class="user_info">
+							<div class="user_infoBox">이름</div>
+							<div class="user_infoCon">
+								<input type="text" name="name" id="name" value="${dto.name }">
+							</div>
+						</div>
+						<div class="user_info">
+							<div class="user_infoBox">이메일</div>
+							<div class="user_infoCon">
+								<input type="text" name="email" id="email" value="${dto.email }">
+							</div>
+						</div>
+						<div class="user_info">
+							<div class="user_infoBox">핸드폰</div>
+							<div class="user_infoCon">
+								<input type="text" name="phone_num" id="phone_num" value="${dto.phone_num }">
+							</div>
+						</div>
+						<div class="user_info">
+							<div class="user_infoBox">닉네임</div>
+							<div class="user_infoCon">
+								<input type="text" name="nickname" id="nickname" value="${dto.nickname }">
+							</div>
+						</div>
+						<div class="user_info">
+							<div class="user_infoBox">회원분류</div>
+							<div  class="user_infoCon">
+								<c:if test="${dto.member_type == 0}">
+									<input type="text" name="common_no" id="common_no" value="일반회원" disabled>
+								</c:if>
+								<c:if test="${dto.member_type == 1}">
+									<input type="text" name="common_no" id="common_no" value="관리자" disabled>
+								</c:if> 
+								<c:if test="${dto.member_type == 2}">
+									<input type="text" name="common_no" id="common_no" value="정지회원" disabled>
+								</c:if>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="button_fix">
+					<input class="infobtn" type="submit" value="정보수정" />
+				</div>
+			</div>
 			</div>
 		</form>
 	</div>
 
 </div>
-<footer><h1>footer</h1></footer>
-<link rel="stylesheet" href="/jejuana/css/commonmanager2.css"/>
+<link rel="stylesheet" href="/jejuana/css/commonmanager2.css" />

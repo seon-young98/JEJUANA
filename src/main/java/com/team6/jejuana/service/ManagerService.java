@@ -8,17 +8,18 @@ import com.team6.jejuana.dto.ReviewDTO;
 
 public interface ManagerService {
 	
-	//ê´€ë¦¬ì - ìœ ì €
+	//°ü¸®ÀÚ - À¯Àú
 	public int commontotalRecord(PagingDTO dto);
 	public List<ReviewDTO> commonpageSelect(PagingDTO dto);
 	public int commonMultiUpdate(List<Integer> noList);
 	public LoginDTO commonSelect(int no);
 	public int commonEditOk(LoginDTO dto);
 	
-	//ê´€ë¦¬ì - ê²Œì‹œê¸€
+	//°ü¸®ÀÚ - °Ô½Ã±Û
 	public int reviewtotalRecord(PagingDTO dto);
 	public List<ReviewDTO> reviewpageSelect(PagingDTO dto);
 	public int reviewMultiUpdate(List<Integer> noList);
-	
+	public ReviewDTO reviewSelect(int plan_no);
+	public int reviewUpdate(int plan_no);
 
 }

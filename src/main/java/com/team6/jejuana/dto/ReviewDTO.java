@@ -4,38 +4,45 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ReviewDTO {
-	private int plan_no; //í”Œëœë²ˆí˜¸
-	private String review_subject; //ì œëª©
-	private String review_content; //ë‚´ìš©
-	private int review_hit; //ì¡°íšŒìˆ˜
-	private String id; //ì‘ì„±ì
-	private String nickname; //ì‘ì„±ì ë‹‰ë„¤ì„
-	private String writedate; //ë“±ë¡ì¼
-	private int activated; //í™œì„±í™”
+	private int plan_no; //ÇÃ·£¹øÈ£
+	private String review_subject; //Á¦¸ñ
+	private String review_content; //³»¿ë
+	private int review_hit; //Á¶È¸¼ö
+	private String id; //ÀÛ¼ºÀÚ
+	private String nickname; //ÀÛ¼ºÀÚ ´Ğ³×ÀÓ
+	private String writedate; //µî·ÏÀÏ
+	private int activated; //È°¼ºÈ­
 	private String ip;
 	private String thumbnail;
 	private int joayo_hit;
 	
-	//íƒœê·¸
+	//ÅÂ±×
 	private String tag_content;
 	private String tagArr[];
 	private String tag;
 	
-	//ì—¬í–‰ì§€
-	private int place_no; //ì—¬í–‰ì§€ë²ˆí˜¸
-	private String place_name; //ì—¬í–‰ì§€ì´ë¦„
-	private int rate; //ë³„ì 
-	private int rate_count; //ë³„ì  ì¤€ ì‚¬ëŒ ìˆ˜
+	//¿©ÇàÁö
+	private int place_no; //¿©ÇàÁö¹øÈ£
+	private String place_name; //¿©ÇàÁöÀÌ¸§
+	private int rate; //º°Á¡
+	private int rate_count; //º°Á¡ ÁØ »ç¶÷ ¼ö
 			
-	//í”Œëœ
-	private int days;//ë‚ ì§œìˆ˜
+	//ÇÃ·£
+	private int days;//³¯Â¥¼ö
 			
-	//ì½”ìŠ¤
-	private int days_order; //ë²ˆì§¸ ë‚ ì§œ
-	private int course_order; //ìˆœì„œ
+	//ÄÚ½º
+	private int days_order; //¹øÂ° ³¯Â¥
+	private int course_order; //¼ø¼­
 	
-	//ì—¬ëŸ¬ ê°œì˜ ë ˆì½”ë“œ í•œë²ˆì— ì‚­ì œí•  ë•Œ í•„ìš”í•œ ë ˆì½”ë“œ ë²ˆí˜¸
+	//¿©·¯ °³ÀÇ ·¹ÄÚµå ÇÑ¹ø¿¡ »èÁ¦ÇÒ ¶§ ÇÊ¿äÇÑ ·¹ÄÚµå ¹øÈ£
 	private List<Integer> noList;
+	
+	//¸¶ÀÌÆäÀÌÁö ºÏ¸¶Å©
+	private int book_no;
+	private int target_no;
+	
+	//¸¶ÀÌÆäÀÌÁö ½Å°í»çÀ¯
+	private String complain;
 	
 	@Override
 	public String toString() {
@@ -129,7 +136,7 @@ public class ReviewDTO {
 	}
 
 	public String getTag() {
-		//ë°°ì—´ì˜ íƒœê·¸ë¥¼ ë¬¸ìì—´ë¡œ ë°˜í™˜
+		//¹è¿­ÀÇ ÅÂ±×¸¦ ¹®ÀÚ¿­·Î ¹İÈ¯
 		String tagStr = Arrays.toString(tagArr);
 		tagStr = tagStr.substring(1, tagStr.length()-1);
 		tagStr = tagStr.replaceAll(", ", "/");
@@ -210,6 +217,25 @@ public class ReviewDTO {
 	}
 	public void setNoList(List<Integer> noRList) {
 		this.noList = noRList;
+	}
+	public int getBook_no() {
+		return book_no;
+	}
+	public void setBook_no(int book_no) {
+		this.book_no = book_no;
+	}
+	public int getTarget_no() {
+		return target_no;
+	}
+	public void setTarget_no(int target_no) {
+		this.target_no = target_no;
+	}
+	///////////////////////////////////////////
+	public String getComplain() {
+		return complain;
+	}
+	public void setComplain(String complain) {
+		this.complain = complain;
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.team6.jejuana.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -9,6 +10,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +24,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.team6.jejuana.dto.PagingTwoVO;
 import com.team6.jejuana.dto.PagingVO;
+import com.team6.jejuana.dto.PlaceDTO;
 import com.team6.jejuana.dto.PlanDTO;
 import com.team6.jejuana.dto.ReviewDTO;
 import com.team6.jejuana.dto.SmsResponseDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.team6.jejuana.dto.BookMarkDTO;
 import com.team6.jejuana.dto.LoginDTO;
 import com.team6.jejuana.dto.MessageDTO;
+import com.team6.jejuana.dto.Paging3VO;
 import com.team6.jejuana.service.MypageService;
 import com.team6.jejuana.service.SmsService;
 
@@ -40,16 +48,18 @@ public class MypageController {
 	@GetMapping("/mypagePlan")
 	public ModelAndView mypagePlan(PagingVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		String userid = (String)session.getAttribute("loginId");
 		
-		vo.setTotalRecord(service.totalRecord(vo));
+		vo.setTotalRecord(service.totalRecord(userid));
 		
 		vo.setId((String)session.getAttribute("loginId"));
 		
-		String userid = (String)session.getAttribute("loginId");
-		
 		List<LoginDTO> pDTO = service.profileSelect(userid);
+		List<PlanDTO> list = service.planAllSelect(vo);
+		List<Integer> rList = service.reviewSelect();
 		
-		mav.addObject("list", service.planAllSelect(vo));
+		mav.addObject("rList", rList);
+		mav.addObject("list", list);
 		mav.addObject("vo", vo);
 		mav.addObject("proDTO", pDTO);
 		mav.setViewName("mypage/mypagePlan");
@@ -81,17 +91,19 @@ public class MypageController {
 	public ModelAndView mypageReview(PagingTwoVO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		vo.setTotalRecord(service.totalRecordReview(vo));
+		String userid = (String)session.getAttribute("loginId");
+		
+		vo.setTotalRecord(service.totalRecordReview(userid));
 		
 		vo.setId((String)session.getAttribute("loginId"));
-		
-		String userid = (String)session.getAttribute("loginId");
 		
 		List<LoginDTO> pDTO = service.profileSelect(userid);
 		mav.addObject("proDTO", pDTO);
 		
+		List<ReviewDTO> list = service.reviewAllSelect(vo);
+		
 		mav.addObject("vo", vo);
-		mav.addObject("list", service.reviewAllSelect(vo));
+		mav.addObject("list", list);
 		mav.setViewName("mypage/mypageReview");
 		return mav;
 	}
@@ -117,31 +129,85 @@ public class MypageController {
 		
 	//마이페이지 북마크(코스)
 	@GetMapping("/mypageCourse")
-	public ModelAndView mypageCourse(PagingTwoVO vo, HttpSession session) {
+	public ModelAndView mypageCourse(Paging3VO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		vo.setId((String)session.getAttribute("loginId"));
-		
 		String userid = (String)session.getAttribute("loginId");
+		
+		vo.setTotalRecord(service.totalRecordCourse(userid));
+		vo.setId((String)session.getAttribute("loginId"));
 		
 		List<LoginDTO> pDTO = service.profileSelect(userid);
 		mav.addObject("proDTO", pDTO);
 		
+		List<ReviewDTO> list = service.bookmarkCourse(vo);
+		
+		mav.addObject("vo", vo);
+		mav.addObject("list", list);
 		mav.setViewName("mypage/mypageCourse");
+		return mav;
+	}
+	
+	//마이페이지 북마크(코스) 삭제
+	@PostMapping("/mypageCourseMultiDel")
+	public ModelAndView mypageCourseMultiDel(BookMarkDTO dto, PagingTwoVO vo) {
+				
+		int result = service.mypageBookmarkMultiDel(dto.getNoCList());
+				
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("nowPage", vo.getNowPage());
+				
+		if(result>0) {
+			mav.setViewName("redirect:mypageCourse?nowPage="+vo.getNowPage());
+		}else {
+			mav.addObject("msg", "북마크 삭제에 실패했습니다.");
+			mav.setViewName("mypage/mypageDelete");
+		}
+				
 		return mav;
 	}
 	
 	//마이페이지 북마크(여행지)
 	@GetMapping("/mypagePlace")
-	public ModelAndView mypagePlace(HttpSession session) {
+	public ModelAndView mypagePlace(Paging3VO vo, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		
 		String userid = (String)session.getAttribute("loginId");
 		
+		vo.setTotalRecord(service.totalRecordPlace(userid));
+		vo.setId((String)session.getAttribute("loginId"));
+		
 		List<LoginDTO> pDTO = service.profileSelect(userid);
+		
+		List<BookMarkDTO> list = service.bookmarkPlace(vo);
+		
+		String[] img = {"kart" ,"meat" ,"pull", "goodch", "fish", "fish2"};
+		
+		mav.addObject("img", img);
+		
+		mav.addObject("vo", vo);
+		mav.addObject("list", list);
 		mav.addObject("proDTO", pDTO);
 		
 		mav.setViewName("mypage/mypagePlace");
+		return mav;
+	}
+	
+	//마이페이지 북마크(코스) 삭제
+	@PostMapping("/mypagePlaceMultiDel")
+	public ModelAndView mypagePlaceMultiDel(BookMarkDTO dto, PagingTwoVO vo) {
+					
+		int result = service.mypageBookmarkMultiDel(dto.getNoCList());
+					
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("nowPage", vo.getNowPage());
+					
+		if(result>0) {
+			mav.setViewName("redirect:mypagePlace?nowPage="+vo.getNowPage());
+		}else {
+			mav.addObject("msg", "북마크 삭제에 실패했습니다.");
+			mav.setViewName("mypage/mypageDelete");
+		}
+					
 		return mav;
 	}
 	
@@ -181,7 +247,7 @@ public class MypageController {
 			mav.addObject("email2", email2);
 			
 			mav.addObject("proDTO", pDTO);
-			mav.setViewName("mypage/mypageUser2");
+			mav.setViewName("mypage/mypageUser");
 		}else {
 			mav.addObject("msg", "비밀번호가 일치하지 않습니다.");
 			mav.setViewName("mypage/mypageDelete");
@@ -264,5 +330,72 @@ public class MypageController {
 			
 		return mav;
 	}
+	
+	//마이페이지 리뷰 수정
+	@GetMapping("/mypageReviewEdit")
+	public ModelAndView mypageReviewEdit(int plan_no) {
+		ReviewDTO dto = service.reviewEditSelect(plan_no);
+		// "" '' 인식
+		String subject = dto.getReview_subject().replaceAll("\"", "&quot;");
+		subject.replaceAll("'", "&#39;");
+		dto.setReview_subject(subject);
+					
+		List<ReviewDTO> list = service.tagSelect();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("dto", dto);
+		mav.addObject("list", list);
+		mav.addObject("size", list.size());
+		mav.setViewName("mypage/mypageReviewEdit");
+			
+		return mav;
+	}
+	
+	//마이페이지 리뷰 수정(DB)
+	@PostMapping("/mypageReviewEditOk")
+	public ResponseEntity<String> mypageReivewEditOk(ReviewDTO dto, HttpSession session) {
+		//레코드 번호, 로그인 아이디가 같은 때 수정 : dto에 id 안 담겨 있기 때문에 session에서 불러옴
+		dto.setId((String)session.getAttribute("loginId"));
+		String bodyTag = "<script>";
+		try {
+		service.reviewUpdate(dto);
+			System.out.println(dto.getPlan_no());
+			bodyTag += "location.href='/jejuana/review/reviewView?plan_no="+dto.getPlan_no()+"'";
+		}catch(Exception e) {
+			e.printStackTrace();	
+			bodyTag += "alert('게시글 수정 실패');";
+			bodyTag += "history.back();";
+		}
+		bodyTag += "</script>";
+				
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(new MediaType("text","html",Charset.forName("UTF-8")));
+		headers.add("Content-Type", "text/html; charset=UTF-8");
+					
+		ResponseEntity<String> entity = new ResponseEntity<String>(bodyTag, headers, HttpStatus.OK);
+				
+		return entity;
+	}
+	
+	//마이페이지 북마크(코스) 삭제
+	@GetMapping("/mypageReviewDelete")
+	public ModelAndView mypageReviewDelete(int plan_no, PagingTwoVO vo) {
+						
+		int result = service.reviewDelete(plan_no);
+						
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("nowPage", vo.getNowPage());
+						
+		if(result>0) {
+			mav.setViewName("redirect:mypageReview?nowPage="+vo.getNowPage());
+		}else {
+			mav.addObject("msg", "여행기록 삭제에 실패했습니다.");
+			mav.setViewName("mypage/mypageDelete");
+		}
+			
+					
+		return mav;
+	}
+		
 	
 }

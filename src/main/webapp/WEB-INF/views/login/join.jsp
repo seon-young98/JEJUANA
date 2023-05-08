@@ -229,7 +229,7 @@ function joinform_check(){
 							
 							<!-- 휴대전화 -->
 							<div>
-								<input type="text" name="phone_num" id="phone_num" placeholder="휴대폰번호를 입력해주세요.">
+								<input type="text" name="phone_num" id="phone_num" placeholder="-을 제외하고 입력해주세요.">
 								<input type="button" value="휴대폰인증">
 							</div>
 							

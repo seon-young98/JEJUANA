@@ -1,113 +1,135 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/jejuana/css/reviewmanager.css">
 
 <div class="screen">
-	<div class="category1">
-		<button>회원관리</button>
-		<button>게시글관리</button>
-	</div>
 	<div class="section">
 		<div class="section1">
-			<div class="section1_1"> 여행목록 관리 </div>
+			<div class="section1_1">
+				<i id="img1" class="fa-solid fa-paste"></i>
+				<p class="section1_1_1">여행목록 관리</p>
+			</div>
 			<div class="category2">
-				<button>게시글관리</button>
-				<button>여행기록 관리</button>
-			</div>	
+				<button class="category2_1" onclick="location.href='commonmanager1'">회원관리</button>
+				<button class="category2_1" onclick="location.href='reviewmanager'">게시글 관리</button>
+			</div>
 		</div>
-		
+
 		<div class="section2">
-			<div class="section2_1"> 여행목록을 관리할수 있습니다. </div>	
-			<span>| 여행목록 검색</span>
-				<div class="section2_2">
-					<div class="section2_3">검색어</div>
-					<div class="section2_4">
+			<div class="category1">
+				<div>
+					<div>관리자 페이지</div>
+					<p>여행목록을 관리 할 수 있습니다.</p>
+				</div>
+			</div>
+			
+			<div class="section2_2">
+				<div class="section2_4">
 					<form method="get" id="searchForm" action="reviewmanager">
+						<div class="section2_1_1">여행목록 검색</div>
 						<select id="searchKey" name="searchKey">
-						    <option value="review_subject" selected>제목</option>
-						    <option value="activated">활성화</option>
-						    <option value="r.id">아이디</option>
-						</select>
-							<input type="text" name="searchWord" id="searchWord"placeholder="검색...."/>
-							<input type="submit" style="margin-left:35px;" value="검색"/>
-						</form>
-					</div>
+							<option value="review_subject" selected>제목</option>
+							<option value="activated">활성화</option>
+							<option value="r.id">아이디</option>
+						</select> <input type="text" name="searchWord" id="searchWord"
+							placeholder="검색...." /> <input type="submit" class="section2_5"
+							value="검색" />
+					</form>
 				</div>
-				
-				<form method="post" action="/jejuana/manager/reviewUpdate" id="upList">
-					<div class="section3">
-						<table id="tb" class="tsearch">
-							<thead>
-								<tr>
-									<td><input type="checkbox" id="allCheck"></td>
-									<td>번호</td>
-									<td>제목</td>
-									<td>작성자</td>
-									<td>조회수</td>
-									<td>등록일시</td>
-									<td>ip</td>
-									<td>활성여부</td>
-								</tr>
+			</div>
+
+			<form method="post" action="/jejuana/manager/reviewUpdate" id="upList">
+				<div class="section3">
+					<div id="tb" class="tsearch">
+						<div id="st">
+							<div class="st_1">
+								<div>
+									<input type="checkbox" id="allCheck">
+								</div>
+								<div>번호</div>
+								<div>제목</div>
+								<div>작성자</div>
+								<div>조회수</div>
+								<div>등록일시</div>
+								<div>IP</div>
+								<div>활성여부</div>
+							</div>
 							<c:forEach var="rDTO" items="${list }">
-								<tr>
-									<td><input type="checkbox" name="noList" value="${rDTO.plan_no }"/></td>
-									<td>${rDTO.plan_no }</td>
-									<td>${rDTO.review_subject }</td>
-									<td>${rDTO.id }</td>
-									<td>${rDTO.review_hit }</td>
-									<td>${rDTO.writedate }</td>
-									<td>${rDTO.ip }</td>
-									<td>
-										<c:if test="${rDTO.activated == 0}">활성화</c:if>
+								<div class="st_2">
+									<div>
+										<input type="checkbox" name="noList" value="${rDTO.plan_no }" />
+									</div>
+									<div>${rDTO.plan_no }</div>
+									<div class="st_2_1">
+										<a
+											<c:if test="${rDTO.complain!=null }"> style="color:red"</c:if>
+											href="reviewView?plan_no=${rDTO.plan_no }&nowPage=${vo.nowPage}
+											<c:if test="${vo.searchWord!=null }">&searchKey=${vo.searchKey }&searchWord=${vo.searchWord }
+											</c:if>
+											">${rDTO.review_subject }
+										</a>
+									</div>
+									<div>${rDTO.id }</div>
+									<div>${rDTO.review_hit }</div>
+									<div>${rDTO.writedate }</div>
+									<div>${rDTO.ip }</div>
+									<div>
+										<c:if test="${rDTO.activated == 0}">활성화</c:if> 
 										<c:if test="${rDTO.activated == 1}">비활성화</c:if>
-									</td>
-								</tr>
+									</div>
+								</div>
 							</c:forEach>
-							</thead>
-						</table>		
+						</div>
 					</div>
-				</form>
-					
+				</div>
+			</form>
+
 			<div class="searchselect">
-					<ul>
-						<c:if test="${vo.nowPage==1 }">
-							<li>&lt;</li>
-						</c:if>
-						<c:if test="${vo.nowPage>1 }">
-							<li><a href="reviewmanager?nowPage=${vo.nowPage-1} <c:if test="${vo.searchWord!=null }">&searchKey=${vo.searchKey}&searchWord=${vo.searchWord}</c:if>">&lt;</a></li>
-						</c:if>
-				
-						<c:forEach var="p" begin="${vo.startPageNum }" end="${vo.startPageNum+vo.onePageNumCount-1 }">
-							<c:if test="${p<=vo.totalPage }">
-								<c:if test="${p==vo.nowPage }">
-									<li>
-								</c:if>	
-								
-								<c:if test="${p!=vo.nowPage }">
-									<li>
-								</c:if>	
-									<a href="reviewmanager?nowPage=${p}<c:if test="${vo.searchWord!=null }">&searchKey=${vo.searchKey}&searchWord=${vo.searchWord}</c:if>">${p} </a></li>
+				<ul class="section3_1">
+					<c:if test="${vo.nowPage==1 }">
+						<li>&lt;</li>
+					</c:if>
+					<c:if test="${vo.nowPage>1 }">
+						<li><a
+							href="reviewmanager?nowPage=${vo.nowPage-1} <c:if test="${vo.searchWord!=null }">&searchKey=${vo.searchKey}&searchWord=${vo.searchWord}</c:if>">&lt;</a></li>
+					</c:if>
+
+					<c:forEach var="p" begin="${vo.startPageNum }"
+						end="${vo.startPageNum+vo.onePageNumCount-1 }">
+						<c:if test="${p<=vo.totalPage }">
+							<c:if test="${p==vo.nowPage }">
+								<li>
 							</c:if>
-						</c:forEach>
-		
-						<c:if test="${vo.nowPage<vo.totalPage }">
-							<li><a href="reviewmanager?nowPage=${vo.nowPage+1}<c:if test="${vo.searchWord!=null }">&searchKey=${vo.searchKey}&searchWord=${vo.searchWord}</c:if>">&gt;</a></li>
+
+							<c:if test="${p!=vo.nowPage }">
+								<li>
+							</c:if>
+							<a
+								href="reviewmanager?nowPage=${p}<c:if test="${vo.searchWord!=null }">&searchKey=${vo.searchKey}&searchWord=${vo.searchWord}</c:if>">${p}
+							</a>
+							</li>
 						</c:if>
-						<c:if test="${vo.nowPage==vo.totalPage }">
-							<li>&gt;</li>
-						</c:if>
-					</ul>
-					
-				</div>
-					
-				<div class="scection4">
-						<input type="button" value="활성화/비활성화" id="aupdate"/>
-				</div>
+					</c:forEach>
+
+					<c:if test="${vo.nowPage<vo.totalPage }">
+						<li><a
+							href="reviewmanager?nowPage=${vo.nowPage+1}<c:if test="${vo.searchWord!=null }">&searchKey=${vo.searchKey}&searchWord=${vo.searchWord}</c:if>">&gt;</a></li>
+					</c:if>
+					<c:if test="${vo.nowPage==vo.totalPage }">
+						<li>&gt;</li>
+					</c:if>
+				</ul>
+
+			</div>
+
+			<div class="scection4">
+				<input type="button" value="활성화/비활성화" id="aupdate" />
+			</div>
 		</div>
-		
+
 	</div>
 
 </div>
-<footer style="width:100%; height:74px; background:antiquewhite; text-align:center; position:fixed; bottom:0; left:0"><h1>footer</h1></footer>
 
 
 <script>

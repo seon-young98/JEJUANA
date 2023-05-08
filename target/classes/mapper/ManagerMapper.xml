@@ -61,12 +61,20 @@
  		</if>
  	</select>
  	
+	<select id="reviewSelect" resultType="com.team6.jejuana.dto.ReviewDTO">
+	 	select plan_no, review_subject, review_content, review_hit, id, writedate, activated, tag, complain
+	 	from review where plan_no=${plan_no}
+	 </select>
+	 
+	 <update id="reviewUpdate" >
+ 		update review set activated=mod((activated+1),2) where plan_no=${param1}
+ 	</update>
  	
  	<select id="reviewpageSelect" resultType="com.team6.jejuana.dto.ReviewDTO">
 	 	select * from 
 		 		(select * from 
 			 		(
-					select r.plan_no, r.review_subject, r.id, r.review_hit, to_char(r.writedate,'MM-DD HH:MI') writedate,r.ip , r.activated 
+					select r.plan_no, r.review_subject, r.id, r.review_hit, to_char(r.writedate,'MM-DD HH:MI') writedate,r.ip , r.activated, r.complain 
 					from review r join common c on r.id=c.id 
 					<if test="searchWord!=null"><!-- 검색어가 있을 경우 -->
 		 				and ${searchKey} like '%${searchWord}%'
@@ -92,7 +100,6 @@
 		 		</choose>
 
  	</select>
- 	
  	<update id="reviewMultiUpdate">
  		update review set activated=mod((activated+1),2) 
  		

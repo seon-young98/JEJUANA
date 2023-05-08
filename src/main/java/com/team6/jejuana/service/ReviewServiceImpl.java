@@ -79,4 +79,8 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewDTO reviewWriteSelect(int plan_no) {
 		return dao.reviewWriteSelect(plan_no);
 	}
+	@Override
+	public int complainCount(int plan_no) {
+		return dao.complainCount(plan_no);
+	}
 }
